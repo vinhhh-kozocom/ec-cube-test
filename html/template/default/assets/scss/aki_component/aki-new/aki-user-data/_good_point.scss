@@ -1,0 +1,147 @@
+.good_point_page{
+    .link_content{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        a{
+            flex: 1 0 100px;
+        }
+    }
+    .aki-about{
+        display: flex;
+        gap: 20px;
+        &_item-img{
+            width: 16%;
+            min-width: 80px;
+        }
+        &_item-content{
+            width: 84%;
+        }
+    }
+}
+
+.store_list{
+    padding-top: 30px;
+    border-top: 1px solid #1F8048;
+    &-list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        margin: 30px 0;
+        @include maxWidth(767px){
+            gap: 20px;
+        }
+    }
+    &-item{
+        padding: 20px 30px;
+        width: calc(50% - 15px);
+        small{
+            font-size: 13px;
+            font-weight: 300;
+            color: $gray-600;
+        }
+        p{
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        @include maxWidth(767px){
+            padding: 10px 15px;
+            width: 100%;
+        }
+    }
+}
+
+.body-service{
+    p{
+        margin: 15px 0;
+    }
+    &__description{
+        display: flex;
+        gap: 8px;
+        i{
+            text-align: center;
+            width: 18px;
+            &::before{
+                width: 18px;
+            }
+        }
+        &-content{
+            width: 100%;
+            span{
+                color: #000000;
+            }
+        }
+    }
+    .text-orange-50{
+        color: $orange-50;
+    }
+}
+.shop_shibuya_page{
+    .shibuya-title{
+        margin-top: 40px;
+        @include maxWidth(767px){
+            margin-top: 20px;
+        }
+        ul{
+            margin:20px 0 40px;
+            color: #333333;
+            @include maxWidth(767px){
+                margin:20px 0 30px;
+            }
+            li{
+                margin-bottom: 15px;
+                display: flex;
+                align-items: baseline;
+                gap: 8px;
+            }
+            li.color-gay{
+                color: #666666;
+            }
+        }
+        .panel-default{
+            background-color: #f4f9f6;
+            border: 1px solid #BCD9C8;
+            border-radius: 0px;
+            text-align: center;
+            .panel-body{
+                padding: 20px;
+                &__link{
+                    background-color: #1F8048;
+                    color: #ffffff;
+                    font-size: 13px;
+                    display: block;
+                    padding: 10px 16px;
+                    font-weight: 600;
+                    margin-top: 12px;
+                    p{
+                        font-size: 11px;
+                        font-weight: 300;
+                        margin-bottom: 5px;
+                    }
+                    &:hover{
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+        &__description{
+            align-items: center;
+            padding: 40px 0;
+        }
+    }
+    .aki-navs{
+		display: flex;
+		gap: 10px;
+	}
+	.aki-tabs-block .tab-content {
+		margin-top: 30px;
+	}  
+	.tab-content > .tab-pane {
+		display: none;
+	}
+	.tab-content > .tab-pane.active {
+		display: block;
+	}
+}

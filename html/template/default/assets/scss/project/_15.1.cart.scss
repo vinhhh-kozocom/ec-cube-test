@@ -407,15 +407,6 @@ Styleguide 15.1.6
   background: #F99;
   margin-bottom: 20px;
 
-  & &__inner {
-    display: inline-block;
-
-    &__item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
 
   & &__icon {
     display: inline-block;
@@ -432,8 +423,6 @@ Styleguide 15.1.6
     font-weight: bold;
     color: #fff;
     position: relative;
-    flex: 1;
-    word-break: break-all;
   }
 }
 

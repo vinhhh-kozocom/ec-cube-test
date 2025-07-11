@@ -1,0 +1,42 @@
+.main-search-product-form {
+  .panel {
+    word-wrap: break-word;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .panel-group .panel {
+    border-color: transparent;
+    border-radius: 0;
+  }
+  .panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    color: inherit;
+    .serchTab {
+      background-color: #dbecc7;
+      font-size: 14px;
+      display: block;
+    }
+  }
+  .panel-body {
+    padding: 15px;
+  }
+}
+.form-control {
+  -webkit-appearance: none;
+  padding: 10px 15px;
+  font-size: 13px;
+  line-height: 1.4;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
+}

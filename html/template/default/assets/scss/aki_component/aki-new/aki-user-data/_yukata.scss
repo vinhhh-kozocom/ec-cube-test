@@ -1,0 +1,82 @@
+.yukata_page {
+  .circle-parent {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 1px solid $gray-300;
+    margin-right: 20px;
+    flex: none;
+
+    @include mobile {
+      width: 60px;
+      height: 60px;
+    }
+
+    .circle-child {
+      height: 100%;
+      border-radius: 50%;
+      background: $green-50;
+      color: $primary-color;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .shop-item {
+    padding: 20px 30px;
+    background: #fff;
+    height: 100%;
+  }
+  .scroll-wrapper {
+    @include mobile {
+      margin-bottom: 10px;
+    }
+    .scroll-items {
+      @include mobile {
+        flex-basis: 50%;
+        flex-shrink: 0;
+      }
+
+      .caption {
+        @include mobile {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .btn-white {
+    padding: 10px 15px;
+    border: 1px solid #BCD9C8;
+    border-radius: 0;
+  }
+  .yukata_good_point ul {
+    border: 1px solid $gray-300;
+    background-color: $gray-50;
+    padding: 20px;
+    height: 100%;
+    li {
+      padding: 10px 0 5px 25px;
+      @include mobile{
+        padding: 8px 0 5px 25px;
+      }
+    }
+  }
+
+  .box-goodpoint {
+    background-color: $green-50;
+    border: 1px dotted $green-300;
+    padding: 30px;
+  }
+
+  .block-full {
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+}

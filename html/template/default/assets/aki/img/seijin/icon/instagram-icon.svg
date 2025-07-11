@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>instagram-logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-18.6%" y="-18.6%" width="137.1%" height="137.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="クリック後" transform="translate(-70.000000, -471.000000)" fill="#FFFFFF">
+            <g id="instagram-logo" filter="url(#filter-1)" transform="translate(72.000000, 472.000000)">
+                <path d="M17.4985926,21 C19.4274653,21 21,19.4302817 21,17.5 C21,16.7380282 20.7507043,16.034507 20.3380284,15.4598592 C19.7021131,14.578169 18.6683106,14 17.5007053,14 C16.3323958,14 15.2992975,14.5774648 14.6619738,15.4591549 C14.2478894,16.0338028 14.0007064,16.7373239 14.0000021,17.4992958 C13.9978895,19.4295775 15.5690157,21 17.4985926,21 Z" id="Path"></path>
+                <polygon id="Path" points="25.6666667 12.8216715 25.6666667 9.78522838 25.6666667 9.33333333 25.2111622 9.33479106 22.1666667 9.34426628 22.178365 12.8333333"></polygon>
+                <path d="M17.5,0 C7.85053976,0 0,7.85053976 0,17.5 C0,27.1487553 7.85053976,35 17.5,35 C27.1487553,35 35,27.1487553 35,17.5 C35,7.85053976 27.1501651,0 17.5,0 Z M27.4525699,15.4578869 L27.4525699,23.6066019 C27.4525699,25.7290744 25.7269596,27.4539797 23.605897,27.4539797 L11.394103,27.4539797 C9.27233545,27.4539797 7.54743011,25.7290744 7.54743011,23.6066019 L7.54743011,15.4578869 L7.54743011,11.3948079 C7.54743011,9.27304036 9.27233545,7.54813502 11.394103,7.54813502 L23.6051921,7.54813502 C25.7269596,7.54813502 27.4525699,9.27304036 27.4525699,11.3948079 L27.4525699,15.4578869 Z" id="Shape" fill-rule="nonzero"></path>
+                <path d="M23.0494539,17.2992031 C23.0494539,20.4328613 20.5608386,22.9842494 17.5010776,22.9842494 C14.4413166,22.9842494 11.9534198,20.4328613 11.9534198,17.2992031 C11.9534198,16.5454174 12.099978,15.824757 12.3614838,15.1666667 L9.33333333,15.1666667 L9.33333333,23.6762012 C9.33333333,24.7759628 10.2047797,25.6666667 11.2773844,25.6666667 L23.7226156,25.6666667 C24.7937834,25.6666667 25.6666667,24.7759628 25.6666667,23.6762012 L25.6666667,15.1666667 L22.6370794,15.1666667 C22.9007404,15.824757 23.0494539,16.5454174 23.0494539,17.2992031 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

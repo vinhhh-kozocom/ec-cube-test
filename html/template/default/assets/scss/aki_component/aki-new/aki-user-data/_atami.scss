@@ -1,0 +1,224 @@
+.shop_atami_page{
+    .side, #main_bottom .banner{
+        display: none;
+    }
+    .content-logo{
+        border: 1px solid #e2041B80;
+        width: 100%;
+        max-width: 300px;
+        padding: 15px;
+        background: white;
+        p{
+            font-size: 16px;
+        }
+        @include maxWidth(767px){
+            max-width: unset;
+        }
+    }
+    .pc-banner{
+        background: url(/html/template/default/assets/aki/img/petit/banner.webp) no-repeat center;
+        background-size: cover;
+        height: 550px;
+    }
+    .tag-a-red{
+        background-color: #E2041B !important;
+        color: white !important;
+        width: 200px;
+    }
+    .bg-orange{
+        background-color: #E868290D;
+    }
+    .bg-sliver{
+        background-color: $gray-50;
+        padding: 40px 0px;
+        @include maxWidth(767px){
+            padding: 30px 0px;
+        }
+    }
+
+    .bg-blue{
+        background-color: $green-50;
+    }
+    .bg-white{
+        background-color: white;
+        padding: 30px;
+        @include maxWidth(767px){
+            padding: 20px;
+        }
+    }
+
+    .atami-title{
+        border: 1px solid $green-300;
+        padding: 10px;
+        writing-mode: vertical-rl;
+        h2{
+            letter-spacing: 3px;
+        }
+       @include maxWidth(767px){
+        border: 0px;
+        writing-mode: unset;
+        text-align: center;
+       }
+    }
+
+    .good_point{
+        padding: 40px 0px;
+        display: flex;
+        gap: 30px;
+        &-item{
+            padding: 30px;
+            background-color: $gray-50;
+            flex: 1 0 0;
+            h3{
+                height: 56px;
+                margin-bottom: 20px;
+            }
+            p{
+                min-height: 66px;
+            }
+        }
+        &-content{
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+        @include maxWidth(767px){
+            flex-direction: column;
+            gap: 20px;
+            padding: 30px 0px;
+            &-item{
+                padding: 10px;
+                h3{
+                    height: auto;
+                    margin-bottom: 20px;
+                }
+                p{
+                    min-height: auto;
+                }
+            }
+            &-content{
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    }
+
+    .rental_plan{
+        &-list{
+            h3{
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+                border-bottom: 1px dashed $gray-300;
+            }
+        }
+        &-time{
+          font-size: 14px;
+        }
+    }
+    .rental_noti{
+        display: flex;
+        border: 1px solid #BCD9C8;
+        justify-content: space-between;
+        &-button{
+            display: flex;
+            gap: 30px;
+        }
+        @include maxWidth(767px){
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            &-button{
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+    }
+    .step_flow{
+        display: flex;
+        gap: 30px;
+        padding-bottom: 40px;
+        .step-title{
+            margin-bottom: 20px;
+        }
+        span{
+            position: relative;
+            width: 105px;
+            height: 105px;
+            min-width: 105px;
+            border-radius: 50%;
+            color: white;
+            background-color: $orange-300;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(1.8rem, 2vw + 0.75rem, 2rem);
+
+            &::before{
+                content: "";
+                position: absolute;
+                width: 119px;
+                height: 119px;
+                background: white;
+                border-radius: 50%;
+                z-index: -1;
+                border: 1px solid #E8682959;
+
+            }
+            &::after{
+                content: '';
+                width: 1px;
+                height: 190px;
+                background-color: #E1E1E1;
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: -2;
+
+            }
+        }
+        &:last-child{
+            span{
+                &::after{
+                    content: none;
+                }
+            }
+        }
+        &-4{
+            &::after{
+                height: 60px !important;
+            }
+        }
+
+        @include maxWidth(767px){
+            gap: 15px;
+            .step-title{
+                margin-bottom: 15px;
+            }
+            span{
+                min-width: 60px;
+                width: 60px;
+                height: 60px;
+                &::before{
+                    width: 74px;
+                    height: 74px;
+                }
+            }
+        }
+    }
+
+    .bg-orange-05{
+        padding: 30px;
+        .access-item{
+            border: 1px solid $gray-300;
+        }
+        @include maxWidth(767px){
+            padding: 30px 20px;
+        }
+    }
+
+
+}
+
+

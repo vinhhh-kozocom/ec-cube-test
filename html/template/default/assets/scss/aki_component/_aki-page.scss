@@ -1,0 +1,19 @@
+html {
+  font-size: 62.5%; /* 62.5%を指定すると「1.0 rem = 10px」 */
+}
+body {
+  font-family: 'Hiragino Sans JP', serif;
+  font-size: 1.4rem;
+  line-height: calc(22 / 14);
+  font-weight: 300;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  color: $gray-600;
+}
+
+
+

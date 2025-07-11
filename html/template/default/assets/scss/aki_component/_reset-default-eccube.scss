@@ -1,0 +1,124 @@
+.btn-group-sm>.btn, .btn-sm {
+  font-size: 12px;
+}
+.ec-link {
+  color: $primary-color;
+}
+.ec-checkbox label{
+  font-weight: 400;
+}
+
+#accordion_search .panel-body .checkbox input[type=checkbox] {
+  margin-right: 10px;
+}
+
+.ec-radio input {
+  margin-right: 0px;
+  margin-bottom: 0px;
+}
+
+.form-control{
+  padding: 5px 8px
+}
+
+.ec-select select {
+  -webkit-appearance: none;
+}
+
+.ec-input input, .ec-birth input, .ec-select input, .ec-halfInput input, .ec-numberInput input, .ec-zipInput input, .ec-telInput input{
+  height: 40px;
+  padding: 5px 8px;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio], input[type=radio], input[type=checkbox]{
+  width: 16px;
+  height: 16px;
+}
+
+.form-select{
+  height: 40px;
+  appearance: none;
+  font-size: 14px;
+  padding: 5px 8px;
+  background-image: unset;
+  border-radius: 0px;
+}
+
+.ec-errorMessage{
+  color: $clrRed;
+}
+
+.ec-progress{
+  & &__item{
+    &:after {
+      background: $gray-300;
+      @include maxWidth(767px){
+        top: 1em;
+      }
+    }
+  }
+  & &__number{
+    background: $gray-300;
+    color: $gray-600;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: "Zen Old Mincho", serif;
+    line-height: 38px;
+    @include maxWidth(767px){
+      line-height: 28px;
+    }
+  }
+  & &__label {
+    font-size: 14px;
+    color: $gray-600;
+    font-weight: 300;
+    @include maxWidth(767px){
+      font-size: 12px;
+    }
+  }
+  .is-complete {
+    .ec-progress__number {
+      background: $primary-color;
+      color: white;
+    }
+    .ec-progress__label {
+      color: $primary-color;
+    }
+  }
+}
+
+.ec-pagerRole .ec-pager .ec-pager__item--active {
+  background: #F4F9F6;
+  color: #16713D;
+}
+.ec-pagerRole .ec-pager .ec-pager__item:hover {
+  background: #F4F9F6;
+}
+
+span.ec-required{
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+@media (min-width: 768px){
+  .ec-input input, .ec-birth input, .ec-select input, .ec-halfInput input, .ec-numberInput input, .ec-zipInput input, .ec-telInput input ,
+  select, .ec-birth select, .ec-select select, .ec-halfInput select, .ec-numberInput select, .ec-zipInput select, .ec-telInput select
+  {
+    font-size: 14px;
+  }
+  .ec-halfInput input[type=text] {
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 2%;
+    vertical-align: middle;
+    width: 48%;
+  }
+  .ec-off1Grid__cell .ec-borderedDefs dl {
+    flex-wrap: nowrap;
+    padding: 15px 0 14px;
+  }
+  .ec-borderedDefs dd {
+    padding: 0 16px;
+  }
+}

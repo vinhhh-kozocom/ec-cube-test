@@ -1,0 +1,102 @@
+.en_header{
+    .dropdown-menu{
+        li{
+            padding: 0 20px;
+            display: inline-flex;
+        }
+        a{
+            margin: 12px 0px;
+            display: inline-block;
+            position: relative;
+            padding: unset;
+            &::before{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                width: 0;
+                height: 2px;
+                background-color: #1f8048;
+                transition: 0.25s ease-in-out;
+            }
+        }
+        a:hover{
+            background-color: white;
+            &::before{
+                width: 100%;
+            }
+        }
+    }
+}
+.aki-header-menu_753{
+    .aki-navbar{
+        justify-content: center;
+    }
+}
+.bg-color-gray{
+    background-color: $gray-50;
+}
+.index_page_753{
+    .sp-nav753{
+        padding-top: 110px;
+    }
+    h2{
+        small{
+            font-size: 16px;
+        }
+    }
+    .full-height-753 {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        gap: 30px;
+        &_item{
+            display: flex;
+            width: calc(33.33% - 20px);
+            padding: 30px 20px;
+            flex-direction: column;
+            align-items: center;
+            img{
+                width: 150px;
+            }
+        }
+    }
+    .flex-link-753{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        span{
+            background-color: $gray-200;
+            color: $gray-600;
+            padding: 10px 16px;
+            text-align: center;
+        }
+
+    }
+    .notification-753{
+        padding: 20px 20px 0px;
+        background: white;
+        border: 1px solid $gray-300;
+        height: 100%;
+        .title-noti{
+            span{
+                font-size: 20px;
+            }
+        }
+        .noti-border-top{
+            padding: 20px 0px;
+            border-top: 1px dashed $gray-300;
+        }
+        .alert-border{
+            border: 1px solid $green-300;
+            padding: 15px;
+        }
+    }
+    @include maxWidth(767px){
+        .en_header_mobile a:last-child{
+            padding-bottom: 15px;
+            color: $gray-600;
+        }
+    }
+
+}

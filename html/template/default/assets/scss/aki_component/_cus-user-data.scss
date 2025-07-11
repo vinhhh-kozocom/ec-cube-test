@@ -1,0 +1,448 @@
+#photo-slider{
+    button{
+        width: inherit;
+        span{
+           color: #18360c;
+           i{
+            font-size: 26px;
+            opacity: 0.8;
+            margin: 0 6px;
+           }
+       }
+    }
+}
+.newyear_index_page {
+    &-list{
+        display: flex;
+        gap: 30px;
+    }
+    &-item{
+        border: 1px solid $gray-300;
+        padding: 30px;
+        width: 50%;
+    }
+    &-title{
+        font-size: clamp(2.2rem, 2vw + 0.75rem, 2.6rem);
+        letter-spacing: 0.8px;
+        font-weight: 500;
+        color: #000;
+        font-family: "Zen Old Mincho", serif;
+        span{
+            font-size: 14px;
+            color: $gray-600;
+        }
+    }
+    @include maxWidth(767px){
+        &-list{
+            gap: 20px;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        &-item{
+            width: 100%;
+            padding: 20px;
+        }
+    }
+}
+
+.location_photo{
+    .panel{
+        border: 1px solid #d8d8d8;
+    }
+    .panel-group{
+        .panel{
+            border-color: transparent;
+            border-radius: 0;
+        }
+    }
+    &-title{
+        .img-responsive{
+            width: 25%;
+			display: inline-block;
+        }
+        .title{
+            padding-left: 0px;
+            &::after{
+                left: 0px;
+                width: 0px;
+                height: 0px;
+                background: none;
+                background-size: contain;
+            }
+        }
+    }
+
+}
+
+.fall_page{
+	.white-spring{
+		overflow: hidden;
+        p{
+            text-shadow:0px 0px 5px #ffffff;
+        }
+        h2{
+            text-shadow:2px 2px 0px #ffffff;
+            text-align: left;
+        }
+	}
+	.side{
+		display: none;
+	}
+	a.btn_box{
+        img{
+            box-shadow: 1px 1px 3px #999999;
+            &:hover{
+                box-shadow: 0px 0px 0px #fff;
+            }
+        }
+    }
+	.topic_path{
+		background-color: #fff;
+	}
+	.breadcrumb{
+		background-color: #fff;
+	}
+	.fall_reason_box{
+		background-color: #fff;
+		padding: 15px;
+        span{
+            font-size: 100%;
+        }
+        h3{
+            text-align: center;
+        }
+	}
+	.fall_title{
+		color: #000000;
+		padding: 20px 0;
+		background: url(/html/template/default/assets/aki/img/fall/leaves-icon.webp) no-repeat center;
+		background-size: 25px 25px;
+		background-position: 50% 0;
+		text-align: center;
+		text-shadow: 2px 2px 0px #ffffff;
+		font-size: 26px;
+        span{
+            font-size: 60%;
+        }
+	}
+
+    .table{
+        &.table-bordered{
+            color: #58441a;
+            th{
+                background-color: $gray-50;
+                font-weight: 300;
+            }
+        }
+        &-bordered{
+            border:1px solid #ebe1c3;
+            tbody, tfoot, thead{
+                tr{
+                    td, th{
+                        border:1px solid #E1E1E1;
+                    }
+                }
+            }
+        }
+        > :not(:first-child) {
+            border-top: 0px solid;
+        }
+    }
+
+	.detail_box{
+		background-color: #ffe97d;
+		box-shadow: 1px 1px 2px #9b966d;
+        span{
+            width: 100%;
+            display: block;
+        }
+	}
+	.season_container {
+		background-color: #f2fbff;
+		padding: 15px;
+	}
+	.furisode_container{
+		background-color: #ffffff;
+	}
+	.houmonngi_container{
+		background-color: #e7e9db54;
+	}
+	.tomesode_container{
+		background-color: #ffffff;
+	}
+	.fall_container{
+		background-color: #FAFAFA;
+	}
+	.theme_side_left aside{
+		display: none;
+	}
+	.reason_font_color{
+		color: #EC2D30;
+	}
+	.btn-kisetunokimono-all{
+		background: #65C7D6;
+		color: #FFF;
+		padding: 20px 0;
+		box-shadow: 2px 2px 2px #ececec;
+        &:hover{
+            background-color: #40CDE3;
+            color: #fff;
+        }
+	}
+	.btn-furisode-all{
+		background: #1F8048;
+		color: #FFF;
+		padding: 10px 15px;
+		box-shadow: 2px 2px 2px #ececec;
+        &:hover{
+            background-color: #ffa83c;
+        }
+	}
+	.btn-houmongi-all{
+		background: #59d5b2;
+		color: #FFF;
+		padding: 20px 0;
+		box-shadow: 2px 2px 2px #ececec;
+        &:hover{
+            background-color: #60e8c2;
+        }
+	}
+	.btn-tomesode-all{
+		background: #fddeb7;
+		color: #FFF;
+		padding: 20px 0;
+		box-shadow: 2px 2px 2px #ececec;
+        &:hover{
+            background-color: #ff900163;
+            color: #fff;
+        }
+	}
+    .panel-title {
+        font-size: 20px;
+    }
+	th {
+		text-align: left;
+	}
+
+    .henkin{
+        h2{
+           color: #da505d;
+           padding: 20px 0;
+           background: url("/html/template/default/assets/img/aki/seijin/flour-icon.webp") no-repeat center;
+           background-size: 20px 20px;
+           background-position: 50% 0;
+       }
+        a {
+            color: #337ab7;
+            text-decoration: underline;
+        }
+    }
+
+	.season_container .season_cap {
+		color: #006a9a;
+		background: #fff;
+		font-size: 1.7rem;
+		line-height: 1.7;
+	    margin: 2em 0;
+	    box-shadow: 0px 0px 0px 10px #d6ebff;
+	    border: dashed 2px #b3e8ff;
+	}
+
+	.balloon-right-btm-wrap{
+		position: relative;
+	}
+	.balloon-right-btm {
+		position: absolute;
+		display: inline-block;
+		margin: 1.5em 15p  x 1.5em 0;
+		padding: 0 5px;
+		width: 180px;
+		height: 90px;
+		line-height: 90px;
+		text-align: center;
+		color: #FFF;
+		font-size: 13px;
+		font-weight: bold;
+		background: #52C9FA;
+		border-radius: 50%;
+		box-sizing: border-box;
+		left: -120px;
+		top: -60px;
+		z-index: 1000;
+
+        &:before {
+        content: "";
+        position: absolute;
+        bottom: -9px;
+        right: -8px;
+        margin-top: -15px;
+        border: 18px solid transparent;
+        border-left: 19px solid #52C9FA;
+        z-index: 0;
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        }
+	}
+}
+
+.image-contact {
+  width: 140px;
+  margin-top: -2px
+}
+
+@include maxWidth(767px){
+    .location_photo{
+        &-title{
+            .img-responsive{
+                width: 40%;
+            }
+        }
+    }
+
+    .white-spring{
+        background-color: rgba(255,255,255,0.3);
+        overflow: hidden;
+    }
+    .fall_reason_box{
+        background: #fff;
+        padding: 20px;
+    }
+    .furisode_container{
+        background-color: #fc592114;
+        padding: 0;
+    }
+    .houmonngi_container{
+        padding: 0;
+    }
+    .tomesode_container{
+        background-color: #ffffff;
+        padding: 0;
+    }
+    .fall_container{
+        padding: 0;
+    }
+    .hede-text{
+        background:#fff;
+        padding: 15px;
+    }
+    .fall_reason_box h3{
+        font-size: 20px;
+    }
+    .fall_page .table>tbody>tr>td{
+        padding: 7px;
+    }
+    .henkin h2{
+        font-size: 2.4rem;
+    }
+    .summer_page {
+        .align-left-mb {
+            text-align: left;
+        }
+    }
+    .announcement_content{
+        text-align: left !important;
+    }
+    .announcement_schedule{
+        width: 100%;
+        margin: auto;
+    }
+    .notification-top{
+        text-align: left !important;
+    }
+}
+
+.shop_atami_page{
+    .hidden_space_header {
+        padding-top: 0px !important;
+        min-height: 0px !important;
+        border-bottom: none !important;
+    }
+    .banner_info_block {
+        bottom: 33px;
+        right: 10px;
+        width: 185px;
+        height: 152px;
+    }
+    .banner_info_block > .content-logo > img {
+        padding-right: 27px;
+    }
+    .banner_info_block > .content-logo > p {
+        font-size: 84%;
+        line-height: 21px;
+        margin-top: -5px;
+    }
+    .reservation_block, .reservation_block_mb {
+        background: #FAFAFA;
+        border: 1px solid #BCD9C8;
+    }
+    .reservation_block .col-auto, .reservation_block_mb .col-auto {
+        padding: 20px;
+    }
+    .reservation_block button {
+        margin: 0 10px 0 10px;
+        width: 250px;
+    }
+    .notifi_block{
+        width: 800px;
+        margin: auto;
+        padding-left: 95px;
+    }
+}
+.product_page{
+    .shoe_size{
+        margin-top: -14px;
+    }
+}
+.custom_arrow_select > select {
+    background-image: url("/html/template/default/assets/icon/aki-icon-down.svg");
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 14px);
+    background-position-y: 50%;
+    background-size: 10px;
+}
+.announcement_schedule{
+    width: 450px;
+    margin: auto;
+}
+.announcement_schedule > p{
+    margin-left: 20px;
+}
+.header-banner{
+    height: 40px;
+    margin-top:-10px;
+    background: #0dc0e9;
+}
+@media screen and (max-width: 768px){
+    .header-link{
+        padding-left:10px
+    }
+}
+
+.input-search__popup.isShowPopup {
+    top: 103px !important;
+}
+
+.english_index_page > #wrapper > header,
+.china_index_page > #wrapper > header {
+    min-height: 64px;
+}
+
+.english_index_page .mobile-header-active.is-show-content,
+.china_index_page .mobile-header-active.is-show-content {
+    top: 64px;
+}
+.english_index_page .input-search__popup.isShowPopup,
+.china_index_page .input-search__popup.isShowPopup {
+    top: 64px !important;
+}
+.announcement-title{
+    font-size: clamp(1.7rem, 3vw, 2.6rem);
+}
+
+.align-left-ip {
+    text-align: left !important;
+    -webkit-text-align: left !important;
+    text-align-last: left !important;
+    -webkit-text-align-last: left !important;
+    direction: ltr !important;
+}

@@ -1,0 +1,56 @@
+//import font aki_new
+@font-face {
+  font-family: "Zen Old Mincho Bold";
+  src: url("../fonts/ZenOldMincho-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Zen Old Mincho";
+  src: url("../fonts/ZenOldMincho-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hiragino Sans JP";
+  src: url("../fonts/ヒラギノ角ゴProW3.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Hiragino Sans JP Bold";
+  src: url("../fonts/ヒラギノ角ゴProW6.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "aki-icon";
+  src: url("../fonts/aki-icon.eot?4k1upm");
+  src: url("../fonts/aki-icon.eot?4k1upm#iefix") format("embedded-opentype"),
+    url("../fonts/aki-icon.ttf?4k1upm") format("truetype"),
+    url("../fonts/aki-icon.woff?4k1upm") format("woff"),
+    url("../fonts/aki-icon.svg?4k1upm#aki-icon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+//import css aki_new
+@import "mixins/variables";
+@import "aki_component/mixin";
+@import "aki_component/reset";
+@import "aki_component/aki-page";
+@import "aki_component/global";
+
+@import "aki_component/aki-new/aki-icon";
+@import "aki_component/aki-new/aki-top";
+@import "aki_component/aki-new/aki-footer";
+@import "aki_component/aki-new/aki-product";
+@import "aki_component/aki-new/aki-mypage";
+@import "aki_component/aki-new/cart-flow/index";
+
+//import css aki_choose
+@import "aki_component/aki-new/aki-user-data/index";
+@import "aki_component/aki-new/user-flow/index";
+@import "aki_component/en_english";

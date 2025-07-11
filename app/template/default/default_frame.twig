@@ -1,0 +1,330 @@
+<!doctype html>
+{#
+Custom Default Frame Template for EC-CUBE
+Based on original EC-CUBE template with custom modifications
+#}
+<html lang="{{ eccube_config.locale }}">
+<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# product: https://ogp.me/ns/product#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="eccube-csrf-token" content="{{ csrf_token(constant('Eccube\\Common\\Constant::TOKEN_NAME')) }}">
+    <title>{{ BaseInfo.shop_name }}{% if subtitle is defined and subtitle is not empty %} / {{ subtitle }}{% elseif title is defined and title is not empty %} / {{ title }}{% endif %}</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/aki.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/aki-new.min.css') }}">
+    {# Meta tags handling #}
+    {% if Page.meta_tags is not empty %}
+        {{ include(template_from_string(Page.meta_tags), sandboxed = true) }}
+        {% if Page.description is not empty %}
+            <meta name="description" content="{{ Page.description }}">
+        {% endif %}
+    {% else %}
+        {{ include('meta.twig') }}
+    {% endif %}
+    {% if Page.author is not empty %}
+        <meta name="author" content="{{ Page.author }}">
+    {% endif %}
+    {% if Page.keyword is not empty %}
+        <meta name="keywords" content="{{ Page.keyword }}">
+    {% endif %}
+    {% if Page.meta_robots is not empty %}
+        <meta name="robots" content="{{ Page.meta_robots }}">
+    {% endif %}
+    
+    {# Favicon and CSS #}
+    <link rel="icon" href="{{ asset('assets/img/common/favicon.ico', 'user_data') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css" integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    
+    {# Custom CSS for modern design #}
+    <style>
+        /* Custom styles for modern layout */
+        .custom-layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .custom-header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .custom-main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        
+        .custom-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .custom-footer {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .custom-container {
+                padding: 0 0.5rem;
+            }
+            
+            .custom-main {
+                padding: 1rem 0;
+            }
+        }
+        
+        /* Loading animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    
+    <script src="{{ asset('front.bundle.js', 'bundle') }}"></script>
+    {% block stylesheet %}{% endblock %}
+    
+    <script>
+        $(function() {
+            $.ajaxSetup({
+                'headers': {
+                    'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content')
+                }
+            });
+            
+            // Custom loading overlay
+            $(document).on('submit', 'form', function() {
+                $('.loading-overlay').show();
+            });
+            
+            // Hide loading overlay on page load
+            $(window).on('load', function() {
+                $('.loading-overlay').hide();
+            });
+        });
+    </script>
+    
+    {# Layout: HEAD #}
+    {% if Layout.Head %}
+        {{ include('block.twig', {'Blocks': Layout.Head}) }}
+    {% endif %}
+    
+    {# Plugin assets #}
+    {% if plugin_assets is defined %}{{ include('@admin/snippet.twig', { snippets: plugin_assets }) }}{% endif %}
+    <link rel="stylesheet" href="{{ asset('assets/css/customize.css', 'user_data') }}">
+</head>
+
+<body id="page_{{ app.request.get('_route') }}" class="{{ body_class|default('other_page') }}">
+    {# Loading overlay #}
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    {# Layout: BODY_AFTER #}
+    {% if Layout.BodyAfter %}
+        {{ include('block.twig', {'Blocks': Layout.BodyAfter}) }}
+    {% endif %}
+
+    {# Maintenance and Debug Mode Alerts #}
+    {% if (isMaintenance is defined and isMaintenance) and (isDebugMode is defined and isDebugMode) %}
+        <div class="ec-twoModeAlert">
+            <div class="ec-maintenanceAlert">
+                <div>
+                    <div class="ec-maintenanceAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+                    {{ 'front.under_maintenance'|trans }}
+                </div>
+            </div>
+            <div class="ec-debugModeAlert bg-danger d-none">
+                <div>
+                    <div class="ec-debugModeAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+                    {{ 'front.under_debug_mode'|trans }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {% if (isMaintenance is defined and isMaintenance) %}
+            <div class="ec-maintenanceAlert">
+                <div>
+                    <div class="ec-maintenanceAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+                    {{ 'front.under_maintenance'|trans }}
+                </div>
+            </div>
+        {% endif %}
+        {% if (isDebugMode is defined and isDebugMode) %}
+            <div class="ec-debugModeAlert bg-danger d-none">
+                <div>
+                    <div class="ec-debugModeAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+                    {{ 'front.under_debug_mode'|trans }}
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="custom-layout">
+        {# Custom Header #}
+        <header class="custom-header">
+            {% if Layout.Header %}
+                {{ include('block.twig', {'Blocks': Layout.Header}) }}
+            {% else %}
+                {# Fallback to include the custom header #}
+                {% include 'Block/header.twig' %}
+            {% endif %}
+        </header>
+
+        {# Layout: CONTENTS_TOP #}
+        {% if Layout.ContentsTop %}
+            <div class="ec-layoutRole__contentTop">
+                {{ include('block.twig', {'Blocks': Layout.ContentsTop}) }}
+            </div>
+        {% endif %}
+
+        <div class="custom-main">
+            <div class="custom-container">
+                <div class="ec-layoutRole__contents">
+                    {# Layout: SIDE_LEFT #}
+                    {% if Layout.SideLeft %}
+                        <aside class="ec-layoutRole__left">
+                            {{ include('block.twig', {'Blocks': Layout.SideLeft}) }}
+                        </aside>
+                    {% endif %}
+
+                    {% set layoutRoleMain = 'ec-layoutRole__main' %}
+                    {% if Layout.ColumnNum == 2 %}
+                        {% set layoutRoleMain = 'ec-layoutRole__mainWithColumn' %}
+                    {% elseif Layout.ColumnNum == 3 %}
+                        {% set layoutRoleMain = 'ec-layoutRole__mainBetweenColumn' %}
+                    {% endif %}
+
+                    <main class="{{ layoutRoleMain }}">
+                        {# Layout: MAIN_TOP #}
+                        {% if Layout.MainTop %}
+                            <div class="ec-layoutRole__mainTop">
+                                {{ include('block.twig', {'Blocks': Layout.MainTop}) }}
+                            </div>
+                        {% endif %}
+
+                        {# MAIN AREA #}
+                        {% block main %}{% endblock %}
+
+                        {# Layout: MAIN_Bottom #}
+                        {% if Layout.MainBottom %}
+                            <div class="ec-layoutRole__mainBottom">
+                                {{ include('block.twig', {'Blocks': Layout.MainBottom}) }}
+                            </div>
+                        {% endif %}
+                    </main>
+
+                    {# Layout: SIDE_RIGHT #}
+                    {% if Layout.SideRight %}
+                        <aside class="ec-layoutRole__right">
+                            {{ include('block.twig', {'Blocks': Layout.SideRight}) }}
+                        </aside>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# Layout: CONTENTS_BOTTOM #}
+        {% if Layout.ContentsBottom %}
+            <div class="ec-layoutRole__contentBottom">
+                {{ include('block.twig', {'Blocks': Layout.ContentsBottom}) }}
+            </div>
+        {% endif %}
+
+        {# Custom Footer #}
+        <footer class="custom-footer">
+            {% if Layout.Footer %}
+                {{ include('block.twig', {'Blocks': Layout.Footer}) }}
+            {% else %}
+                {# Default footer content #}
+                <div class="custom-container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>{{ BaseInfo.shop_name }}</h5>
+                            <p>{{ 'common.footer.copyright'|trans }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>{{ 'common.footer.quick_links'|trans }}</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ url('homepage') }}">{{ 'common.footer.home'|trans }}</a></li>
+                                <li><a href="{{ url('help_about') }}">{{ 'common.footer.about'|trans }}</a></li>
+                                <li><a href="{{ url('contact') }}">{{ 'common.footer.contact'|trans }}</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>{{ 'common.footer.customer_service'|trans }}</h5>
+                            <ul class="list-unstyled">
+                                <li><a href="{{ url('help_guide') }}">{{ 'common.footer.guide'|trans }}</a></li>
+                                <li><a href="{{ url('help_privacy') }}">{{ 'common.footer.privacy'|trans }}</a></li>
+                                <li><a href="{{ url('help_legal') }}">{{ 'common.footer.legal'|trans }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </footer>
+    </div>
+
+    {# Drawer and overlay components #}
+    <div class="ec-overlayRole"></div>
+    <div class="ec-drawerRoleClose"><i class="fas fa-times"></i></div>
+    <div class="ec-drawerRole">
+        {# Layout: DRAWER #}
+        {% if Layout.Drawer %}
+            {{ include('block.twig', {'Blocks': Layout.Drawer}) }}
+        {% endif %}
+    </div>
+    
+    {# Page top button #}
+    <div class="ec-blockTopBtn pagetop">{{'common.pagetop'|trans}}</div>
+    
+    {# Language selector #}
+    {% include('@common/lang.twig') %}
+    
+    {# JavaScript files #}
+    <script src="{{ asset('assets/js/function.js') }}"></script>
+    <script src="{{ asset('assets/js/eccube.js') }}"></script>
+    {% block javascript %}{% endblock %}
+    
+    {# Layout: CLOSE_BODY_BEFORE #}
+    {% if Layout.CloseBodyBefore %}
+        {{ include('block.twig', {'Blocks': Layout.CloseBodyBefore}) }}
+    {% endif %}
+    
+    {# Plugin snippets #}
+    {% if plugin_snippets is defined %}
+        {{ include('snippet.twig', { snippets: plugin_snippets }) }}
+    {% endif %}
+    
+    <script src="{{ asset('assets/js/customize.js', 'user_data') }}"></script>
+</body>
+</html> 

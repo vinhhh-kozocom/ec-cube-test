@@ -1,0 +1,92 @@
+.location_photo {
+  &-block {
+    border: 1px solid $green-300;
+    background-color: $green-50;
+    padding: 20px;
+
+    h4 {
+      color: $primary-color;
+      margin-bottom: 12px;
+    }
+  }
+
+  &_point {
+    .point-text {
+      position: absolute;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(31, 128, 72, 0) 0%,
+        #1f8048 87.61%
+      );
+      width: 100%;
+      height: 187px;
+      display: flex;
+      align-items: end;
+      text-align: center;
+
+      h3 {
+        color: #fff;
+        font-family: "Zen Old Mincho";
+        width: 100%;
+        font-size: 20px;
+        position: absolute;
+        bottom: 0;
+      }
+    }
+  }
+
+  #main_middle {
+    .row {
+      padding-top: 30px;
+      padding-bottom: 0;
+      @include mobile {
+        padding-top: 15px;
+        gap: 15px;
+      }
+    }
+
+    .location_service {
+      a {
+        text-decoration: underline;
+      }
+      .panel {
+        height: 100%;
+        margin: 0;
+      }
+    }
+  }
+
+  .group-button-control {
+    gap: 15px;
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      position: inherit;
+      border: 1px solid $gray-300;
+      color: $gray-500;
+      padding: 4px 16px;
+      font-size: 16px;
+
+      &:hover {
+        color: $primary-color;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  .slick-list {
+    margin: 0 -15px;
+    .slick-slide > div {
+      padding: 0 15px;
+    }
+
+    .carousel-item img {
+      height: auto;
+    }
+  }
+
+  .slick-arrow {
+    display: flex !important;
+  }
+}

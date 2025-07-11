@@ -1,0 +1,97 @@
+.faq-item {
+  border: 1px solid $gray-300;
+  padding: 10px;
+}
+.service_page {
+  .block-error {
+    @include maxWidth(479px) {
+      hr {
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+      margin-bottom: 30px;
+    }
+    .block-contact {
+      margin-bottom: 20px;
+      @include maxWidth(479px) {
+        margin-bottom: 20px;
+      }
+      .contact-info {
+        display: flex;
+        gap: 30px;
+        @include maxWidth(767px) {
+          flex-direction: column;
+        }
+        @include maxWidth(479px) {
+          gap: 10px;
+        }
+      }
+    }
+  }
+  .maintenance-link {
+    @include maxWidth(479px) {
+      margin-top: 15px !important;
+    }
+  }
+  .schedule {
+    p {
+      margin-bottom: 20px;
+    }
+    @include maxWidth(479px) {
+      margin-top: 15px !important;
+      margin-bottom: 30px;
+      p {
+        margin-bottom: 15px;
+      }
+      p:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .btn-dropdown {
+    @include maxWidth(479px) {
+      margin: 0 auto;
+      margin-bottom: 15px !important;
+      width: 100%;
+      .btn-primary-nonbg{
+        width: 100%;
+      }
+    }
+  }
+}
+.box-plan-custom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  @include maxWidth(479px){
+    display: block;
+    padding: 20px;
+  } 
+}
+.plan-custom{
+  display: grid;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);    
+  @include maxWidth(767px){
+    flex-direction: column;
+  }
+  @include maxWidth(479px){
+    display: block;
+    gap:15px;
+    margin-bottom: 20px;
+
+  }
+  p{
+    @include maxWidth(479px){
+      margin-bottom: 15px;
+    }
+  } 
+}
+
+.aki-title-collaps{
+  font-weight: 300;
+  font-family: 'Hiragino Sans JP';
+}

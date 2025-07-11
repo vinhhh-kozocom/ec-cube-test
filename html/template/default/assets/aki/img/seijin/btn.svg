@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.2" baseProfile="tiny" id="レイヤー_1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 505 105"
+	 xml:space="preserve">
+<g>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="52.5" x2="505" y2="52.5">
+		<stop  offset="0" style="stop-color:#CC3366"/>
+		<stop  offset="0.1083" style="stop-color:#CC3F66"/>
+		<stop  offset="0.2564" style="stop-color:#CC4866"/>
+		<stop  offset="0.5071" style="stop-color:#CC4A66"/>
+		<stop  offset="0.8049" style="stop-color:#CC4866"/>
+		<stop  offset="0.9121" style="stop-color:#CC4166"/>
+		<stop  offset="0.9883" style="stop-color:#CC3666"/>
+		<stop  offset="1" style="stop-color:#CC3366"/>
+	</linearGradient>
+	<rect x="2.5" y="2.5" fill="none" stroke="url(#SVGID_1_)" stroke-width="5" stroke-miterlimit="10" width="500" height="100"/>
+	<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="252.5" y1="6" x2="252.5" y2="100.1329">
+		<stop  offset="0" style="stop-color:#FF4664"/>
+		<stop  offset="7.323599e-02" style="stop-color:#FF4C64"/>
+		<stop  offset="0.3232" style="stop-color:#FF5E64"/>
+		<stop  offset="0.5071" style="stop-color:#FF6464"/>
+		<stop  offset="0.7026" style="stop-color:#FF6164"/>
+		<stop  offset="0.8574" style="stop-color:#FF5764"/>
+		<stop  offset="0.9982" style="stop-color:#FF4664"/>
+		<stop  offset="1" style="stop-color:#FF4664"/>
+	</linearGradient>
+	<rect x="2.5" y="2.5" fill="url(#SVGID_2_)" width="500" height="100"/>
+</g>
+<g>
+	<circle fill="#FFFFFF" cx="60.6" cy="52.5" r="21.8"/>
+	<g>
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="60.5681" y1="47.261" x2="60.5681" y2="55.8112">
+			<stop  offset="0" style="stop-color:#FF4664"/>
+			<stop  offset="7.323599e-02" style="stop-color:#FF4C64"/>
+			<stop  offset="0.3232" style="stop-color:#FF5E64"/>
+			<stop  offset="0.5071" style="stop-color:#FF6464"/>
+			<stop  offset="0.7026" style="stop-color:#FF6164"/>
+			<stop  offset="0.8574" style="stop-color:#FF5764"/>
+			<stop  offset="0.9982" style="stop-color:#FF4664"/>
+			<stop  offset="1" style="stop-color:#FF4664"/>
+		</linearGradient>
+		<polygon fill="url(#SVGID_3_)" points="70.1,47.4 70.1,48.4 60.6,55.8 51,48.3 51,47.3 60.6,52.5 		"/>
+		<g>
+			<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="60.568" y1="43.1025" x2="60.568" y2="61.8975">
+				<stop  offset="0" style="stop-color:#FF4664"/>
+				<stop  offset="7.323599e-02" style="stop-color:#FF4C64"/>
+				<stop  offset="0.3232" style="stop-color:#FF5E64"/>
+				<stop  offset="0.5071" style="stop-color:#FF6464"/>
+				<stop  offset="0.7026" style="stop-color:#FF6164"/>
+				<stop  offset="0.8574" style="stop-color:#FF5764"/>
+				<stop  offset="0.9982" style="stop-color:#FF4664"/>
+				<stop  offset="1" style="stop-color:#FF4664"/>
+			</linearGradient>
+			<path fill="url(#SVGID_4_)" d="M48.1,43.1C48.1,43.1,48,43.1,48.1,43.1L48,61.8c0,0.1,0,0.1,0.1,0.1H73c0.1,0,0.1,0,0.1-0.1V43.2
+				c0-0.1,0-0.1-0.1-0.1H48.1z M50.3,59.7C50.3,59.7,50.2,59.7,50.3,59.7l-0.1-14.3c0-0.1,0-0.1,0.1-0.1h20.5c0.1,0,0.1,0,0.1,0.1
+				v14.2c0,0.1,0,0.1-0.1,0.1L50.3,59.7L50.3,59.7z"/>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 91.182 64.3516)" fill="#FFFFFF" font-family="'RyuminPro-Heavy-83pv-RKSJ-H'" font-size="25px">メールでのお問い合わせはこちら</text>
+</svg>

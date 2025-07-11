@@ -1,0 +1,211 @@
+#footer{
+    background-color: black;
+    padding: 0px;
+    font-size: 1.4rem;
+    ul{
+        li{
+            a{
+                display: block;
+            }
+        }
+    }
+}
+.aki-footer{
+    background-color: black;
+    &-title{
+        display: flex;
+        justify-content: space-between;
+        h2{
+            color:#ffffff;
+        }
+    }
+    &-content{
+        padding: 60px 0 30px;
+        display: flex;
+        border-top: 1px solid #ffffff10;
+        border-bottom: 1px solid #ffffff10;
+        &__left{
+
+            &-icon{
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                cursor: pointer;
+                .custom-modal{
+                    font-size: 14px;
+                    h3{
+                        color: #000;
+                    }
+                    .modal-content{
+                        background-color: white;
+                        color: #666;
+                        .modal-body{
+                            &_content{
+                                padding-bottom: 30px;
+                                margin-bottom: 20px;
+                                border-bottom: 1px solid $gray-300;
+                                a{
+                                    color: $primary-color;
+                                    text-decoration: underline;
+                                }
+                            }
+                            &_button{
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 20px;
+                                overflow-y: hidden;
+                            }
+                        }
+                        .info-phone{
+                            width: calc(50% - 10px);
+                            text-align: left;
+                            padding: 12px 16px;
+                            background-color: $green-50;
+                            border: 1px solid $green-300;
+                            p{
+                                font-size: 12px;
+                                color: #666;
+                            }
+                            a{
+                                color: $primary-color;
+                                font-weight: 700;
+                            }
+                        } 
+                    }
+                    .modal-footer{
+                        margin: 0px;
+                        text-align: center;
+                        .aki-btn-secondary{
+                            background-color:#EEEEEE;
+                        }
+                    }
+                }
+            }
+        }
+        &__right{
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 380px);
+        }
+        .aki-disc{
+            list-style: disc;
+            transition-duration: .2s;
+            li:hover{
+               transition-duration: .2s;
+               padding-left: 3px;
+               color: #1f8048 !important;
+           }
+           li{
+            margin-bottom: 4px;
+            a:hover{
+                transition-duration: .2s;
+                padding-left: 3px;
+                color: #1f8048 !important;
+            }
+           } 
+        }
+    }
+    &-copyright{
+        padding: 24px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        border-top: 1px solid #ffffff20
+
+    }
+    .fb_iframe_widget, .fb_iframe_widget span,
+    .fb_iframe_widget span iframe[style] {
+        width: 100% !important;
+    }
+    .twitter-timeline, 
+    .twitter-timeline iframe[style] {
+        width: 100% !important;
+    }
+
+    
+}
+.gap30{
+    gap: 30px;
+}
+
+.ft-icon-email-pc{
+    display: block;
+    position: fixed;
+    right: 16px;
+    z-index: 10000;
+    &:hover{
+        animation-duration: 1s;
+        animation-name: shakeX;
+    }
+}
+.ft-icon-email-pc{
+    bottom: 60px;
+}
+
+@media screen and (max-width: 767px){
+    .aki-footer{
+        &-title{
+            flex-direction: column-reverse;
+        }
+        &-top{
+            flex-direction: column;
+            padding-top: 40px;
+            align-items: flex-start;
+        }
+        &-content{
+            padding: 30px 0px;
+            &__right{
+                width: 100%;
+                padding-left: 26px;
+                margin-bottom: -40px;
+            }
+        }
+        &-copyright{
+            flex-direction: column;
+        }
+        .twitter-timeline{
+            max-width: 340px !important;
+        }
+        .ft-icon-phone, .ft-icon-email{
+            display: block;
+            position: fixed;
+            right: 16px;
+            z-index: 10000;
+            &:hover{
+                animation-duration: 1s;
+                animation-name: shakeX;
+            }
+        }
+        .ft-icon-phone{
+            bottom: 80px;
+        }
+        .ft-icon-email{
+            bottom: 140px;
+        }
+        .modal-body{
+            padding: 15px 10px;
+        }
+    }   
+}
+
+@keyframes shakeX {
+    0%,to {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0)
+    }
+
+    30%,50%,70%{
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0)
+    }
+    40%,60%,80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0)
+    }
+}
+.animate__shakeX {
+    -webkit-animation-name: shakeX;
+    animation-name: shakeX
+}
+  

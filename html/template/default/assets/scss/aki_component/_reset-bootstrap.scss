@@ -1,0 +1,641 @@
+#wrapper,
+#footer {
+  .container {
+    padding-right: 15px;
+    padding-left: 15px;
+
+    @media (min-width: 1170px) {
+      width: 1170px;
+    }
+
+    @media (min-width: 992px) {
+      width: 970px;
+    }
+
+    @media (min-width: 768px) {
+      width: 750px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .feature-banner .col-sm-3 {
+      width: 20% !important;
+    }
+  }
+}
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding-bottom: 16px;
+
+  > * {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+p {
+  margin: 0 0 10px;
+}
+
+.breadcrumb {
+  margin-bottom: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 13px 15px;
+  background-color: #f3f3f3;
+  border-radius: 2px;
+}
+
+.breadcrumb > li > a {
+  color: #999;
+}
+
+.breadcrumb > li + li:after,
+.breadcrumb > li + li:before {
+  position: absolute;
+  content: "";
+}
+
+.breadcrumb > li + li:after,
+.breadcrumb > li + li:before {
+  top: 9px;
+}
+
+.breadcrumb > li + li:after,
+.breadcrumb > li + li:before {
+  left: -12px;
+}
+
+.breadcrumb > li + li:after {
+  border: 5px solid transparent;
+}
+
+.breadcrumb > li + li:after {
+  margin-top: -5px;
+  border-left: 5px solid #f3f3f3;
+}
+
+.breadcrumb > li + li {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.breadcrumb > li + li:before {
+  border: 7px solid transparent;
+}
+
+.breadcrumb > li + li:before {
+  margin-top: -7px;
+  border-left: 7px solid;
+  border-left-color: #777;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+dl {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.label-default {
+  background-color: #999;
+}
+
+.label {
+  font-size: 80%;
+  border-radius: 0;
+}
+
+.btn {
+  padding: 5px 12px;
+  font-size: 13px;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-default {
+  color: #333;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 0 #fff;
+  background-color: #f3f3f3;
+  background-image: -webkit-linear-gradient(top, #f5f5f5 0, #f1f1f1 100%);
+  background-image: -o-linear-gradient(top, #f5f5f5 0, #f1f1f1 100%);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#f5f5f5),
+    to(#f1f1f1)
+  );
+  background-image: linear-gradient(to bottom, #f5f5f5 0, #f1f1f1 100%);
+  background-repeat: repeat-x;
+  border: 1px solid #dcdcdc;
+}
+
+.btn-info {
+  color: #fff;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+  background-image: -webkit-linear-gradient(top, #5bc0de 0, #5bc0de 100%);
+  background-image: -o-linear-gradient(top, #5bc0de 0, #5bc0de 100%);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#5bc0de),
+    to(#5bc0de)
+  );
+  background-image: linear-gradient(to bottom, #5bc0de 0, #5bc0de 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff5bc0de', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  background-repeat: repeat-x;
+  border: 1px solid #46b8da;
+}
+
+.btn-info.active,
+.btn-info.focus,
+.btn-info:active,
+.btn-info:focus,
+.btn-info:hover,
+.open > .dropdown-toggle.btn-info {
+  color: #fff;
+  background-color: #46b8da;
+  background-image: -webkit-linear-gradient(top, #5bc0de 0, #46b8da 100%);
+  background-image: -o-linear-gradient(top, #5bc0de 0, #46b8da 100%);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#5bc0de),
+    to(#46b8da)
+  );
+  background-image: linear-gradient(to bottom, #5bc0de 0, #46b8da 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff46b8da', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  background-repeat: repeat-x;
+  border: 1px solid #31b0d5;
+}
+
+.form-group .form-control {
+  width: 100%;
+}
+
+.checkbox-inline,
+.radio-inline {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"],
+input[type="checkbox"] {
+  border-radius: 1px;
+}
+
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"],
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+input[type="radio"],
+input[type="checkbox"] {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  vertical-align: middle;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+input[type="radio"] {
+  border-radius: 1em;
+}
+
+.radio input[type="radio"]:checked,
+.radio-inline input[type="radio"]:checked,
+input[type="radio"]:checked {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #1f8048;
+}
+
+input[type="radio"]:checked {
+  border-color: #1f8048;
+}
+
+input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #1f8048;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.checkbox-inline + .checkbox-inline,
+.radio-inline + .radio-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.checkbox input[type="checkbox"]:checked::after,
+.checkbox-inline input[type="checkbox"]:checked::after,
+input[type="checkbox"]:checked::after {
+  position: absolute;
+  top: -4px;
+  left: -6px;
+  display: block;
+  content: url(../../assets/img/aki/checkmark.png);
+}
+
+.well {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.well {
+  background-color: #f1f1f1;
+  border: 1px solid #e5e5e5;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.thumbnail {
+  display: block;
+  padding: 0;
+  margin-bottom: 18px;
+  line-height: 1.4;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-addon,
+.input-group-lg > .input-group-btn > .btn {
+  height: 42px;
+  width: 44px;
+  padding: 9px 11px;
+  font-size: 14px;
+  line-height: 1.3;
+  border-radius: 1px;
+}
+
+.panel-group .panel-heading a.collapsed:before,
+.panel-group .panel-heading a:before {
+  width: 13px;
+}
+
+.panel-group .panel-heading a.fa-plus-circle:before {
+  margin-right: 7px;
+  content: "\f056";
+}
+
+.panel-group .panel-heading a.collapsed.fa-minus-circle:before {
+  margin-right: 7px;
+  content: "\f055";
+}
+
+.datepicker td,
+.datepicker th {
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #eee;
+}
+
+.datepicker table tr td span {
+  display: block;
+  width: 23%;
+  height: 54px;
+  line-height: 54px;
+  float: left;
+  margin: 1%;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.datepicker table tr td span.disabled,
+.datepicker table tr td span.disabled:hover {
+  background: 0 0;
+  color: #999;
+  cursor: default;
+}
+
+.datepicker table tr td.day.focused, .datepicker table tr td.day:hover {
+  background: #bcd9c8;
+  color: white;
+  cursor: pointer;
+}
+
+.datepicker .datepicker-switch:hover,
+.datepicker .next:hover,
+.datepicker .prev:hover,
+.datepicker tfoot tr th:hover {
+  background: #eee;
+}
+
+.datepicker .datepicker-switch {
+  width: 145px;
+}
+
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+#entry_birth,
+#entry_sex {
+  display: flex;
+  align-items: center;
+}
+
+.ec-required {
+  display: inline-block;
+  margin-left: 1em;
+  color: #de5d50;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.btn.focus,
+.btn:focus,
+.btn:hover {
+  text-decoration: none;
+}
+a:focus,
+a:hover {
+  color: #15c;
+  // text-decoration: underline;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+button.close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: 0 0;
+  border: 0;
+}
+
+.modal-backdrop.show {
+  background-color: #fff;
+}
+
+.panel-group {
+  margin-bottom: 18px;
+}
+
+.panel-body {
+  padding: 15px 20px;
+}
+
+.panel {
+  word-wrap: break-word;
+  background-color: #fff;
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-bottom: 20px;
+}
+
+.panel-group .panel + .panel {
+  margin-top: -3px;
+}
+
+.panel-group .panel {
+  margin-bottom: 0;
+  border-color: transparent;
+  border-radius: 0;
+}
+
+.panel-default > .panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.panel-group .panel-heading {
+  padding: 0 15px;
+  background-color: #fafafa;
+  border-top: 1px dashed #ccc;
+  border-bottom: 1px dashed #ccc;
+}
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: inherit;
+}
+
+.panel-group .panel-heading .panel-title {
+  font-size: 13px;
+}
+
+.panel-group .panel-heading + .panel-collapse > .list-group,
+.panel-group .panel-heading + .panel-collapse > .panel-body {
+  border-top: 0 none;
+}
+
+.panel-group .panel-heading a {
+  color: #444;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.panel-group .panel-heading a:hover {
+  background-color: #f5f5f5;
+}
+
+.panel-group .panel-heading a:before {
+  margin-right: 7px;
+}
+
+.dropdown-menu {
+  margin: 1px 0 0;
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  min-width: 150px;
+  text-align: center;
+}
+.aki-header-menu {
+  .dropdown-menu{
+    top: 100% !important;
+    transform: translate(0px, 0px) !important;
+  }
+}
+
+.dropdown-menu > li > a {
+  display: block;
+  padding: 4px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+  &:hover{
+    color: $primary-color;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.nav-tabs > li > a {
+  margin-right: 2px;
+  color: #666;
+  border-radius: 2px 2px 0 0;
+}
+
+.nav-tabs > li > a:hover {
+  border-color: #eee #eee #ddd;
+  color: #555;
+}
+
+.nav > li > a:focus,
+.nav > li > a:hover {
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.nav-tabs > li > a.active,
+.nav-tabs > li > a.active:focus,
+.nav-tabs > li > a.active:hover {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+h3 {
+  small {
+    font-size: 13px;
+  }
+}
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .form-inline .form-control,
+  .navbar-form .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+  .form-inline .checkbox,
+  .form-inline .radio,
+  .navbar-form .checkbox,
+  .navbar-form .radio {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+  .registration_page .dl_table {
+    margin: 24px 0 32px;
+  }
+}
+
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+
+.h1,
+.h2,
+.h3,
+h1,
+h2,
+h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 1200px) {
+  h2 {
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 24px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    max-width: none;
+  }
+  .row {
+    margin-left: -8px;
+    margin-right: -8px;
+
+    > * {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+}

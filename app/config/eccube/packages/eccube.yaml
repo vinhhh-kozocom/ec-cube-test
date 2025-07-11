@@ -49,7 +49,7 @@ parameters:
     eccube_html_plugin_dir: '%kernel.project_dir%/html/plugin'
     eccube_html_front_dir: '%eccube_html_dir%/template/%eccube.theme%'
     eccube_html_admin_dir: '%eccube_html_dir%/template/admin'
-    eccube_twig_block_templates: []
+    eccube_twig_block_templates: ['%kernel.project_dir%/app/template']
     eccube_save_image_dir: '%kernel.project_dir%/html/upload/save_image'
     eccube_temp_image_dir: '%kernel.project_dir%/html/upload/temp_image'
     eccube_csv_size: 5                 # post_max_size, upload_max_filesize に任せればよい？

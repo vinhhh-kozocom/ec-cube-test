@@ -1,4 +1,3 @@
-@use "sass:math";
 @import "../mixins/projects";
 @import "../mixins/clearfix";
 @import "../mixins/media";
@@ -17,7 +16,7 @@
 
   @media (min-width: $desktop) {
     float: left;
-    width: percentage(math.div($columns, 12));
+    width: percentage(($columns/ 12));
   }
 }
 

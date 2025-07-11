@@ -1,0 +1,238 @@
+.aki-mypage{
+    &_title{
+       p{
+        margin: 20px 0 10px;
+       }
+
+    }
+    &_list-item{
+        display: flex;
+        padding: 15px;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 15px;
+        p{
+            margin-bottom: 15px;
+        }
+        @include maxWidth(767px){
+            flex-direction: column;
+            p:last-child{
+                margin-bottom: 0px;
+            }
+        }
+    }
+    &_list-title{
+        display: flex;
+        gap: 15px;
+        .list-title-info {
+            display: flex;
+            gap: 15px;
+        }
+        @include maxWidth(767px){
+            flex-direction: column;
+        }
+    }
+    &_list-time{
+        color: $gray-sub-text;
+    }
+    &_info{
+        width: 200px;
+        min-width: 200px;
+    }
+    &_img{
+        img{
+            width: 80px;
+        }
+        &-item{
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed $gray-300;
+            &:first-child{
+                padding-top: 0px;
+                border-top: 0px;
+            }
+            &:last-child{
+                margin-bottom: 0px;   
+            }
+        }
+        @include maxWidth(767px){
+            padding-top: 15px;
+            border-top: 1px solid $gray-300;
+        }
+    }
+    &_btn{
+        display: inline-block;
+        width: 105px;
+        border: 1px solid $gray-300;
+        color: $gray-600;
+        padding: 10px 16px;
+    }
+    
+    .group-block-custom{
+        input, select{
+            padding: 10px 15px;
+            font-size: 14px;
+            line-height: 1.4;
+            background-color: #fff;
+            border: 1px solid #d9d9d9;
+            color: #212529;
+            border-radius: 0px;
+            height: 40px;
+            width: 100%;
+        }
+    } 
+  
+    .delivery-content{
+        &__list{
+            margin: 20px 0px;
+        }
+        &__item{
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+    }
+    
+    .btn-no-background{
+        color : $primary-color;
+        border: 1px solid $primary-color;
+        &:hover{
+            color : white;
+        }
+    }
+    
+    .form-block{
+        input:not([type="checkbox"]):not([type="radio"]):not([name="date"]), select {
+            width: 100%;
+        }
+        .radio{
+            gap: 30px;
+        }
+        @include maxWidth(767px){
+            .row{
+                .col-md-6{
+                    margin-bottom: 20px;
+                    &:last-child{
+                        margin-bottom: 0px;
+                    }
+                }
+            }
+        }
+    }
+
+    .history{
+        &-block{
+            .ec-orderMail {
+                margin-bottom: 0px;
+                a{
+                    color: $primary-color;
+                }
+            }
+            background: $gray-50;
+            border: 1px solid $gray-300;
+            padding: 20px;
+            margin-bottom: 25px;
+            word-wrap: break-word;
+            &-white{
+                background: white;
+                border: 1px solid $gray-300;
+                padding: 20px;
+                word-wrap: break-word;
+                img{
+                    width: 80px;
+                }
+            }
+            &-item{
+                display: flex;
+                gap: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px dashed $gray-300;
+                margin-bottom: 15px;
+                &:last-child{
+                    border-bottom: 0px;
+                    padding-bottom: 0px;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+        &-price{
+            position: sticky;
+            top: 0px;
+            &__total{
+                padding-top: 12px;
+                border-top: 1px dashed $gray-300;
+            }
+            &__price{
+                margin-right: 15px;
+                font-size: 24px;
+                font-weight: 600;
+            }
+        }
+    }
+    .toggle-password{
+        position: absolute;
+        right: 12px;
+        bottom: 8px;
+    }
+}
+
+.aki-navi {
+    &-item{
+        width: calc(20% - 12px);
+        min-width: 150px;
+    }
+    &-list{
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+}
+
+.aki-title_usage-scene{
+    display: flex;
+    align-items: center;
+    .title_usage-scene{
+        font-family: "Zen Old Mincho", serif;
+        font-weight: 500;
+        color: white;
+        margin-left: 35px;
+        min-width: 182px;
+        font-size: clamp(2.2rem, 2vw + 0.73rem, 2.4rem);
+        @include maxWidth(767px){
+            margin-left: 25px;
+        }
+        &:hover{
+            color: white;
+        }
+    }
+}
+.aki-btn-reserve{
+    background-color: #ffffff  ;
+    color: $primary-color ;
+    cursor: pointer;
+    padding: 10px 50px;
+    transition: 0.25s ease;
+    border: 1px solid $primary-color;
+    border-bottom: 2px solid $primary-color;
+    border-radius: 30px;
+    @include maxWidth(767px){
+        padding: 8px 40px;
+    }
+    &:hover {
+        transition: 0.25s ease;
+        opacity: 0.8;
+        background-color: $primary-color;
+        color: #ffffff;
+    }
+}
+.aki-line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.reservation_store_list{
+    text-align-last: center !important;
+}

@@ -1,0 +1,17 @@
+.other_page {
+  #form1 {
+    max-width: 470px;
+    width: 100%;
+
+    #top_box__next_button {
+      padding: 0;
+    }
+  }
+}
+.close-button{
+  position: absolute;
+  right: 20px;
+  width: 16px;
+  top: 0px;
+  z-index: 1;
+}
