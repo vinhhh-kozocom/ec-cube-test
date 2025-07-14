@@ -1,0 +1,348 @@
+common.reservation.time: Time
+common.reservation.date: Date visit
+common.reservation.people: People
+common.reservation.use_day: Date
+common.reservation.purpose: Purpose
+common.reservation.purpose.sample: Purpose
+common.reservation.height: Height
+common.reservation.budget: budget
+common.reservation.request: Request
+common.reservation.note: Note
+common.reservation.product_code.sample: Kr-103
+common.reservation.budget.sample: Ex 233
+common.reservation.note.sample: Enter your note (if applicable)
+common.reservation.request.sample: Enter your request (if applicable)
+common.reservation.shop_name: Shop name
+common.reservation.body_type: Body shape
+front.shopping.nonmember_text1: Please enter your customer information.
+front.cart.orderType.different: 'This product has been removed from your cart because it does not match the reservation method for the existing products in your cart.'
+reservation.entry.agree: Accept
+reservation.entry.disagree: Disagree
+reservation.entry.register: Register
+reservation.entry.back: Back
+front.reservation.complete: Have registered for a reservation
+front.reservation.complete_title: Reservation placed
+front.reservation.errors: Reservation to fails
+front.reservation.errors_contact: Contact
+front.reservation.errors_full: Reservation is full
+aki.front.mypage.favorite_count: '<span class="fw-600">%count%item(s)</span><span>found in Favorites。</span>'
+aki.front.reservation.error.email: If you do not receive the confirmation email, we apologize for the inconvenience, as there may be a problem. Please contact us again or contact us by phone. We look forward to your continued patronage.
+# multi language
+aki.front.detail.policy.title: 'Required Time : 20minutes for dressing, 20minutes for hair styling(if needed)'
+aki.front.detail.policy.store.title: For those renting at our store
+aki.front.detail.policy.store.content: <p>Please return it on the day of use (reservation date) or <b>the next day</b>. (Total 1 night)</p><br>
+aki.front.detail.policy.delivery.title: For home delivery rental
+aki.front.detail.policy.delivery.content: <p>The product will arrive 2 days before the usage date (reservation date).<br> Please return it on the day of use or <b>the day after</b> use. (Total 3 nights)</p></br>
+aki.front.detail.product.code: Product code
+aki.front.detail.product.yukata: Yukata are only available at affiliated stores.
+aki.front.detail.product.title.montsuki_hakama: Montsuki hakama comes in multiple sizes. Therefore, even if the calendar is reserved, it may be possible to rent it. For details, please contact the affiliated store below.
+aki.front.detail.product.title: For product inquiries, please contact the affiliated store below.
+aki.front.detail.product.info.shibuya: Shibuya main store
+aki.front.detail.product.info.shibuya.phone: 03-3476-3341
+aki.front.detail.product.info.ginza: Ginza main store
+aki.front.detail.product.info.ginza.phone: 03-3476-3341
+aki.front.detail.product.info.ikebukuro: Ikebukuro main store
+aki.front.detail.product.info.ikebukuro.phone: 03-3476-3341
+aki.front.detail.product.info.yokohama: Yokohama main store
+aki.front.detail.product.info.yokohama.phone: 03-3476-3341
+aki.front.detail.product.info.close: ※If you do not have a dressing reservation, we will be closed every Tuesday.
+aki.front.detail.product.info.under.20000: ※For items under 20,000 yen, we do not offer dressing at other branches, home delivery rentals, or service on Tuesdays (closed).
+aki.front.detail.product.info.present.id: ※Please present an ID (driver's license, insurance card, etc.) that can confirm your current address at the time of reception at the store.
+aki.front.detail.product.info.montsuki: Montsuki hakama comes in multiple sizes. Therefore, even if the calendar is reserved, it may be possible to rent it. For details, please contact the above affiliated store.
+aki.front.detail.product.info.please.check: Please check the business hours, address, etc. of the affiliated stores below.
+aki.front.detail.store.shibuya: Kimono rental Aki Shibuya Main Store
+aki.front.detail.store.ginza: Kimono rental Aki Ginza store
+aki.front.detail.store.ikebukuro: Kimono rental Aki Ikebukuro store
+aki.front.detail.store.yokohama: Kimono rental Aki Yokohama store
+aki.front.detail.reservation.status: Reservation status
+aki.front.detail.use.now: If you wish to use the service immediately (within 3 days), please contact the store.
+aki.front.detail.use.quantity: Quantity
+aki.front.detail.service: ・Reservations will be made in 4 days due to the system. <b>Please contact us if you would like to reserve before that</b>
+aki.front.detail.service.redirect: ※Kimono dressing is available from early morning.
+aki.front.detail.btn.order: Proceed to reservation.
+aki.front.detail.btn.out.stock: Currently out of stock.
+aki.front.detail.size: Size
+aki.front.detail.size.s: S size (women 149cm or less/men 160-170cm)
+aki.front.detail.size.m: M size (women's 150-167cm/men's 165-175cm)
+aki.front.detail.size.l: L size (women's 168-173cm/men's 170-180cm)
+aki.front.detail.size.large: Large size (women over 174cm/men over 180cm)
+aki.front.detail.size.reference: ※Displayed sizes are for reference only. Some adjustments can be made during fitting. Even if you are tall, first of all.
+aki.front.detail.size.contact: Contact us.
+aki.front.detail.size.please:  Please.
+aki.front.detail.material: Material
+aki.front.detail.note: Precautions for use
+aki.front.detail.note_1: ※There may be slight differences in color between your PC monitor and the actual product. please note that.
+aki.front.detail.note_2: ※You may not be able to order when the payment system is undergoing maintenance.
+aki.front.detail.note_3: ※When the product arrives, please check the product based on the rental checklist included in the package.
+aki.front.detail.note_4: ※The image is a coordination example. We will coordinate the obi and accessories with you during the preview.
+aki.front.detail.note_5: ※For home delivery rental customers, the image will be coordinated as a general rule.
+aki.front.detail.accessory: Contents of accessories
+aki.front.detail.img.title: This is a reference image, so the accessories you use may differ in color etc.
+aki.front.detail.tabi: Tabi
+aki.front.detail.underwear: underwear
+aki.front.detail.towel: towel
+aki.front.detail.waist: waist strap
+aki.front.detail.jin_xin: Jin Xin
+aki.front.detail.long_undergarment: long undergarment
+aki.front.detail.ida_jin: Ida Jin
+aki.front.detail.idadi: Idadi
+aki.front.detail.kolin_belt: kolin belt
+aki.front.detail.strip: strip
+aki.front.detail.obi: obi pillow
+aki.front.detail.triple_cord: triple cord
+aki.front.detail.obiage_obijime: Obiage/Obijime
+aki.front.detail.sandals_bags: Obiage/Obijime
+aki.front.detail.belt: Belt fastening metal fittings
+aki.front.detail.suehiro: Suehiro
+aki.front.detail.obiage_2: Obiage/obijime
+aki.front.detail.undershirt: undershirt
+aki.front.detail.purse: purse
+aki.front.detail.sandals: leather soled sandals
+aki.front.detail.u.v: ※Please prepare a U- or V-neck shirt for underwear.
+aki.front.detail.hair_ornaments: hair ornaments
+aki.front.detail.zori: Zori sandals
+aki.front.detail.band: band
+aki.front.detail.pocket_sword: pocket sword
+aki.front.detail.amulet: amulet
+aki.front.detail.haori_string: Haori string
+aki.front.detail.shigoki: Shigoki
+aki.front.detail.hakoseko: Hakoseko
+aki.front.detail.obiage: Obiage
+aki.front.detail.obijime: Obiage
+aki.front.detail.accessory.all: ※Includes all items necessary for dressing.
+aki.front.detail.accessory.all.tabi: Complete set of accessories (including tabi)
+aki.front.detail.accessory.one: A set of accessories
+aki.front.detail.hand: handbag
+aki.front.detail.hair.for.fee: ※Hair ornaments are available for a fee.
+aki.front.detail.half.band: half width band
+aki.front.detail.sandals_purse: half width band
+aki.front.detail.boot: ※If you would like boots, there will be an additional charge of ¥3,300 (tax included).
+aki.front.detail.square_belt: square belt
+aki.front.detail.footwear: footwear
+aki.front.detail.Accessories.one: Accessories
+aki.front.detail.geta_purse: Geta/Purse
+aki.front.detail.accessories.has: There are accessories.
+aki.front.detail.accessories.other: ※The image above is an example of Houmgi. Other kimonos each come with their own full set contents. Please contact us for more information.
+# form
+aki.front.detail.form.title: Reservation Forms
+aki.front.detail.form.type: How to make a reservation
+aki.front.detail.form.required: Required
+aki.front.detail.form.visit: Visiting kimono rental
+aki.front.detail.form.error.required: Please select.
+aki.front.detail.form.use_day: Date
+aki.front.detail.form.use_day.required: please select
+aki.front.detail.form.use_day.place_holder: Date of use
+aki.front.detail.form.info.close: ・Closed on Tuesday.
+aki.front.detail.form.list.store: Store
+aki.front.detail.form.warning.store.under: ※Products under 20,000 yen cannot be fitted at other branches or rented for home delivery.
+aki.front.detail.form.info.departure: Time
+aki.front.detail.form.list.departure: Please select a time
+aki.front.detail.form.warning.departure.1: ※This is the "desired departure time from the store."
+aki.front.detail.form.warning.departure.2: Your arrival time will be calculated backwards from your departure time and will be notified in the order confirmation email sent later.
+aki.front.detail.form.warning.departure.3: ※Early morning charges will apply if you use the service before 10:00.
+aki.front.detail.form.warning.departure.4: Click here for details
+aki.front.detail.form.warning.shoe_size: "* Please indicate all guest's height, shoe size and gender in the remark column below."
+aki.front.detail.form.warning.shoe_size_above: "* Please indicate all guest's height, shoe size and gender in the remark column above."
+aki.front.detail.form.info.purpose: Purpose
+aki.front.detail.form.list.purpose: Please tell me the usage
+aki.front.detail.form.warning.purpose: ※If you select "Other", please specify the details in the "Inquiry field" of "Confirm your order" on the next page.
+aki.front.detail.form.info.height: Height
+aki.front.detail.form.info.num_of_guests: Number of guests
+aki.front.detail.form.info.gender: Gender
+aki.front.detail.form.info.plese.select: Please select.
+aki.front.detail.form.info.foot: Shoe size
+aki.front.detail.form.info.era: Era
+aki.front.detail.form.info.body: Body shape
+aki.front.detail.form.info.secure.pack: Kimono Insurance
+aki.front.detail.form.info.secure.pack.link: Click here for details on secure Pack
+aki.front.detail.form.info.photo: Optional Photo Shoot
+aki.front.detail.form.info.click.here: Click here for details
+aki.front.detail.form.info.hair: Optional Hair set
+aki.front.detail.form.info.policy: '<label for="check" class="user-guide">I agree to rental terms and conditions.</label>'
+aki.front.detail.form.info.policy.sup: 'Click <span class="tooltip-trigger color-primary underline">here</span> for details'
+aki.front.detail.form.info.policy.check: Please be sure to read it
+aki.front.detail.form.info.instruct.1: ID that can confirm your current address at the time of reception at the store
+aki.front.detail.form.info.instruct.2: Please show your passport or pictured ID on the day
+aki.front.detail.form.button.submit: Add to card
+aki.front.detail.form.option_hair.notice1: '<b>* Please indicate the number of people who would like a hair set in the remarks column below.</b>'
+aki.front.detail.form.option_hair.notice2: '<b>* Please note that the difference in fees due to studio shooting, hair setting, will be charged at the store on the day of rental.</b>'
+aki.front.cart.title.how: How to make a reservation
+aki.front.cart.title.delivery: Delivery kimono rental
+aki.front.cart.title.visit: Visiting kimono rental
+aki.front.cart.title.useday: Date
+aki.front.cart.title.store: Store
+aki.front.cart.title.schedule: Time
+aki.front.cart.title.hair: Optional Hair set
+aki.front.cart.title.secure.pack: Kimono Insurance
+aki.front.cart.title.message.delete: Are you sure you want to remove the item from your cart?
+aki.front.cart.title.total: total
+aki.front.cart.title.tax: Tax included
+aki.front.cart.title.total.warning.1: The above amount shows rental and insurance(if selected) fees for one person only.
+aki.front.cart.title.total.warning.2: We will inform you total amount including options and other guests rental fee in confirmation e-mail, and it will be charged at the store on the day of rental.
+aki.front.cart.title.total.warning.3: Please note that difference in the option fees and the number of additional people will be charged at the store on the day of rental.
+aki.front.cart.title.checkout: Proceed to checkout
+aki.front.cart.title.continue.shopping: Continue shopping
+aki.front.shopping.shipping_sub_title: After confirming your order details, click the "Pay by credit card" button.
+aki.front.cart.title.foot: Shoe size
+aki.front.cart.title.era: Era
+aki.front.cart.title.photo: Optional Photo Shoot
+aki.front.cart.button.change.cart: Change or remove quantity
+aki.front.shopping.shipping_button: Pay by credit card
+aki.common.charge: Commission
+aki.common.delivery_fee_shipping: Postage
+aki.front.cart.title.warnig: ※The above amount is the product price + safety pack (if selected). Please pay for various optional fees at the time of your visit.
+aki.front.cart.total: Total
+aki.front.cart.button.order: Order
+aki.front.cart.title.order: After confirming your order details and shipping address, click the "Place Order" button.
+aki.front.cart.title.order.bank.transfer: Bank transfer
+aki.front.cart.locale.different: Some items have been removed from your cart due to different languages
+common.required: '*'
+aki.front.credit.title: Credit card
+aki.front.credit.card.number: Card number
+aki.front.credit.card.expire: Expire
+aki.front.credit.card.security: Security code
+aki.front.credit.card.name: Card holder name (Romanization)
+aki.front.credit.card.placeholder.number: 'Ex: 1234567890123456'
+aki.front.credit.card.placeholder.security: 'Ex: 123'
+aki.front.credit.card.placeholder.name: 'Ex: TARO YAMADA'
+aki.front.credit.card.button.submit: Proceed to Review page
+# message validate card
+aki.front.credit.card.validate.empty: This field is required
+aki.front.credit.card.cardno.valid: Card number format error (including non-numeric characters)
+aki.front.credit.card.cardno.lenght: Card number format error (out of range of 10-16 digits)
+aki.front.credit.card.expire.valid: Expiration date format error (contains non-numeric characters)
+aki.front.credit.card.name.valid: Only Latin characters can be entered
+aki.front.credit.card.security.valid: Security number format error (contains non-numeric characters)
+aki.front.credit.card.security.lenght: PIN format error (outside 3-4 digit range)
+aki.front.credit.card.date.expire: You cannot select a month or year that is smaller than the current one
+aki.front.credit.card.lenght: Holder format error (more than 51 digits)
+aki.front.checkout.error: <p>There is a purchase error. We apologize for the inconvenience, but please<a class="color-primary underline" href="/contact"> contact </a>the management office.</p>
+front.shopping.thanks_for_order: Thank you for your order
+front.shopping.email_sendding_warning1: We have received your order and it is now being processed.
+front.shopping.email_sendding_warning2: If you do not receive a confirmation email within 2 business days after placing your order, please contact the store.
+front.shopping.go_to_confirm: Confirm your order
+aki.mail.thank.order: Thank you very much for your order.
+aki.mail.plese.check.text1: Please check that the order details below are correct.
+aki.mail.plese.check.text2: Afterwards, you will receive an "Order Confirmation Email" from the store representative.
+aki.mail.plese.check.text3: ★Please note that this email does not confirm your order★
+aki.mail.plese.check.text4: ※If you choose bank transfer, we will inform you of the payment account information in a confirmation email.
+aki.mail.payment.info: Payment information
+aki.mail.order.number: Order number
+aki.mail.order.payment.method: Payment method
+aki.mail.order.message: Payment method
+aki.mail.order.total: Total (tax included)
+aki.mail.order.price.info: ※The above prices are rental fees and safety packs.
+aki.mail.order.notify.info: ※We will inform you about hair and makeup, early morning fees, and paid photos in the completion email.
+aki.mail.order.usege: Usage details
+aki.mail.order.product.name: Product name
+aki.mail.order.product.price.tax: Unit price (tax included)
+aki.mail.order.product.secure: Secure pack (tax included)
+aki.mail.order.product.secure.no: No subscription
+aki.mail.order.info: Orderer information
+aki.mail.order.name: Name
+aki.mail.order.company.name: Company name
+aki.mail.order.phone.number: Phone number
+aki.mail.order.mail.address: Email address
+aki.mail.order.mail.notify.only1: This message is for customer notification only.
+aki.mail.order.mail.notify.only2: If you send your question in reply to this message, we will not be able to answer it.
+aki.mail.order.mail.notify.only3: Note that.
+aki.mail.order.mail.notify.only4: If you have any questions or concerns, please contact us below.
+aki.mail.shop.name: Kimono Rental Aki
+aki.mail.shop.name.shibuya: Shibuya shop
+aki.mail.shop.name.ginza: Ginza store
+aki.mail.shop.name.inkebukuro: Ikebukuro store
+aki.mail.shop.name.yokohama: Yokohama store
+aki.mail.order.subject: 'Kimono Rental AKI: Thank you for your reservation'
+aki.mail.shop.name.atami: Atami store
+common.reservation.product_code: Product code
+aki.admin.common.birth_day: Birthday
+front.shopping.recaptcha.notice: ※Please check the checkbox
+front.recaptcha.error: Please perform recaptcha authentication.
+aki.button.change: Change
+aki.remtal.term.condition.title: Rental Terms & Conditions
+aki.remtal.term.condition.text1: -Last admission is at 4:30 pm
+aki.remtal.term.condition.text2: -Please return kimono by 5:30 pm
+aki.remtal.term.condition.text3: '-Required Time : 20minutes for dressing, 20minutes for hair styling(Optional)'
+aki.remtal.term.cancelation.title: Cancelation
+aki.remtal.term.cancelation.text1: -2 days before reservation date 50% of rental fee
+aki.remtal.term.cancelation.text2: '-Before and on the day of reservation date : 100% of rental fee'
+aki.remtal.term.location.photo.plan: '*For Location Photo Plan'
+aki.remtal.term.location.photo.plan.text1: '-1 week before resrevation date  30% of rental fee'
+aki.remtal.term.location.photo.plan.text2: '-2 days before reservation date  50% of rental fee'
+aki.remtal.term.location.photo.plan.text3: '-Before and on the day of reservation date : 100% of rental fee'
+aki.front.detail.form.warning.time: Please select from 10:00 to 16:00 for One-Day Rental Plan
+aki.front.detail.form.warning.body.text.1: '<b>* Please check the box above if any of the following apply, and indicate the number of People and size in the remarks column below. </b>'
+aki.front.detail.form.warning.body.text.2: ・Taller than 190cm(about6'3'')  in man
+aki.front.detail.form.warning.body.text.3: ・Taller than 175cm(5'9'')  in woman
+aki.front.detail.form.warning.body.text.4: ・One of the bust-waist-hip is larger than 100cm(39 inches)
+aki.front.detail.form.info.secure.pack.warning: '*If a kimono get damaged or stains, this  will cover up to 20,000 yen.'
+aki.front.detail.form.info.hair.decription.text1: '* Please indicate the <span class="fw-600">number of people who would like a hair set in the remarks column below,</span>'
+aki.front.detail.form.info.hair.decription.text2: '* Please note that the difference in fees due to studio shooting, hair setting, will be charged at the store on the day of rental.'
+aki.front.detail.form.info.term.service.title1: Rental Terms & Conditions
+aki.front.detail.form.info.term.service.title1.child1: -Last admission is at 4:30 pm
+aki.front.detail.form.info.term.service.title1.child2: -Please return kimono by 5:30 pm
+aki.front.detail.form.info.term.service.title1.child3: '-Required Time : 20minutes for dressing, 20minutes for hair styling(Optional)'
+aki.front.detail.form.info.term.service.title2: Cancelation
+aki.front.detail.form.info.term.service.title2.child1: -2 days before reservation date  50% of rental fee
+aki.front.detail.form.info.term.service.title2.child2: '-Before and on the day of reservation date : 100% of rental fee'
+aki.front.detail.form.info.term.service.title3: '*For Location Photo Plan'
+aki.front.detail.form.info.term.service.title3.child1: -1 week before resrevation date  30% of rental fee
+aki.front.detail.form.info.term.service.title3.child2: -2 days before reservation date  50% of rental fee
+aki.front.detail.form.info.term.service.title3.child3: '-Before and on the day of reservation date : 100% of rental fee'
+aki.front.detail.form.info.remark: Remark
+aki.front.detail.form.info.remark.placeholder: Up to 3000 characters can be entered
+aki.front.detail.form.error.max.3000: Must not exceed 3000 characters
+aki.front.detail.secure_pack: Kimono Insurance（+1,100yen)
+aki.front.cart.tax.included: Tax included
+aki.common.complete.title: Order Placed
+# Time working
+aki.front.about.business_hour: Business Hours
+# Token error
+aki.front.get.token.error.000: Token acquisition completed successfully
+aki.front.get.token.error.100: Card number required check error
+aki.front.get.token.error.101: Card number format error (including non-numeric characters)
+aki.front.get.token.error.102: Card number format error (outside 10-16 digit range)
+aki.front.get.token.error.110: Required expiration date check error
+aki.front.get.token.error.111: Expiry date format error (contains non-numeric characters)
+aki.front.get.token.error.112: Expiry date format error (other than 6 or 4 digits)
+aki.front.get.token.error.113: Expiration date format error (month is 13 or more)
+aki.front.get.token.error.121: Security code format error (contains non-numeric characters)
+aki.front.get.token.error.122: Security code number of digits error
+aki.front.get.token.error.131: Holder format error (including half-width alphanumeric characters and some symbols)
+aki.front.get.token.error.132: Holder format error (more than 51 digits)
+aki.front.get.token.error.141: Issue number format error (including non-numbers)
+aki.front.get.token.error.142: Issue number format error (outside the range 1-10)
+aki.front.get.token.error.150: Required check error for encrypted card information
+aki.front.get.token.error.160: Shop ID required check error
+aki.front.get.token.error.161: Shop ID format error (more than 14 digits)
+aki.front.get.token.error.162: Shop ID format error (other than half-width alphanumeric characters)
+aki.front.get.token.error.170: Public key hash value required check error
+aki.front.get.token.error.180: Shop ID or public key hash value does not exist on master
+aki.front.get.token.error.190: Card information (Encrypted) cannot be decrypted
+aki.front.get.token.error.191: Format error after decrypting card information (Encrypted)
+aki.front.get.token.error.501: Token parameter (id) not sent
+aki.front.get.token.error.502: Token parameter (id) does not exist on master
+aki.front.get.token.error.511: Token parameter (cardInfo) was not sent
+aki.front.get.token.error.512: Token parameter (cardInfo) cannot be decrypted
+aki.front.get.token.error.521: Token parameter (key) was not sent
+aki.front.get.token.error.522: Token parameter (key) cannot be decrypted
+aki.front.get.token.error.531: Token parameter (callBack) was not sent
+aki.front.get.token.error.541: Token parameter (hash) does not exist
+aki.front.get.token.error.551: ID for token apikey does not exist
+aki.front.get.token.error.552: Apikey for token is not valid
+aki.front.get.token.error.901: Multipayment internal system error
+aki.front.get.token.error.902: Processing is busy
+aki.front.get.token.error: An error occurred.
+# Reservation product_code
+aki.front.reservation.product_code: Desired product code (up to 3 items)
+# Error message cart
+front.product.duplicate.use_date: '「%product%」This product is a made-to-order item. Please choose another date or purchase another item'
+# Admin Filter checkbox
+aki.admin.filter.checkbox.all: All
+
+# Payment method Installment
+aki.front.shopping.payment.method.bulk: Bulk
+aki.front.shopping.payment.method.installment: Split
+aki.front.shopping.payment.method.not.value: Please select payment method if Payment is credit card
+aki.front.shopping.payment.method.paytime.select: Number of payments
+aki.front.shopping.payment.method.paytime.select.error: Please select payment amount

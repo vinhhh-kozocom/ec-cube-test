@@ -1,0 +1,62 @@
+This value should be the user\'s current password.: 目前密碼不正確。
+Invalid credentials.: |
+  無法登入。
+  請檢查輸入的資訊是否正確。
+Invalid CSRF token.: |
+  無法登入。
+  請檢查輸入的資訊是否正確。
+
+#------------------------------------------------------------------------------------
+# EC-CUBE錯誤訊息
+#
+# EC-CUBE通用錯誤訊息
+#------------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------
+# 已棄用
+#
+# 以下為不推薦使用的訊息ID。
+#------------------------------------------------------------------------------------
+form.type.graph.invalid: 請輸入半形英數字。
+form.type.name.firstname.nothasspace: 名字不可包含空格、制表符或換行符。
+form.type.name.lastname.nothasspace: 姓氏不可包含空格、制表符或換行符。
+form.type.customer.password.too_short: 密碼長度太短，必須至少為 {{ limit }} 個字符。
+form.type.customer.password.too_long: 密碼長度太長，必須少於 {{ limit }} 個字符。
+form.type.customer.company.nothasspace: 公司名稱不可包含空格、制表符或換行符。
+form.type.admin.nottelstyle: 電話號碼只能包含半形數字和連字符。
+form.type.admin.notkanastyle: 姓名（假名）請輸入片假名。
+form.type.select.notselect: 尚未選擇。
+form.type.select.classcategory: 尚未選擇項目。
+form.type.add.quantity: 請輸入1或更大的數字。
+form.type.select.select_is_future_or_now_date: 出生日期無效。
+form.type.admin.nottrackingnumberstyle: 追蹤號碼只能包含半形英數字和連字符。
+form.type.float.invalid: 只能輸入數字和小數點。
+This value should not be blank.: 不能留空。
+Too many failed login attempts, please try again later.: 登入嘗試次數過多，請稍後再試。
+Too many failed login attempts, please try again in %minutes% minute.: 登入嘗試次數過多，請於 %minutes% 分鐘後再試。
+Too many failed login attempts, please try again in %minutes% minutes.: 登入嘗試次數過多，請於 %minutes% 分鐘後再試。
+form_error.kana_only: 請輸入片假名。
+form_error.graph_only: 請輸入半形英數字。
+form_error.not_contain_spaces: 請勿包含空格、制表符或換行符。
+form_error.graph_and_hyphen_only: 請輸入半形英數字或連字符。
+form_error.not_selected: 尚未選擇。
+form_error.select_is_future_or_now_date: 出生日期無效。
+form_error.float_only: 只能輸入數字和小數點。
+form_error.same_password: 請再次輸入相同的密碼。
+form_error.same_email: 請再次輸入相同的電子郵件地址。
+form_error.admin_is_not_available: 目錄名稱不可包含「admin」。
+form_error.member_already_exists: 登入帳號已存在。
+form_error.customer_already_exists: 此電子郵件地址無法使用。
+form_error.password_pattern_invalid: 請至少使用一種英數字符號。
+form_error.out_of_range: 日期無效。
+form_error.phone_number: 請輸入10至12位半形數字。
+form_error.fax_number: 請輸入10至12位半形數字。
+form_error.use_day.required: 此項目為必填。
+errors.numeric_only: 請輸入數字。
+errors.float_only: 只能輸入數字和小數點。
+errors.graph_only: 請輸入半形英數字。
+errors.kana_only: 請輸入片假名。
+errors.not_contain_spaces: 請勿包含空格、制表符或換行符。
+errors.not_selected: 尚未選擇。
+errors.graph_and_hyphen: 請輸入半形英數字或連字符。
+form_error.email.valid: 此值不是有效的电子邮件地址。

@@ -1,0 +1,84 @@
+twig:
+    globals:
+        root: /
+        admin_dir: admin/
+        tpl: /user_data/packages/default/
+        admin_tpl: /user_data/packages/admin/
+        image_path: /upload/save_image/
+        root_dir: '%kernel.project_dir%'
+        root_urlpath: null
+        template_code: aki
+        admin_route: admin
+        user_data_route: user_data
+        public_path: /html
+        public_path_realdir: '%kernel.project_dir%/html'
+        image_save_realdir: '%kernel.project_dir%/html/upload/save_image'
+        image_temp_realdir: '%kernel.project_dir%/html/upload/temp_image'
+        user_data_realdir: '%kernel.project_dir%/html/user_data'
+        block_default_realdir: '%kernel.project_dir%/src/Eccube/Resource/template/default/Block'
+        block_realdir: '%kernel.project_dir%/app/template/aki/Block'
+        template_default_realdir: '%kernel.project_dir%/src/Eccube/Resource/template/default'
+        template_default_html_realdir: '%kernel.project_dir%/html/template/default'
+        template_admin_realdir: '%kernel.project_dir%/src/Eccube/Resource/template/admin'
+        template_admin_html_realdir: '%kernel.project_dir%/html/template/admin'
+        template_realdir: '%kernel.project_dir%/app/template/aki'
+        template_html_realdir: '%kernel.project_dir%/html/template/aki'
+        template_temp_realdir: '%kernel.project_dir%/app/cache/eccube/template'
+        csv_temp_realdir: '%kernel.project_dir%/app/cache/eccube/csv'
+        plugin_realdir: '%kernel.project_dir%/app/Plugin'
+        plugin_temp_realdir: '%kernel.project_dir%/app/cache/plugin'
+        plugin_html_realdir: '%kernel.project_dir%/html/plugin'
+        admin_urlpath: /template/admin
+        front_urlpath: /html/template/aki
+        image_address: /html/template/default/assets/aki/img
+        image_save_urlpath: /upload/save_image
+        image_temp_urlpath: /upload/temp_image
+        user_data_urlpath: /user_data
+        plugin_urlpath: /plugin
+        grayPresent: 3
+        app_name: 'KIMONO_RENTAL'
+        SALON_URL: '%env(SALON_URL)%'
+        PGCARD_SHOP_ID: '%env(PGCARD_SHOP_ID)%'
+        LOCALE_JAPAN: ja
+        LOCALE_ENGLISH: en
+        LOCALE_CHINA: zh
+        CREDIT_CARD_ID: 20
+        PAYMENT_TOKEN: '%env(GMP_TOKEN_API)%'
+        PAYMENT_BULK_METHOD: '1'
+        PAYMENT_INSTALLENT_METHOD: '2'
+        PAYMENT_BULK_METHOD_NAME: '一括'
+        PAYMENT_INSTALLENT_METHOD_NAME: '分割'
+        APP_ENV: '%env(APP_ENV)%'
+        APP_PROD: prod
+        PAYMENT_METHOD_SPLIT_OPTIONS: ['3', '5', '6', '10', '12', '15', '18', '20', '24']
+        ID_FACEBOOK: '%env(ID_FACEBOOK)%'
+
+
+parameters:
+    setting_url: /app/Customize/kraki.yml
+    setting_en_url: /app/Customize/kraki.en.yml
+    setting_zh_url: /app/Customize/kraki.zh.yml
+    setting_salon_url: /app/Customize/SalonKraki.yml
+    order_processing: 8
+    eccube_order_mail_template_delivery_id: 20
+    eccube_order_mail_template_locale_id: 21
+    eccube_order_mail_template_salon_deliv_id: 22
+    eccube_order_mail_template_salon_fitting_id: 23
+    category_not_show_tmv: 31
+    env(SALON_URL): null
+    root_dir: '%kernel.project_dir%'
+    salon_domain: '%env(SALON_URL)%'
+    gpay_config: /app/Customize/Service/Payment/Config.php
+    eccube_postal_code_len: 7
+    eccube_reservation_characteristic_len: 255
+    eccube_reservation_note_len: 255
+    eccube_reservation_budget_len: 999999
+    eccube_reservation_item_len: 32
+    eccube_reservation_use_people_len: 10
+
+    env(SITE_KEY): null
+    env(SECRET_KEY): null
+    env(URL_API_RECAPTCHA_SERVER): null
+    site_key: '%env(SITE_KEY)%'
+    secret_key: '%env(SECRET_KEY)%'
+    url_recaptcha: '%env(URL_API_RECAPTCHA_SERVER)%'

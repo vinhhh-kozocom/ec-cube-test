@@ -1,0 +1,359 @@
+front.shopping.shipping_title: お届け先の指定
+front.shopping.shipping_sub_title: ご注文内容と配送先をご確認の上、「確認する」ボタンをクリックしてください。
+front.shopping.shipping_address_warning_text1: お届け先をご入力ください。
+front.shopping.shipping_address_warning_text2: 会員登録をしておくと、次回以降のご注文が便利にご利用できます。
+front.shopping.shipping_address_to_add: 追加するお届け先を入力してください
+front.shopping.thanks_for_order: ご注文ありがとうございました
+front.shopping.email_sendding_warning1: ただいま、ご注文の確認メールをお送りさせていただきました。
+front.shopping.email_sendding_warning2: もし、ご注文後2営業日以内に確定メールが届かない場合は店舗へご連絡ください。
+front.shopping.nonmember_text1: お客様情報をご入力ください。なお、会員登録をしておくと、
+front.shopping.nonmember_text2: 毎回お客様情報をご入力する必要がなくなりますので
+front.shopping.nonmember_text3: 便利にご購入いただく事ができるようになります。
+front.product.duplicate.use_date: '「%product%」この商品は取寄せ品です。別の日付を選択するか、別の商品を購入してください'
+front.product.locale.error: '「%product%」この商品の言語タイプは注文と一致しません'
+front.cart.order.empty: 'カート内に該当する商品が見つかりません。もう一度試してください'
+front.cart.orderType.different: '本商品はカートに既存する商品のご予約方法と適当していないので勝手にカートから削除されました。'
+front.block.login.to_cart: 'カート'
+common.required: '*'
+eccube.front.login.request.error: あなたのアカウントはこの Web サイトへのログインを許可されていません
+admin.common.type_customer: 会員区分
+tooltip.customer.type_customer: この情報は編集できません
+front.account.limit: 1日に2つ以上のアカウントを登録することはできません
+front.mypage.customer_complete_message__body: 今後ともご愛顧賜りますようよろしくお願い申し上げます。
+common.back.payment: トップページへ
+common.reservation.time: 訪問時間
+common.reservation.date: 訪問日
+common.reservation.date_time: ご来店日時
+common.reservation.people: ご利用人数
+common.reservation.use_day: ご利用予定日
+common.reservation.purpose: 用途
+common.reservation.purpose.sample: 用途をお教え下さい
+common.reservation.height: 身長
+common.reservation.product_code: 商品コード
+common.reservation.budget: ご希望の予算
+common.reservation.request: 特記事項
+common.reservation.note: 備考
+common.reservation.product_code.sample: Kr-103
+common.reservation.budget.sample: ご希望の予算
+common.reservation.note.sample: メモを入力します (該当する場合)
+common.reservation.request.sample: リクエストを入力してください (該当する場合)
+common.reservation.shop_name: 来店店舗
+common.reservation.body_type: 体型
+aki.front.mypage.withdraw_message__body: 会員を退会された場合には、現在保存されている購入履歴やお届け先等の情報は、すべて削除されますがよろしいでしょうか？
+aki.front.mypage.withdraw_confirm: 会員退会手続きへ
+aki.common.kana: お名前(フリガナ)
+aki.front.contact.order_notice: ご注文に関するお問い合わせには、「ご注文番号」をご記入くださいますようお願いいたします。
+aki.front.contact.inquiry_notice.top: 内容によっては回答をさしあげるのにお時間をいただくこともございます。
+aki.front.contact.inquiry_notice.bottom: また、火曜日は定休日となるので、月曜日営業時間終了以降のお問合わせに関しては、水曜日にお答えさせて頂きますのでご了承ください。
+aki.front.contact.complete_message__title: お問い合わせ完了
+aki.front.contact.complete_message__body.top: 万一、ご回答メールが届かない場合は、トラブルの可能性もありますので
+aki.front.contact.complete_message__body.center: 大変お手数ではございますがもう一度お問い合わせいただくか、お電話にてお問い合わせください。
+aki.front.contact.complete_message__body.bottom: 今後ともご愛顧賜りますようよろしくお願い申し上げます。
+aki.front.mypage.nav__history: 会員情報編集(完了)
+reservation.entry.agree: 確認画面へ
+reservation.entry.disagree: 同意しない
+reservation.entry.register: 予約する
+reservation.entry.back: 戻る
+front.reservation.complete: 予約を登録しました
+front.reservation.complete_title: 予約済み
+front.reservation.errors: 予約エラーが発生しました。お手数ですが、運営事務局まで
+front.reservation.errors_contact: お問い合わせ
+front.reservation.errors_full: 今回は満席です
+front.reservation.tutorial.select : 日時指定からクリックで申し込み
+aki.common.delivery_fee: 送料合計
+aki.front.shopping.shipping_sub_title: ご注文内容と配送先をご確認の上、「クレジットカードで支払う」ボタンをクリックしてください。
+aki.front.shopping.shipping_button: クレジットカードで支払う
+aki.common.charge: 内金
+aki.common.delivery_fee_shipping: ご来店時支払い
+aki.front.mypage.payment_info: お支払方法
+aki.front.mypage.payment: 支払方法
+aki.front.mypage.favorite_count: '<span class="fw-600">%count%件</span><span>のお気に入りがあります。</span>'
+aki.front.reservation.error.email: 万一、ご確認メールが届かない場合は、トラブルの可能性もありますので大変お手数ではございますが. もう一度お問い合わせいただくか、お電話にてお問い合わせくださいませ。今後ともご愛顧賜りますようよろしくお願い申し上げます。
+# multi language
+aki.front.detail.policy.title: ご返却日(レンタル泊数)について
+aki.front.detail.policy.store.title: ご来店レンタルの方
+aki.front.detail.policy.store.content: <p>ご利用日（ご予約日）または<b>翌日</b>にご返却をお願い致します。(計１泊)</p><br>
+aki.front.detail.policy.delivery.title: 宅配レンタルの方
+aki.front.detail.policy.delivery.content: <p>ご利用日（ご予約日）2日前に商品が到着します。<br>ご利用日またはご利用日の<b>翌日</b>にご返却をお願い致します。(計３泊)</p></br>
+aki.front.detail.product.code: 商品コード
+aki.front.detail.product.yukata: 浴衣は所属店舗のみのお取扱いとなります。
+aki.front.detail.product.title.montsuki_hakama: 紋付袴は複数サイズがございます。そのためカレンダーが予約済みとなっていてもレンタルが可能な場合がございます。詳細は下記所属店舗までご連絡下さい。
+aki.front.detail.product.title: 商品のお問合せは、下記所属店舗までご連絡下さい。
+aki.front.detail.product.info.shibuya: 渋谷本店
+aki.front.detail.product.info.ginza: 銀座店
+aki.front.detail.product.info.ikebukuro: 池袋店
+aki.front.detail.product.info.yokohama: 横浜店
+aki.front.detail.product.info.close: ※火曜定休　2万円以上の商品は休日料金3,300円/1名にて定休日でもご利用いただけます。定休日の当日返却は承っておりません。後日または配送（別途送料）でのご返却をお願いいたします。
+aki.front.detail.product.info.under.20000: ※2万円以下の商品は他支店での着付け、宅配レンタル、火曜日（定休日）に加え営業時間外での対応を行っておりません。
+aki.front.detail.product.info.present.id: ※店舗での受付時に現住所の確認できる身分証（免許証や保険証など）をご提示ください。ご提示いただけない場合は保証金を別途お預かりいたします。（浴衣・小紋5,000円、その他の着物1万円）
+aki.front.detail.product.info.montsuki: 紋付袴は複数サイズがございます。そのためカレンダーが予約済みとなっていてもレンタルが可能な場合がございます。詳細は上記所属店舗までご連絡下さい。
+aki.front.detail.product.info.please.check: 所属店舗の営業時間、住所等は下記にてご確認ください。
+aki.front.detail.store.shibuya: 着物レンタルあき　渋谷本店
+aki.front.detail.store.ginza: 着物レンタルあき　銀座店
+aki.front.detail.store.ikebukuro: 着物レンタルあき　池袋店
+aki.front.detail.store.yokohama: 着物レンタルあき　横浜店
+aki.front.detail.reservation.status: 予約カレンダー
+aki.front.detail.use.now: 直近（3日以内）でのご利用希望の方は店舗迄ご連絡下さい。
+aki.front.detail.use.quantity: 数量
+aki.front.detail.service: ※宅配レンタルの方、商品の所属店舗と異なる店舗で着付ける場合（例：渋谷店の着物を銀座店で着付ける場合）は、4日後からお選び下さい。
+aki.front.detail.service.redirect: ※早朝からの着付け承ります。
+aki.front.detail.btn.order: 予約に進む
+aki.front.detail.btn.out.stock: ただいま品切れ中です
+aki.front.detail.size: サイズ
+aki.front.detail.size.s: Sサイズ(女性149cm以下/男性160-170cm)
+aki.front.detail.size.m: Mサイズ(女性150-167cm/男性165-175cm)
+aki.front.detail.size.l: Lサイズ(女性168-173cm/男性170-180cm)
+aki.front.detail.size.large: 大きいサイズ(女性174cm以上/男性180cm以上)
+aki.front.detail.size.reference: ※表示サイズは目安となります。着付けにて多少の調整は可能となります。身長の高い方でも、まずは
+aki.front.detail.size.contact:  お問合せ
+aki.front.detail.size.please: ください。
+aki.front.detail.material: 素材
+aki.front.detail.note: ご利用の注意
+aki.front.detail.note_1: ※PCモニターと実際の商品では、色味に若干の違いがある場合がございます。ご了承下さい。
+aki.front.detail.note_2: ※決済システムのメンテナンスが行われる際にはご注文いただけない場合がございます。
+aki.front.detail.note_3: ※商品が到着しましたら、同梱されているレンタルチェック表を元に商品のご確認をお願いします。
+aki.front.detail.note_4: ※画像はコーディネート例となります。帯や小物はお下見時にお客様と一緒にコーディネートさせていただきます。
+aki.front.detail.note_5: ※宅配レンタルのお客様は原則画像のコーディネートとなります。
+aki.front.detail.accessory: 付属品の内容
+aki.front.detail.img.title: 参考画像となりますので、ご利用いただく付属品は色など異なる場合がございます。
+aki.front.detail.img.title_konrei: 参考画像となりますので、ご利用いただく付属品は色など異なる場合がございます。また、配送レンタルをご利用の場合は、付属品の内容が異なる場合がございます。
+aki.front.detail.tabi: 足袋
+aki.front.detail.underwear: 下着
+aki.front.detail.towel: タオル
+aki.front.detail.waist: 腰紐
+aki.front.detail.jin_xin: 衿芯
+aki.front.detail.long_undergarment: 長襦袢
+aki.front.detail.ida_jin: 伊達衿
+aki.front.detail.idadi: 伊達締
+aki.front.detail.kolin_belt: コーリンベルト
+aki.front.detail.strip: 帯板
+aki.front.detail.obi: 帯枕
+aki.front.detail.triple_cord: 三重紐
+aki.front.detail.obiage_obijime: 帯揚・帯締
+aki.front.detail.sandals_bags: 草履・バック
+aki.front.detail.belt: 帯止め金具
+aki.front.detail.suehiro: 末広
+aki.front.detail.obiage_2: 帯揚げ・帯締
+aki.front.detail.undershirt: 襦袢
+aki.front.detail.purse: 巾着
+aki.front.detail.sandals: 雪駄
+aki.front.detail.u.v: ※下着は洋服用のUまたはVネックのシャツをご用意ください
+aki.front.detail.hair_ornaments: 髪飾り
+aki.front.detail.zori: 草履
+aki.front.detail.band: 帯
+aki.front.detail.pocket_sword: 懐剣
+aki.front.detail.amulet: お守り
+aki.front.detail.haori_string: 羽織紐
+aki.front.detail.shigoki: しごき
+aki.front.detail.hakoseko: はこせこ
+aki.front.detail.obiage: 帯揚
+aki.front.detail.obijime: 帯締
+aki.front.detail.accessory.all: ※着付けに必要な一式すべて含みます。
+aki.front.detail.undergarment_notice: ※着付けに必要な一式すべて含みます。ただし、肌着は付きませんので、キャミソール・ペチコートなどをご用意ください 。
+aki.front.detail.accessory.all.tabi: 付属品一式(足袋を含む)
+aki.front.detail.accessory.one: 小物一式
+aki.front.detail.hand: ハンドバッグ
+aki.front.detail.hair.for.fee: ※髪飾りは有料にて承ります。
+aki.front.detail.half.band: 半幅帯
+aki.front.detail.sandals_purse: 草履・巾着
+aki.front.detail.boot: ※ブーツをご希望の場合は別途￥3,300（税込み）頂きます。
+aki.front.detail.square_belt: 角帯
+aki.front.detail.footwear: 履物
+aki.front.detail.Accessories.one: 小物
+aki.front.detail.geta_purse: 下駄・巾着
+aki.front.detail.accessories.has: 付属品あります。
+aki.front.detail.accessories.other: ※上記画像は訪問着の例となります。他の着物にはそれぞれ専用のフルセット内容が付きます。詳細についてはお問い合わせください。
+aki.front.detail.dressing_kit_notice: ※着付けに必要な一式すべて含みます。ただし、肌着は付きませんので、洋服用のUまたはVネックのシャツをご用意ください。
+# form
+aki.front.detail.form.title: ご予約内容確認
+aki.front.detail.form.type: ご予約内容確認
+aki.front.detail.form.required: 必須
+aki.front.detail.form.visit: 来店着付けレンタル
+aki.front.detail.form.error.required: 選択して下さい。
+aki.front.detail.form.use_day: ご利用日選択.
+aki.front.detail.form.use_day.required: 選択してください。
+aki.front.detail.form.use_day.place_holder: ご利用日
+aki.front.detail.form.info.close: ※火曜定休　2万円以上の商品は休日料金3,300円/1名にて定休日でもご利用いただけます。定休日の当日返却は承っておりません。後日または配送（別途送料）でのご返却をお願いいたします。
+aki.front.detail.form.list.store: 着付けご来店希望店舗
+aki.front.detail.form.warning.store.under: ※2万円以下の商品は他支店での着付け、宅配レンタルを行っておりません。
+aki.front.detail.form.info.departure: ご出発予定時間
+aki.front.detail.form.list.departure: 時間を選択ください
+aki.front.detail.form.warning.departure.1: ※こちらは「店舗からのご出発希望時間」となります。
+aki.front.detail.form.warning.departure.2: ご来店時間は出発時間より逆算の上、後にお送りするご注文確定メールにてお知らせいたします。
+aki.front.detail.form.warning.departure.3: ※10：00以前のご利用は早朝料金が別途発生いたします。
+aki.front.detail.form.warning.departure.4: 詳細はこちら
+aki.front.detail.form.info.purpose: 用途
+aki.front.detail.form.list.purpose: 用途をお教え下さい
+aki.front.detail.form.warning.purpose: ※「その他」をご選択の場合、この先のページ「ご注文内容のご確認」の「お問い合わせ欄」に詳細を明記下さい。
+aki.front.detail.form.info.height: 身長
+aki.front.detail.form.info.plese.select: 選択してください。
+aki.front.detail.form.info.foot: 足のサイズ
+aki.front.detail.form.info.era: 年代
+aki.front.detail.form.info.body: 体型
+aki.front.detail.form.info.secure.pack: 安心パック
+aki.front.detail.form.info.secure.pack.link: 安心パックの詳細はこちら
+aki.front.detail.form.info.photo: フォト
+aki.front.detail.form.info.click.here: 詳細はこちら
+aki.front.detail.form.info.hair: ヘア・メイクの有無
+aki.front.detail.form.info.policy: '<label for="check" class="user-guide">利用ガイドに同意します。</label>'
+aki.front.detail.form.info.policy.sup.jp: '詳細は <a href="/user_data/cancel" target="_blank" class="underline color-primary">こちら</a>'
+aki.front.detail.form.info.policy.check: 必ずお読みください
+aki.front.detail.form.info.instruct.1: 店舗での受付時に現住所の確認できる身分証
+aki.front.detail.form.info.instruct.2: （免許証や保険証など）をご提示ください。
+aki.front.detail.form.button.submit: カートに入れる
+aki.front.detail.secure_pack: 安心パックに加入する(+1,000円+税)
+aki.front.cart.title.how: ご予約方法
+aki.front.cart.title.delivery: 宅配着物レンタル
+aki.front.cart.title.visit: 来店着付けレンタル
+aki.front.cart.title.useday: ご利用日
+aki.front.cart.title.store: 着付けご来店希望店舗
+aki.front.cart.title.schedule: ご出発予定時間
+aki.front.cart.title.hair: ヘア・メイクの有無
+aki.front.cart.title.secure.pack: 安心パック
+aki.front.cart.title.message.delete: カートから商品を削除してもよろしいですか?
+aki.front.cart.title.total: 合計
+aki.front.cart.title.tax: 税込
+aki.front.cart.title.total.warning.1: ※上記金額は、商品代金＋安心パック（ご選択の場合）となります。
+aki.front.cart.title.total.warning.2: 各種オプション料金はご来店時にお支払いください。
+aki.front.cart.title.checkout: レジに進む
+aki.front.cart.title.continue.shopping: お買い物を続ける
+aki.front.cart.title.foot: 足のサイズ
+aki.front.cart.title.era: 年代
+aki.front.cart.title.photo: フォト
+aki.front.cart.button.change.cart: 数量を変更または削除する
+aki.front.cart.title.warnig: ※上記金額は、商品代金＋安心パック（ご選択の場合）となります。各種オプション料金はご来店時にお支払いください。
+aki.front.cart.total: 合計
+aki.front.cart.button.order: 確認する
+aki.front.cart.title.order: ご注文内容と配送先をご確認の上、「確認する」ボタンをクリックしてください。
+aki.front.cart.title.order.bank.transfer: 銀行振込
+aki.front.cart.locale.different: 言語が異なるため、一部の商品がカートから削除されました。
+aki.front.credit.title: クレジットカード
+aki.front.credit.card.number: カード番号
+aki.front.credit.card.expire: 有効期限
+aki.front.credit.card.security: セキュリティコード
+aki.front.credit.card.name: カード名義（ローマ字）
+aki.front.credit.card.placeholder.number: 例：1234567890123456
+aki.front.credit.card.placeholder.security: 例：123
+aki.front.credit.card.placeholder.name: 例：TARO YAMADA
+aki.front.credit.card.button.submit: ご注文確認ページへ
+# message validate card
+aki.front.credit.card.validate.empty: このフィールドを空白のままにすることはできません
+aki.front.credit.card.cardno.valid: カード番号フォーマットエラー(数字以外を含む)
+aki.front.credit.card.cardno.lenght: カード番号フォーマットエラー(10-16 桁の範囲外)
+aki.front.credit.card.expire.valid: 有効期限フォーマットエラー(数字以外を含む)
+aki.front.credit.card.name.valid: ラテン文字のみ入力可能
+aki.front.credit.card.security.valid: セキュリティ番号フォーマットエラー（数字以外の文字を含む）
+aki.front.credit.card.security.lenght: 暗証番号フォーマットエラー（3～4桁の範囲外）
+aki.front.credit.card.date.expire: 現在よりも小さい月または年を選択することはできません
+aki.front.credit.card.lenght: 名義人フォーマットエラー(51 桁以上)
+aki.front.checkout.error: <p>購入エラーが出ております。お手数ですが、運営事務局まで<a class="color-primary underline" href="/contact"> お問い合わせ </a>ください。</p>
+# mail
+aki.mail.thank.order: この度はご注文いただき誠にありがとうございます。
+aki.mail.plese.check.text1: 下記ご注文内容にお間違えがないかご確認下さい。
+aki.mail.plese.check.text2: 後に店舗担当者より「ご注文確定メール」を送らせていただきます。
+aki.mail.plese.check.text3: ★本メールでは注文は確定しておりませんのでご注意ください★
+aki.mail.plese.check.text4: ※銀行振込をご選択の場合は、お支払口座を確定メールにてお伝えいたします。
+aki.mail.payment.info: お支払情報
+aki.mail.order.number: ご注文番号
+aki.mail.order.payment.method: お支払い方法
+aki.mail.order.message: メッセージ
+aki.mail.order.total: 合　計(税込)
+aki.mail.order.price.info: ※上記の料金はレンタル料金・安心パックの金額となっております。
+aki.mail.order.notify.info: ※ヘアー＆メイク、早朝料金、有料写真については完了メールにてご案内させていただきます。
+aki.mail.order.usege: ご利用内容
+aki.mail.order.product.name: 商品名
+aki.mail.order.product.price.tax: 単価(税込)
+aki.mail.order.product.secure: 安心パック(税込)
+aki.mail.order.product.secure.no: 加入なし
+aki.mail.order.info: ご注文者情報
+aki.mail.order.name: お名前
+aki.mail.order.company.name: 会社名
+aki.mail.order.phone.number: 電話番号
+aki.mail.order.mail.address: メールアドレス
+aki.mail.order.mail.notify.only1: このメッセージはお客様へのお知らせ専用ですので、
+aki.mail.order.mail.notify.only2: このメッセージへの返信としてご質問をお送りいただいても回答できません。
+aki.mail.order.mail.notify.only3: ご了承ください。
+aki.mail.order.mail.notify.only4: ご質問やご不明な点がございましたら、以下よりお願いいたします。
+aki.mail.shop.name: 着物レンタルあき
+aki.mail.shop.name.shibuya: 渋谷店
+aki.mail.shop.name.ginza: 銀座店
+aki.mail.shop.name.inkebukuro: 池袋店
+aki.mail.shop.name.yokohama: 横浜店
+aki.mail.shop.name.atami: 熱海店
+aki-mypage-delete: 消去
+aki-forgot-complete: パスワード再発行メールの送信 完了
+aki-forgot-complete-top: ご登録メールアドレスにパスワードを再発行するためのメールを送信いたしました。
+aki-forgot-complete-bottom: メールの内容をご確認いただきますよう、お願いいたします。
+aki-common.address_sample_01: 市区町村名(例：大阪市北区)
+aki-common.address_sample_02: 番地・ビル名(例：西梅田1丁目6-8)
+aki-front.forgot.message2: ※新しくパスワードを発行いたしますので、お忘れになったパスワードはご利用できなくなります。
+aki.front.mypage.title__history: お届け先編集
+aki.admin.common.birth_day: 生年月日
+front.reservation.notice.customer.num1: 10名以上の場合はお電話もしくはメールでお問い合わせください。
+front.reservation.notice.customer.num2: ※ご来店人数ではなく、実際に着物をお召になるご利用者様の人数をご選択ください。
+front.shopping.recaptcha.notice: ※チェックボックスにチェックを入れてください
+front.recaptcha.error: recaptcha認証を行ってください。
+aki.button.change: 変更する
+aki.front.cart.tax.included: 税込
+aki.common.complete.title: ご注文完了
+# Custom CSV
+admin.product.product_csv.delete_flag_col_standard: 商品規格削除フラグ
+admin.product.product_csv.language.description: 'ja:日本語 en:英語 zh:中国語。NULLの場合はjaで設定する。'
+# Time working
+aki.front.about.business_hour: 営業時間
+# Token error
+aki.front.get.token.error.000: トークン取得正常終了
+aki.front.get.token.error.100: カード番号必須チェックエラー
+aki.front.get.token.error.101: カード番号フォーマットエラー(数字以外を含む)
+aki.front.get.token.error.102: カード番号フォーマットエラー(10-16 桁の範囲外)
+aki.front.get.token.error.110: 有効期限必須チェックエラー
+aki.front.get.token.error.111: 有効期限フォーマットエラー(数字以外を含む)
+aki.front.get.token.error.112: 有効期限フォーマットエラー(6 又は 4 桁以外)
+aki.front.get.token.error.113: 有効期限フォーマットエラー(月が 13 以上)
+aki.front.get.token.error.121: セキュリティコードフォーマットエラー(数字以外を含む)
+aki.front.get.token.error.122: セキュリティコード桁数エラー
+aki.front.get.token.error.131: 名義人フォーマットエラー(半角英数字、一部の記号以外を含む)
+aki.front.get.token.error.132: 名義人フォーマットエラー(51 桁以上)
+aki.front.get.token.error.141: 発行数フォーマットエラー(数字以外を含む)
+aki.front.get.token.error.142: 発行数フォーマットエラー(1-10 の範囲外)
+aki.front.get.token.error.150: カード情報を暗号化した情報必須チェックエラー
+aki.front.get.token.error.160: ショップ ID 必須チェックエラー
+aki.front.get.token.error.161: ショップ ID フォーマットエラー(14 桁以上)
+aki.front.get.token.error.162: ショップ ID フォーマットエラー(半角英数字以外)
+aki.front.get.token.error.170: 公開鍵ハッシュ値必須チェックエラー
+aki.front.get.token.error.180: ショップ ID または公開鍵ハッシュ値がマスターに存在しない
+aki.front.get.token.error.190: カード情報(Encrypted)が復号できない
+aki.front.get.token.error.191: カード情報(Encrypted)復号化後フォーマットエラー
+aki.front.get.token.error.501: トークン用パラメータ(id)が送信されていない
+aki.front.get.token.error.502: トークン用パラメータ(id)がマスターに存在しない
+aki.front.get.token.error.511: トークン用パラメータ(cardInfo)が送信されていない
+aki.front.get.token.error.512: トークン用パラメータ(cardInfo)が復号できない
+aki.front.get.token.error.521: トークン用パラメータ(key)が送信されていない
+aki.front.get.token.error.522: トークン用パラメータ(key)が復号できない
+aki.front.get.token.error.531: トークン用パラメータ(callBack)が送信されていない
+aki.front.get.token.error.541: トークン用パラメータ(hash)が存在しない
+aki.front.get.token.error.551: トークン用 apikey が存在しない ID
+aki.front.get.token.error.552: トークン用 apikey が有効ではない
+aki.front.get.token.error.901: マルチペイメント内部のシステムエラー
+aki.front.get.token.error.902: 処理が混み合っている
+aki.front.get.token.error: エラー発生しました。
+# Reservation product_code
+aki.front.reservation.product_code: ご希望の商品コード（3点まで）
+# Admin Filter checkbox
+aki.admin.filter.checkbox.all: すべて
+
+# Gray out
+aki.admin.not.start_date.or.end_date: 開始日と終了日を選択してください。
+
+# Payment method Installment
+aki.front.shopping.payment.method.bulk: 一括
+aki.front.shopping.payment.method.installment: 分割
+aki.front.shopping.payment.method.not.value: クレジットカードでお支払いの場合はお支払い方法を選択してください
+aki.front.shopping.payment.method.paytime.select: 支払回数
+aki.front.shopping.payment.method.paytime.select.error: お支払い金額を選択してください
+
+# Summer opening notice
+aki.front.notice.summer_opening_title: 7月・8月は火曜日も休まず営業いたします
+aki.front.notice.summer_opening_text1: いつもご利用いただきありがとうございます。
+aki.front.notice.summer_opening_text2: 通常、火曜を定休日とさせていただいておりますが、7月・8月の火曜は10:00～18:00で休まず営業いたします。
+aki.front.notice.summer_opening_text3: ぜひお気軽にご利用ください。

@@ -1,0 +1,225 @@
+aki.front.detail.product.code: 產品代碼
+aki.front.cart.tax.included: 含稅
+aki.front.detail.form.required: 必填
+aki.front.detail.btn.order: 繼續預訂
+aki.remtal.term.condition.title: 租賃條款和條件
+aki.remtal.term.condition.text1: -最後入場時間為下午 4:30
+aki.remtal.term.condition.text2: -請在下午 5:30 前歸還和服
+aki.remtal.term.condition.text3: '-所需時間：穿搭20分鐘，髮型20分鐘（可選）'
+aki.remtal.term.cancelation.title: 取消
+aki.remtal.term.cancelation.text1: '-預訂日期前-2 天 租金的 50%'
+aki.remtal.term.cancelation.text2: '-預訂日期之前和當天：租金的100%'
+aki.remtal.term.location.photo.plan: '*適用於外景照片計劃'
+aki.remtal.term.location.photo.plan.text1: -預訂日期前 -1 週 租金的 30%
+aki.remtal.term.location.photo.plan.text2: -預訂日期前-2 天 租金的 50%
+aki.remtal.term.location.photo.plan.text3: -預訂日期之前和當天：租金的100%
+aki.front.detail.form.title: 預約表格
+aki.front.detail.form.use_day: 日期
+aki.front.detail.form.use_day.required: 必填
+aki.front.detail.form.use_day.place_holder: 請選擇
+aki.front.detail.form.info.close: ・週二休息。
+aki.front.detail.service: ・依據系統，預約時間為 4 天。<b>如果您想在此之前預訂，請聯絡我們</b>
+aki.front.detail.form.list.store: 店舖
+aki.front.detail.form.info.departure: 時間
+aki.front.detail.form.list.departure: 請選擇時間
+aki.front.detail.form.warning.time: 一日租賃方案請選擇10:00至16:00之間
+aki.front.detail.form.info.height: 身高
+aki.front.detail.form.info.num_of_guests: 客戶數量
+aki.front.detail.form.info.gender: 性別
+aki.front.detail.form.info.plese.select: 請選。
+aki.front.detail.form.info.foot: 鞋碼
+aki.front.detail.form.info.body: 身材
+aki.front.detail.form.warning.body.text.1: '<b>* 如果符合以下任何一項，請勾選上面的方框，並在下面的備註欄中註明人數和規模。</b>'
+aki.front.detail.form.warning.body.text.2: ・男性身高超過190cm（約6'3''）
+aki.front.detail.form.warning.body.text.3: ・女性身高超過 175cm(5'9'')
+aki.front.detail.form.warning.body.text.4: ・胸圍、腰圍、臀圍其中一項大於 100 公分（39 吋）
+aki.front.detail.form.warning.shoe_size: '* 請在下面的備註欄中註明所有客人的身高、鞋碼和性別。'
+aki.front.detail.form.warning.shoe_size_above: "* 請在上方備註欄註明所有客人的身高、鞋碼和性別。"
+aki.front.detail.form.info.secure.pack: 和服保險
+aki.front.detail.form.info.secure.pack.warning: '*如果和服損壞或弄髒，最多可賠償 ￥20,000'
+aki.front.detail.form.info.photo: 選購
+aki.front.detail.form.info.hair: 可選髮套
+aki.front.detail.form.info.hair.decription.text1: '* 請在下面的備註欄註明需要做髮型的人數，'
+aki.front.detail.form.info.hair.decription.text2: '* 請注意，因影棚拍攝、髮型設計而產生的費用差額將在租賃當天在店內收取。'
+aki.front.detail.form.info.click.here: 點此了解詳情
+aki.front.detail.form.info.policy: '<label for="check" class="user-guide">我同意租賃條款和條件。</label>'
+aki.front.detail.form.info.policy.sup: '<span class="tooltip-trigger color-primary underline">點此了解詳情</span>'
+aki.front.detail.form.info.policy.check: 請務必閱讀
+aki.front.detail.form.info.instruct.1: 在商店接待時可以確認您目前地址的 ID
+aki.front.detail.form.info.instruct.2: 請出示當天的護照或照片
+aki.front.detail.form.button.submit: 添加到卡
+aki.front.detail.form.info.term.service.title1: 租借条款与条件
+aki.front.detail.form.info.term.service.title1.child1: -最晚入场时间为下午4:30
+aki.front.detail.form.info.term.service.title1.child2: -请在下午5:30前归还和服
+aki.front.detail.form.info.term.service.title1.child3: -穿着所需时间：20分钟，发型（可选）需要20分钟
+aki.front.detail.form.info.term.service.title2: 取消政策
+aki.front.detail.form.info.term.service.title2.child1: -预订日期前2天取消，租金的50%
+aki.front.detail.form.info.term.service.title2.child2: -预订日期前或当天取消，租金的100%
+aki.front.detail.form.info.term.service.title3: '*关于现场拍照计划'
+aki.front.detail.form.info.term.service.title3.child1: -预订日期前1周取消，租金的30%
+aki.front.detail.form.info.term.service.title3.child2: -预订日期前2天取消，租金的50%
+aki.front.detail.form.info.term.service.title3.child3: -预订日期前或当天取消，租金的100%
+aki.front.detail.secure_pack: 和服保險（+1,100日圓）
+aki.front.cart.title.useday: 日期
+aki.front.cart.title.store: 店舖
+aki.front.cart.title.schedule: 時間
+aki.front.cart.title.secure.pack: 和服保險
+aki.front.cart.title.photo: 自选拍照
+aki.front.cart.title.hair: 自选发型
+aki.front.cart.title.tax: 含稅
+aki.front.cart.title.total.warning.1: 上述金額僅顯示一人的租金和保險（如果選擇）費用。
+aki.front.cart.title.total.warning.2: 我們將在確認電子郵件中告知您包括選項和其他客人租賃費在內的總金額，並將在租賃當天在商店收取。
+# aki.front.cart.title.total.warning.3: Please note that difference in the option fees and the number of additional people will be charged at the store on the day of rental.
+common.reservation.height: 身高
+aki.front.cart.title.total: 全部的
+front.cart.nav__cart_items: 購物車
+front.cart.nav__order: 結帳
+front.cart.nav__confirm: 評論
+front.cart.nav__complete: 已下訂單
+front.cart.title: 購物車
+front.cart.orderType.different: 該產品已從您的購物車中刪除，因為它與您購物車中現有產品的預訂方式不符。
+aki.front.cart.title.checkout: 進行結算
+aki.front.cart.title.continue.shopping: 繼續購物
+aki.front.cart.title.message.delete: 您確定要從購物車刪除這個商品嗎？
+common.name: 姓名
+common.first_name: 名字
+common.last_name: 姓氏
+front.shopping.nonmember: 輸入客戶資訊
+front.shopping.nonmember_text1: 請輸入您的客戶資料。
+common.phone_number: 電話
+common.phone_number_sample: 例如：11122223333
+common.mail_address: 電子郵件
+common.mail_address_sample: 例如：ec-cube@example.com
+common.repeated_confirm: 请再次输入以确认
+common.back: 回去
+common.next: 下一個
+common.reservation.use_day: 日期
+aki.front.cart.title.foot: 鞋碼
+aki.front.cart.button.change.cart: 更改或刪除數量
+aki.front.shopping.shipping_sub_title: 確認您的訂單詳細資料和送貨地址後，點擊「透過信用卡付款」按鈕。
+front.shopping.title: 查看
+front.cart.nav__customer_info: 客戶資訊
+common.change: 改變
+aki.front.mypage.payment_info: 付款方式
+front.shopping.message_info: 給商店留言
+front.shopping.message_placeholder: 請在此輸入您的資訊（最多 3,000 個字元）
+common.subtotal: 小計
+common.charge: 收費
+common.delivery_fee: 運費
+aki.front.cart.total: 全部的
+front.shopping.recaptcha.notice: ※請勾選複選框
+aki.front.shopping.shipping_button: 透過信用卡支付
+front.shopping.confirm_title: 查看你的訂單
+front.shopping.customer_info: 客戶資訊
+front.shopping.payment_info: 付款方式
+front.shopping.go_to_confirm: 確認您的訂單
+front.shopping.complete_title: 订单已完成
+front.shopping.thanks_for_order: 謝謝您的訂單
+front.shopping.email_sendding_warning1: 我們已收到您的訂單，目前正在處理中。
+front.shopping.email_sendding_warning2: 如果您在下單後 2 個工作天內沒有收到確認電子郵件，請聯絡商店。
+front.shopping.continue: 繼續購物
+front.block.cart.no_item: 您的購物車目前沒有產品。
+aki.mail.order.subject: '和服租賃 AKI：謝謝您的預訂'
+aki.front.detail.form.info.remark: 評論
+aki.front.detail.form.info.remark.placeholder: 可輸入最多3000個字符
+aki.front.detail.form.error.max.3000: 不得超過 3000 個字符
+aki.front.detail.form.option_hair.notice1: '<b>* 請在下面的備註欄註明需要做髮型的人數，</b>'
+aki.front.detail.form.option_hair.notice2: '<b>* 請注意，因影棚拍攝、髮型設計而產生的費用差額將在租賃當天在店內收取。</b>'
+aki.front.credit.title: 信用卡
+aki.front.credit.card.number: 卡號
+aki.front.credit.card.expire: 過期
+aki.front.credit.card.security: 安全碼
+aki.front.credit.card.name: 持卡人姓名（羅馬字母）
+aki.front.credit.card.placeholder.number: 例：1234567890123456
+aki.front.credit.card.placeholder.security: 例：123
+aki.front.credit.card.placeholder.name: 例：TARO YAMADA
+aki.front.credit.card.button.submit: 進入評論頁面
+# Validate card
+aki.front.credit.card.validate.empty: 這個欄位不能留空
+aki.front.credit.card.cardno.valid: 卡號格式錯誤（包含非數字字符）
+aki.front.credit.card.cardno.lenght: 卡號格式錯誤（範圍應為10-16位）
+aki.front.credit.card.expire.valid: 有效期限格式錯誤（包含非數字字符）
+aki.front.credit.card.name.valid: 只能輸入拉丁字母
+aki.front.credit.card.security.valid: 安全碼格式錯誤（包含非數字字符）
+aki.front.credit.card.security.lenght: 安全碼格式錯誤（應為3至4位數字）
+aki.front.credit.card.date.expire: 不能選擇比當前更小的月份或年份
+aki.front.credit.card.lenght: 持卡人名稱格式錯誤（應不超過51位）
+aki.front.checkout.error: <p>購買時出現錯誤。請聯繫<a class="color-primary underline" href="/contact">運營部門</a>以獲得協助。</p>
+front.cart.no_items: 您的購物車目前沒有產品。
+aki.common.complete.title: 訂單已下
+aki.front.detail.form.error.required: 請選擇。
+aki.front.detail.product.info.shibuya: 澀谷總店
+aki.front.detail.product.info.ginza: 銀座店
+aki.front.detail.product.info.ikebukuro: 池袋店
+aki.front.detail.product.info.yokohama: 橫濱店
+front.shopping.error: 購買錯誤
+front.shopping.back_to_cart: 返回購物車
+common.go_to_top: 首頁
+common.card.manage: カード管理
+aki.front.detail.policy.title: '-所需時間：穿搭20分鐘，髮型設計20分鐘（如有需要）'
+aki.front.cart.title.photo.other: 自選拍照
+aki.front.cart.title.hair.other: 自選髮型
+common.reservation.body_type: 身材
+aki.front.cart.locale.different: 某些商品已從您的購物車中刪除，因為它們採用不同的語言。
+front.shopping.order_error: 購買處理發生錯誤。
+front.shopping.system_error: 購買處理發生意外錯誤。請通過聯繫我們頁面與我們聯繫。
+front.shopping.empty_items_error: 訂單處理未能成功完成。請再次提交訂單。
+front.shopping.out_of_stock: "「%product%」的庫存不足。無法一次購買超過庫存量的商品。"
+front.shopping.over_sale_limit: "「%product%」已達銷售限制。無法一次購買超過限制數量的商品。"
+front.shopping.out_of_stock_zero: "「%product%」的庫存不足。已從購物車中刪除相應商品。"
+front.shopping.over_price_limit: "商品購買金額超過上限。請調整數量。"
+front.shopping.in_preparation: "「%product%」尚未準備好發貨。請通過聯繫我們頁面聯繫我們。"
+front.shopping.not_purchase: 包含目前無法購買的商品。已從購物車中刪除相應商品。
+front.shopping.not_purchase_product_class: "「%product%」目前無法購買。已從購物車中刪除相應商品。"
+front.shopping.price_changed: "「%product%」的售價已更改。"
+front.shopping.payment_total_invalid: 總金額無效。
+front.shopping.different_payment_methods: 包含不同支付方式的商品，無法同時購買。
+front.shopping.payment_method_unselected: 請選擇支付方式。
+front.shopping.not_available_payment_method: 所選支付方式不可用。
+front.shopping.payment_method_not_fount: 無可用的支付方式。如配送方式不同，請選擇相同的配送方式。
+front.under_maintenance: 維護模式已啟用。
+# Token error
+aki.front.get.token.error.000: 令牌取得成功完成
+aki.front.get.token.error.100: 卡片必填檢查錯誤
+aki.front.get.token.error.101: 卡號格式錯誤（包括非數字字元）
+aki.front.get.token.error.102: 卡號格式錯誤（超出10-16位元數字範圍）
+aki.front.get.token.error.110: 必需的過期日期檢查錯誤
+aki.front.get.token.error.111: 到期日期格式錯誤（包含非數字字元）
+aki.front.get.token.error.112: 到期日格式錯誤（6 或 4 位數字除外）
+aki.front.get.token.error.113: 過期日期格式錯誤（月份為 13 或以上）
+aki.front.get.token.error.121: 安全碼格式錯誤（包含非數字字元）
+aki.front.get.token.error.122: 安全碼位數錯誤
+aki.front.get.token.error.131: 持有者格式錯誤（包括半角字母數字字元和一些符號）
+aki.front.get.token.error.132: 持有者格式錯誤（超過51位元）
+aki.front.get.token.error.141: 問題數字格式錯誤（包括非數字）
+aki.front.get.token.error.142: 問題編號格式錯誤（超出1-10範圍）
+aki.front.get.token.error.150: 加密卡片資訊需要檢查錯誤
+aki.front.get.token.error.160: 商店 ID 需要檢查錯誤
+aki.front.get.token.error.161: 店舖ID格式錯誤（超過14位）
+aki.front.get.token.error.162: 商店 ID 格式錯誤（半角字母數字字元除外）
+aki.front.get.token.error.170: 需要公鑰哈希值檢查錯誤
+aki.front.get.token.error.180: master 上不存在商店 ID 或公鑰哈希值
+aki.front.get.token.error.190: 卡片資訊（加密）無法解密
+aki.front.get.token.error.191: 解密卡片資訊後格式錯誤（已加密）
+aki.front.get.token.error.501: 令牌參數（id）未發送
+aki.front.get.token.error.502: master 上不存在令牌參數（id）
+aki.front.get.token.error.511: 未發送令牌參數（cardInfo）
+aki.front.get.token.error.512: Token參數（cardInfo）無法解密
+aki.front.get.token.error.521: 未發送令牌參數（密鑰）
+aki.front.get.token.error.522: Token參數（key）無法解密
+aki.front.get.token.error.531: 未發送令牌參數（callBack）
+aki.front.get.token.error.541: 令牌參數（雜湊）不存在
+aki.front.get.token.error.551: 令牌 apikey 的 ID 不存在
+aki.front.get.token.error.552: 令牌的 APIkey 無效
+aki.front.get.token.error.901: 多付款內部系統錯誤
+aki.front.get.token.error.902: 處理正忙
+aki.front.get.token.error: 發生錯誤。
+# Error message cart
+front.product.duplicate.use_date: '「%product%」本產品為客製化產品。 請選擇其他日期或購買其他商品'
+
+# Payment method Installment
+aki.front.shopping.payment.method.bulk: 一次
+aki.front.shopping.payment.method.installment: 分期
+aki.front.shopping.payment.method.not.value: 若付款方式為信用卡，請選擇付款方式
+aki.front.shopping.payment.method.paytime.select: 付款次數
+aki.front.shopping.payment.method.paytime.select.error: 請選擇付款金額

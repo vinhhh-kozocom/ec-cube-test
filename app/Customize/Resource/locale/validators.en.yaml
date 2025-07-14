@@ -1,0 +1,4 @@
+reservation.validate.past.day: The date must not be before the reservation date.
+
+# Grayout
+form_error.end_date.less.start_date: The end date cannot be earlier than the start date.
