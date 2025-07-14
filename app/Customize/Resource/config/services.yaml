@@ -1,0 +1,215 @@
+services:
+  # Customize\Service\CartServiceOverride:
+  #   public: false
+  #   autowire: true
+  #   decorates: Eccube\Service\CartService
+
+  Customize\Service\MailServiceOverride:
+    public: false
+    autowire: true
+    decorates: Eccube\Service\MailService
+  # Customize\Service\OrderHelperOverride:
+  #   public: false
+  #   autowire: true
+  #   decorates: Eccube\Service\OrderHelper
+
+  Customize\Repository\NewsRepository:
+    public: false
+    autowire: true
+    decorates: Eccube\Repository\NewsRepository
+
+  Customize\Repository\PaymentRepository:
+    public: false
+    autowire: true
+    decorates: Eccube\Repository\PaymentRepository
+
+  # Customize\Repository\OrderRepository:
+  #   public: false
+  #   autowire: true
+  #   decorates: Eccube\Repository\OrderRepository
+
+  customize.middleware.customer_type:
+    class: Customize\Service\Security\CustomerTypeMatcher
+    arguments:
+      - '@Eccube\Repository\CustomerRepository'
+
+  Customize\Service\CsvExportServiceOverride:
+    public: false
+    autowire: true
+    decorates: Eccube\Service\CsvExportService
+
+  # this config to listen when entity productClass update
+  Customize\Service\Cache\DetectSecurePack:
+    arguments:
+      - '@Eccube\Common\EccubeConfig'
+    tags:
+      -
+        name: 'doctrine.orm.entity_listener'
+        event: 'postUpdate'
+        entity: 'Eccube\Entity\ProductClass'
+
+  # this config to listen when entity Order update
+  Customize\Service\Order\OrderDetectChange:
+    arguments:
+      - '@Eccube\Service\OrderHelper'
+    tags:
+      -
+        name: 'doctrine.orm.entity_listener'
+        event: 'postUpdate'
+        entity: 'Eccube\Entity\Order'
+
+  Customize\Service\Order\OrderDetailAditionalInfoObserver:
+    arguments:
+      - '@Doctrine\ORM\EntityManagerInterface'
+      - '@Customize\Service\Cache\UserDataCache'
+      - '@Eccube\Service\OrderHelper'
+    tags:
+      - {name: 'doctrine.orm.entity_listener', event: 'postUpdate', entity: 'Customize\Entity\OrderDetailAdditionalInfo'}
+      - {name: 'doctrine.orm.entity_listener', event: 'postPersist', entity: 'Customize\Entity\OrderDetailAdditionalInfo'}
+      - {name: 'doctrine.orm.entity_listener', event: 'postRemove', entity: 'Customize\Entity\OrderDetailAdditionalInfo'}
+
+
+  # interface's method have been defined by "Customize\Service\Cart\SaleTypeCartAllocator" class
+  # This 2 code can seperate cart (More optimized). But client don't like it => comment
+
+  # Eccube\Service\Cart\CartItemAllocator: '@Customize\Service\Cart\SaleTypeCartAllocatorOverride'
+  # Eccube\Service\Cart\CartItemComparator: '@Customize\Service\Cart\ProductClassComparatorOverride'
+
+  # config validate for cart--------------------------------------------------
+  eccube.purchase.flow.cart.item_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Eccube\Service\PurchaseFlow\Processor\DeliverySettingValidator' # 配送設定のチェック
+        - '@Eccube\Service\PurchaseFlow\Processor\ProductStatusValidator' # 商品の公開状態のチェック
+        - '@Eccube\Service\PurchaseFlow\Processor\PriceChangeValidator' # 商品価格の変更検知
+        - '@Eccube\Service\PurchaseFlow\Processor\StockValidator' # 在庫のチェック
+        - '@Eccube\Service\PurchaseFlow\Processor\SaleLimitValidator' # 販売制限数のチェック
+        - '@Eccube\Service\PurchaseFlow\Processor\ClassCategoryValidator' # 商品規格の公開状態チェック
+        - '@Customize\Service\PurchaseFlow\Processor\OrderValidator'
+        - '@Customize\Service\PurchaseFlow\Processor\OrderTypeValidator'
+
+  eccube.purchase.flow.cart.holder_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Customize\Service\PurchaseFlow\Processor\SecurePackProcessor'
+        - '@Customize\Service\PurchaseFlow\Processor\EmptyItemsValidator' # 空明細の削除処理
+
+  eccube.purchase.flow.cart.holder_post_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Customize\Service\PurchaseFlow\Processor\PaymentValidator'  #=> change this from default
+        - '@Eccube\Service\PurchaseFlow\Processor\PaymentTotalLimitValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\PaymentTotalNegativeValidator'
+
+  # -------------------------------------------------------------------------------
+  #  config validate for shopping--------------------------------------------------
+  eccube.purchase.flow.shopping.item_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Eccube\Service\PurchaseFlow\Processor\DeliverySettingValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\ProductStatusValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\PriceChangeValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\ClassCategoryValidator'
+        - '@Customize\Service\PurchaseFlow\Processor\OrderValidator'
+
+  eccube.purchase.flow.shopping.holder_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Eccube\Service\PurchaseFlow\Processor\StockMultipleValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\SaleLimitMultipleValidator'
+        - '@Customize\Service\PurchaseFlow\Processor\SecurePackProcessor'
+        - '@Customize\Service\PurchaseFlow\Processor\EmptyItemsValidator' # 空明細の削除処理
+
+  eccube.purchase.flow.shopping.holder_post_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Eccube\Service\PurchaseFlow\Processor\PointRateProcessor'
+        - '@Eccube\Service\PurchaseFlow\Processor\AddPointProcessor'
+        - '@Customize\Service\PurchaseFlow\Processor\PaymentValidator' #=> change this from default
+        - '@Eccube\Service\PurchaseFlow\Processor\PaymentTotalLimitValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\PaymentTotalNegativeValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\PaymentChargeChangeValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\DeliveryFeeChangeValidator'
+        - '@Eccube\Service\PurchaseFlow\Processor\TaxRateChangeValidator'
+
+
+  # Purchase Flow for Order -----------------------------------------------
+  eccube.purchase.flow.order.item_validators:
+    class: Doctrine\Common\Collections\ArrayCollection
+    arguments:
+      - #
+        - '@Customize\Service\PurchaseFlow\Processor\AdminOrderValidator'
+        - '@Customize\Service\PurchaseFlow\Processor\AdminOrderLocaleValidator'
+
+  # This config is copied from app/config/eccube/packages
+security:
+  enable_authenticator_manager: true
+  # encoders:
+  #   Eccube\Entity\Member:
+  #     id: Eccube\Security\Core\Encoder\PasswordEncoder
+  #   Eccube\Entity\Customer:
+  #     id: Eccube\Security\Core\Encoder\PasswordEncoder
+  providers:
+    member_provider:
+      id: Eccube\Security\Core\User\MemberProvider
+    customer_provider:
+      id: Eccube\Security\Core\User\CustomerProvider
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    admin:
+      pattern: "^/%eccube_admin_route%/"
+      provider: member_provider
+      form_login:
+        enable_csrf: true
+        check_path: admin_login
+        login_path: admin_login
+        default_target_path: admin_homepage
+        username_parameter: "login_id"
+        password_parameter: "password"
+        use_forward: false
+        success_handler: eccube.security.success_handler
+        failure_handler: eccube.security.failure_handler
+      login_throttling:
+        max_attempts: "%eccube_login_throttling_max_attempts%"
+        interval: "%eccube_login_throttling_interval%"
+      logout:
+        path: admin_logout
+        # success_handler: eccube.security.logout.success_handler
+    customer:
+      pattern: ^/
+      provider: customer_provider
+      request_matcher: customize.middleware.customer_type
+      remember_me:
+        secret: "%kernel.secret%"
+        lifetime: 3600
+        name: eccube_remember_me
+        remember_me_parameter: "login_memory"
+        secure: auto
+      form_login:
+        enable_csrf: true
+        check_path: mypage_login
+        login_path: mypage_login
+        default_target_path: homepage
+        username_parameter: "login_email"
+        password_parameter: "login_pass"
+        use_forward: false
+        success_handler: eccube.security.success_handler
+        failure_handler: eccube.security.failure_handler
+      login_throttling:
+        max_attempts: "%eccube_login_throttling_max_attempts%"
+        interval: "%eccube_login_throttling_interval%"
+      logout:
+        path: logout
+        target: homepage
+
+  access_decision_manager:
+    strategy: unanimous
+    allow_if_all_abstain: false
