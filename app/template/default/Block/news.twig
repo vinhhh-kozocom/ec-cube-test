@@ -1,0 +1,26 @@
+{% if not isSalon %}
+{% set NewsList = repository('Eccube\\Entity\\News').getList() %}
+
+<div class="mt30">
+    <h2 class="aki-title-zen mb20">{{ 'front.block.news.title__ja'|trans }}</h2>
+    <section class="aki-news aki-border">
+        {%  for news in NewsList %}
+            <div class=" aki-border">
+                <div class="aki-news-item ">
+                    <p class="aki-news-title">{{news.publish_date|date("Y年m月d日")}}</p>
+                    {% if news.url %}
+                        <a class="aki-news-content" href="{{ news.url }}" {% if news.link_method == '1' %}target="_blank"{% endif %}>
+                            {{ news.title }}
+                        </a>
+                    {% else %}
+                        <p class="aki-news-content">{{ news.title }}</p>
+                    {% endif %}
+                </div>
+                {% if news.description %}
+					<p class="aki-news-description">{{ news.description|replace({'< a': '<a'})|raw|nl2br }}</p>
+				{% endif %}
+            </div>
+        {% endfor %}
+    </section>
+</div>
+{% endif %}

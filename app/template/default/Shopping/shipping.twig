@@ -1,0 +1,61 @@
+{% extends 'default_frame.twig' %}
+{% block main %}
+	<div id="">
+		<div class="text-center">
+			<h2 class="mb20">{{ 'front.shopping.shipping_title'|trans }}</h2>
+			<p>
+				{{ 'front.shopping.shipping_address_warning_text1'|trans }}<br>
+				{{ 'front.shopping.shipping_address_warning_text2'|trans }}
+			</p>
+		</div>
+		<div class="mt30">
+			{% if Customer.CustomerAddresses|length < eccube_config.eccube_deliv_addr_max %}
+				<div>
+					<a class="aki-btn aki-btn-default" href="{{ url('shopping_shipping_edit', {'id': shippingId}) }}">{{ 'front.shopping.shipping_add_new_shipping'|trans }}</a>
+				</div>
+			{% else %}
+				<div class="ec-alert-warning">
+					<div class="ec-alert-warning__text">
+						<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+						{{ 'common.customer_address_count_is_over'|trans({ '%count%': eccube_config.eccube_deliv_addr_max }) }}
+					</div>
+				</div>
+			{% endif %}
+			{% if has_errors(form.addresses) %}
+				<div class="ec-alert-warning">
+					<div class="ec-alert-warning__text">
+						<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
+						{{ 'front.shopping.shipping_unselected'|trans }}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<form method="post" action="{{ url('shopping_shipping', {'id': shippingId}) }}">
+			{{ form_widget(form._token) }}
+			<div>
+				{% for choice in form.addresses.vars.choices %}
+					{% set Address = choice.data %}
+					<div class="d-flex align-items-center gap30 pa30 aki-border mt20 mb20">
+						<div>
+							{% set checked = choice is selectedchoice(form.addresses.vars.value) ? 'checked="checked"' : '' %}
+							<input type="radio" id="address{{ choice.value }}" name="{{ form.addresses.vars.full_name }}" value="{{ choice.value }}" {{ checked }}/>
+						</div>
+						<div><div class="aki-font-semibold gray-sub-text">{{ Address.name01 }}&nbsp;{{ Address.name02 }}</div>
+						<div>〒{{ Address.postal_code }}
+							{{ Address.Pref }}{{ Address.addr01 }}{{ Address.addr02 }}</div>
+						<div>{{ Address.phone_number }}</div></div>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="col-12 mb30">
+				<div class="text-center">
+					<a href="{{ url('shopping') }}" class="aki-btn aki-btn-default mr20">{{ 'common.back'|trans }}</a>
+					<button type="submit" class="aki-btn aki-btn-primary">{{ 'front.shopping.shipping_send_selected_shipping'|trans }}</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+{% endblock %}

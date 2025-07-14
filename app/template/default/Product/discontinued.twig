@@ -1,0 +1,67 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'product_page' %}
+{% block main %}
+</div>
+</div>
+</div>
+</div>
+<div class="aki-container">
+    <div class="no-padding text-center">
+        <div style="margin-top:-40px" class="">
+        <img loading="lazy"
+            src="/html/template/default/assets/icon/error.svg"
+            class="aki-icon-default mt30"
+            alt="icon" />
+        <h2 class="error mb40 mt20">
+            お探しの商品は販売終了いたしました
+        </h2>
+        <p class="text-start text-md-center mb30">
+            申し訳ございませんが、お客様がアクセスしようとした商品は現在取り扱っておりません。<br />
+            商品は販売終了、もしくは一時的に在庫切れとなっている可能性がございます。<br />
+            商品の詳細についてご質問がございましたら、お気軽にお問い合わせください。<br />
+            引き続き、お客様のお買い物をサポートさせていただきます。
+        </p>
+        </div>
+        <div class="btn_group col-md-6 col-12 offset-md-3">
+        <h3 class="mb20">
+            着物{% if not isSalon %}あき{% endif %}TOPページ
+        </h3>
+        <a href="/">
+            <p class="text-center">
+            <button type="button" class="aki-btn aki-btn-primary mb30">
+                ▶ こちらから
+            </button>
+            </p>
+        </a>
+        {% if not isSalon %}
+            <form class="" method="get" action="/products/list">
+            <div class="input-search__popup-form justify-content-center mb30">
+                <input type="text"
+                class="input-search__popup-input"
+                name="name"
+                placeholder="商品名・品番で検索" />
+                <button class="btn btn-primary" type="submit">
+                <svg width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.11111 15.2222C12.0385 15.2222 15.2222 12.0385 15.2222 8.11111C15.2222 4.18375 12.0385 1 8.11111 1C4.18375 1 1 4.18375 1 8.11111C1 12.0385 4.18375 15.2222 8.11111 15.2222Z"
+                    stroke="white"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                    <path d="M17.0005 17L13.1338 13.1333"
+                    stroke="white"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                </svg>
+                </button>
+            </div>
+            </form>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

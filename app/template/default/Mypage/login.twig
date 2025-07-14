@@ -1,0 +1,115 @@
+{% extends 'default_frame.twig' %} {% set body_class = 'aki-mypage' %} {% block main
+%}
+<div>
+    <div class="text-center">
+        {% for error in app.session.flashbag.get('eccube.front.login.request.error') %}
+			<div class="ec-cartRole__error">
+				<div class="ec-alert-warning">
+					<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"></div>
+					<div class="ec-alert-warning__text">
+						{{ error|trans|nl2br }}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+        <h2>ログイン</h2>
+        <p class="mt20 text-start text-md-center">
+            会員の方は、登録時に入力されたメールアドレスとパスワードでログインしてください。
+        </p>
+    </div>
+    <div class="mt30">
+        <form
+            name="login_mypage"
+            id="login_mypage"
+            method="post"
+            action="{{ url('mypage_login') }}"
+        >
+            {% if app.session.flashBag.has('eccube.login.target.path') %} {% for
+            targetPath in app.session.flashBag.get('eccube.login.target.path')
+            %}
+            <input type="hidden" name="_target_path" value="{{ targetPath }}" />
+            {% endfor %} {% endif %}
+            <div id="login_box" class="aki-row">
+                <div id="mypage_login_wrap" class="col-12">
+                    <div id="mypage_login_box" class="column">
+                        <div
+                            id="mypage_login_box__body"
+                            class="column_inner clearfix"
+                        >
+                            <div id="mypage_login_box__login_email">
+                                <label class="mb10 aki-font-semibold"
+                                    >メールアドレス<span class="required"
+                                        >*</span
+                                    ></label
+                                >
+                                {{ form_widget(form.login_email, {'attr': {'style' : 'ime-mode: disabled;', 'autofocus': true
+                                }}) }}
+                            </div>
+                            <div id="mypage_login_box__login_pass" class="mt25 position-relative">
+                                <label class="mb10 aki-font-semibold"
+                                    >パスワード<span class="required"
+                                        >*</span
+                                    ></label
+                                >
+                                {{ form_widget(form.login_pass) }} {% if BaseInfo.option_remember_me %} {% endif %}
+                                <span
+                                    toggle="#login_pass"
+                                    class="toggle-password"
+                                >
+                                    <img loading="lazy" src="{{ asset('assets/icon/eye-slash.svg') }}" class="aki-icon-default" alt="icon"/>
+                                    <img loading="lazy" src="{{ asset('assets/icon/eye.svg') }}" class="aki-icon-default aki-navs" alt="icon"/>
+                                </span>
+                            </div>
+                            {% for reset_complete in
+                            app.session.flashbag.get('password_reset_complete')
+                            %}
+                            <p>{{ reset_complete | trans }}</p>
+                            {% endfor %} {% if error %}
+                            <p class="text-danger mt10">
+                                {{ error.messageKey|trans(error.messageData, 'validators')|nl2br }}
+                            </p>
+                            {% endif %}
+                            <div
+                                id="mypage_login__login_button"
+                                class="btn_area mt25"
+                            >
+                                <button
+                                    type="submit"
+                                    class="aki-btn aki-btn-primary btn-block"
+                                >
+                                    {{ "common.login" | trans }}
+                                </button>
+                            </div>
+                            {% if not isSalon %}
+                                <div class="text-center mt25">
+                                    <a
+                                        class="text-green text-decoration-underline"
+                                        href="{{ url('forgot') }}"
+                                        >パスワードをお忘れの方</a
+                                    >
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}"
+            />
+        </form>
+    </div>
+</div>
+<script>
+    $(".toggle-password").click(function () {
+        $(this).children().toggle();
+        let input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
+{% endblock %}

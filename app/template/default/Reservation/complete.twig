@@ -1,0 +1,21 @@
+{% extends 'default_frame.twig' %}
+{% block main %}
+	<div id="">
+		<div class="col-md-12 text-center mb20">
+			<h2 class="mb20">{{ 'front.reservation.complete_title'|trans }}</h2>
+			<p>
+				{{ 'front.reservation.complete'|trans }}<br>
+			</p>
+            <div id="deliveradd_input_box__message" class="complete_message">
+                {{'aki.front.reservation.error.email'|trans}}
+			</div>
+		</div>
+		<div id="complete_wrap">
+			<div class="row no-padding">
+				<div class="btn_group text-center">
+					<a class="aki-btn aki-btn-default" href="{{ url('homepage') }}">{{ 'common.go_to_top'|trans }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

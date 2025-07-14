@@ -1,0 +1,41 @@
+{% extends 'default_frame.twig' %} {% set body_class = 'registration_page' %} {%
+block main %}
+<div class="text-center">
+    <h2>新規会員登録（完了）</h2>
+
+    <div id="complete_box" class="mt20">
+        <div id="deliveradd_input" class="row">
+            <div id="complete_box__body" class="col-md-10 offset-md-1">
+                <div id="complete_box__message" class="complete_message">
+                    <h3>会員登録ありがとうございます</h3>
+                    <p id="complete_box__attention" class="mt20 text-start text-md-center">
+                        現在<span class="attention">仮会員</span
+                        >の状態です。<br />
+                        ご入力いただいたメールアドレス宛てに、ご連絡が届いておりますので、<br class="d-none d-md-block"/>本会員登録になった上でお買い物をお楽しみください。<br />
+                        今後ともご愛顧賜りますようよろしくお願い申し上げます。
+                    </p>
+                </div>
+                <div>
+                    <div id="complete_box__footer" class="row no-padding">
+                        <div
+                            id="complete_box__button_menu"
+                            class="btn_group offset-md-4 col-md-4"
+                        >
+                            <div
+                                id="complete_box__top_button"
+                                class="mt20 d-flex justify-content-center"
+                            >
+                                <a
+                                    href="{{ url('homepage') }}"
+                                    class="aki-btn aki-btn-primary "
+                                    >{{ "common.go_to_top" | trans }}</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

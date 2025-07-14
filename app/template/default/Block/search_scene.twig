@@ -1,0 +1,63 @@
+<span id="choose_scene" class="scroll-hide"></span>
+<div class="aki-row search_scene">
+	<div class="col-12">
+        <p class="aki-border-primary"></p>
+		<section id="all-party">
+			<div class="aki-row">
+				<div class="col-12">
+					<div class="text-center">
+						<h2 class="aki-title-zen mb20">ご利用のシーンから選ぶ</h2>
+						<p class="mb30">ご利用のシーンをお選びください。</p>
+					</div>
+				</div>
+			</div>
+			<div class="aki-row choose tab-pane active">
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/adult" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_成人式sp'});">
+                        <div class="top_recommend_title aki-title_usage-scene aki-border" style="background-image: url(/html/template/default/assets/img/aki/choose/new1.webp)">
+                            <span class="title_usage-scene">成人式</span>
+                        </div>
+                        </a>
+                </div>
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/graduation_entrance" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_卒業式・入学式sp'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene"  style="background-image: url(/html/template/default/assets/img/aki/choose/new2.webp)">
+                            <span class="title_usage-scene">卒業式・入学式</span>
+                        </div></a>
+                </div>
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/wedding" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_結婚式sp'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new3.webp)">
+                        <span class="title_usage-scene">結婚式</span>    
+                    </div></a>
+                </div>
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/party" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_パーティー・お茶会sp'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new4.webp)">
+                        <span class="title_usage-scene">パーティー<br>お茶会</span>
+                        </div></a>
+                </div>
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/theater_dinner" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_観劇・お食事会sp'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new5.webp)">
+                        <span class="title_usage-scene">観劇・お食事会</span>
+                        </div></a>
+                </div>
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/shrine_visit" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_七五三着物・十三詣り画像pc'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new6.webp)">
+                        <span class="title_usage-scene">七五三<br>お宮参り<br>十三参り</span>
+                        </div></a>
+                </div>
+                {% if not isSalon %}
+                <div class="col-md-6 col-12">
+                    <a href="/user_data/choose/fireworks_festival" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_浴衣画像pc'});">
+                        <div class="top_recommend_title aki-border aki-title_usage-scene mb00" style="background-image: url(/html/template/default/assets/img/aki/choose/new7.webp)">
+                        <span class="title_usage-scene">花火・お祭り</span>
+                        </div></a>
+                </div>
+                {% endif %}
+            </div>
+		</section>
+	</div>
+</div>

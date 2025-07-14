@@ -1,0 +1,263 @@
+{% extends 'default_frame.twig' %} {% form_theme form
+'Form/form_div_layout.twig' %} {% block javascript %}
+<script
+    src="//yubinbango.github.io/yubinbango/yubinbango.js"
+    charset="UTF-8"
+></script>
+{% endblock javascript %} {% block main %}
+
+<div class="text-center">
+    <h2>{{ "front.contact.title" | trans }}</h2>
+    <p class="mt20 text-start text-md-center">{{ "aki.front.contact.inquiry_notice.top" | trans | nl2br }} <br>{{ "aki.front.contact.inquiry_notice.bottom" | trans | nl2br }} </p>
+</div>
+<div class="form-block text-center mt30">
+    <h2>{{ "aki.front.notice.summer_opening_title" | trans }}</h2>
+    <p class="mt20 text-start text-md-center">
+        {{ "aki.front.notice.summer_opening_text1" | trans }}<br>
+        {{ "aki.front.notice.summer_opening_text2" | trans }}<br>
+        {{ "aki.front.notice.summer_opening_text3" | trans }}
+    </p>
+</div>
+    <div class="mt30 form-block">
+        <div class="cart_page">
+            <form
+                method="post"
+                action="{{ url('contact') }}"
+                class="h-adr"
+                novalidate
+            >
+                <span class="p-country-name" style="display: none">Japan</span>
+                {{ form_widget(form._token) }}
+                <div>
+                    <div id="top_box__name" class="group-block">
+                        <div>
+                            {{
+                                form_label(form.store, "", {
+                                    label_attr: { class: "control-label" }
+                                })
+                            }}
+                        </div>
+                        <div class="custom_arrow_select position-relative {{ has_errors(form.store) ? ' error' }}">
+                            {{
+                                form_widget(form.store, {
+                                    attr: { class: "form-control w-100" }
+                                })
+                            }}
+                            {{ form_errors(form.store) }}
+                        </div>
+                    </div>
+                    <div class="group-block">
+                        <div>
+                            <label class="control-label"
+                                >お名前<span class="required">*</span></label
+                            >
+                        </div>
+                        <div>
+                            <div
+                                class="row pb-0{{ has_errors(form.name.name01, form.name.name02) ? ' error' }}"
+                            >
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.name.name01, {
+                                            attr: {
+                                                placeholder: "common.last_name",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.name.name01) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.name.name02, {
+                                            attr: {
+                                                placeholder:
+                                                    "common.first_name",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.name.name02) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-block">
+                        <div>
+                            {{
+                                form_label(form.kana, "aki.common.kana", {
+                                    label_attr: { class: "control-label" }
+                                })
+                            }}
+                        </div>
+                        <div>
+                            <div
+                                class="row pb-0{{ has_errors(form.kana.kana01, form.kana.kana02) ? ' error' }}"
+                            >
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.kana.kana01, {
+                                            attr: {
+                                                placeholder:
+                                                    "common.last_name_kana",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.kana.kana01) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.kana.kana02, {
+                                            attr: {
+                                                placeholder:
+                                                    "common.first_name_kana",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.kana.kana02) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-block">
+                        <div>
+                            {{
+                                form_label(
+                                    form.phone_number,
+                                    "common.phone_number",
+                                    { label_attr: { class: "control-label" } }
+                                )
+                            }}
+                        </div>
+                        <div>
+                            <div
+                                class="{{ has_errors(form.phone_number) ? ' error' }}"
+                            >
+                                {{
+                                    form_widget(form.phone_number, {
+                                        attr: {
+                                            class: "form-control w-100"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.phone_number) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-block">
+                        <div class="row pb-0">
+                            <div
+                                class="col-md-6 {{ has_errors(form.email) ? ' error' }}"
+                            >
+                                <label class="control-label"
+                                    >メールアドレス<span class="required"
+                                        >*</span
+                                    ></label
+                                >
+                                {{
+                                    form_widget(form.email, {
+                                        attr: {
+                                            placeholder:
+                                                "common.mail_address_sample",
+                                            class: "form-control w-100"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.email) }}
+                            </div>
+                            <div
+                                class="col-md-6 {{ has_errors(form.reply) ? ' error' }}"
+                            >
+                                <div>
+                                    <label class="control-label">返信の方法<span class="required"
+                                    >*</span
+                                ></label>
+                                </div>
+                                <div class="custom_arrow_select position-relative">
+                                    {{
+                                        form_widget(form.reply, {
+                                            attr: {
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.reply) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-block">
+                        <label class="control-label"
+                            >お問い合わせ内容<span class="required"
+                                >*</span
+                            ></label
+                        >
+                        <div>
+                            <div
+                                class="{{ has_errors(form.contents) ? ' error' }}"
+                            >
+                                {{
+                                    form_widget(form.contents, {
+                                        attr: {
+                                            class: "form-control w-100"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.contents) }}
+                            </div>
+                            <p class="mt10">
+                                {{ "aki.front.contact.order_notice" | trans }}
+                            </p>
+                        </div>
+                    </div>
+                    {# エンティティ拡張の自動出力 #} {% for f in form|filter(f
+                    => f.vars.eccube_form_options.auto_render) %} {% if
+                    f.vars.eccube_form_options.form_theme %} {% form_theme f
+                    f.vars.eccube_form_options.form_theme %}
+                    {{ form_row(f) }}
+                    {% else %}
+                    <div class="group-block">
+                        <div>
+                            {% set label_class = f.vars.label_attr.class is
+                            defined ? f.vars.label_attr.class : '' %}
+                            {{ form_label(f, f.vars.label, { 'label_attr': {'class': label_class ~ ' control-label'}
+                        }) }}
+                        </div>
+                        <div>
+                            <div
+                                class="{{
+                                    f.vars.eccube_form_options.style_class
+                                }}{{ has_errors(f) ? ' error' }}"
+                            >
+                                {{ form_widget(f) }}
+                                {{ form_errors(f) }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %} {% endfor %}
+                </div>
+                <div
+                    class="divide group-block"
+                    style="background-color: var(--bs-gray-300)"
+                ></div>
+                <div>
+                    <div id="top_box__footer" class="row no-padding">
+                        <div id="top_box__confirm_button" class="text-center">
+                            <button
+                                type="submit"
+                                class="aki-btn aki-btn-primary"
+                                name="mode"
+                                value="confirm"
+                            >
+                                {{ "common.go_to_confirm" | trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

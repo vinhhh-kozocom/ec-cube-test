@@ -1,0 +1,67 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'cart_page' %}
+{% block main %}
+<style>
+.button__layout {
+	width: 55%;
+	margin: auto;
+}
+@media screen and (max-width: 1205px) {
+  .button__layout {
+    width: 80%;
+  }
+  .button__card{
+	width: 200px !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  .button__layout {
+    width: 100%;
+  }
+  .button__card{
+	width: 200px !important;
+  }
+}
+</style>
+<div id="">
+	<div class="aki-row">
+		<div class="col-12 text-center">
+			<h2 class="mb20">{{'front.shopping.error'|trans}}</h2>
+			{{'aki.front.checkout.error'|trans|raw}}
+			<p>
+				{% for error in app.session.flashbag.get('eccube.front.error')  %}
+				<div id="error_box__error_message-{{ loop.index }}" class="message">
+					{{ error|trans|nl2br }}
+				</div>
+				{% endfor %}
+				{% for warning in app.session.flashbag.get('eccube.front.warning')  %}
+				<div id="error_box__error_message-{{ loop.index }}" class="message">
+					{{ warning|trans|nl2br }}
+				</div>
+				{% endfor %}
+			</p>
+		</div>
+	</div>
+	<div class="mt30">
+		<div class="aki-row button__layout">
+			<div class="{{ app.user ? 'col-4 col-6 col-md-4' : 'col-6 text-end' }} mb-3">
+				<a href="{{ url(not isJapan ? 'cart_locale' : 'cart') }}" class="aki-btn aki-btn-default {{ app.user ? 'w-100' : '' }}">{{'front.shopping.back_to_cart'|trans}}</a>
+			</div>
+            <div class="{{ app.user ? 'col-4 col-6 col-md-4' : 'col-6 text-start' }} mb-3">
+                {% if isEnglish %}
+                    <a href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});" class="aki-btn aki-btn-primary {{ app.user ? 'w-100' : '' }}">{{'common.go_to_top'|trans}}</a>
+                {% elseif isChina %}
+                    <a href="/user_data/china" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_中文'});" class="aki-btn aki-btn-primary {{ app.user ? 'w-100' : '' }}">{{'common.go_to_top'|trans}}</a>
+                {% else %}
+                    <a href="{{ url('homepage') }}" class="aki-btn aki-btn-primary {{ app.user ? 'w-100' : '' }}">{{'common.go_to_top'|trans}}</a>
+                {% endif %}
+            </div>
+			{% if app.user %}
+				<div class="col-4 col-12 col-md-4 mb-3 d-flex justify-content-center">
+					<a href="{{ path('mypage_card') }}" class="button__card aki-btn aki-btn-primary w-100">{{ 'common.card.manage'|trans }}</a>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% if not isSalon %}
+    {# {% set Stores = repository('Customize\\Entity\\ReservationSetting').getList() %} #}
+{% endif %}
+<div class="aki-feature-search d-none d-md-block">
+    <div class="mb10">
+        <form name="left_search_form" action="/products/list" id="left-search-product-form" class="left_search_form">
+            {% if isSalon %}
+            <div class="mb10 mt20">
+                <h4>ご利用日・ご利用シーンから着物を探す</h4>
+            </div>
+            {% endif %}
+            <div class="form-group date">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon" id="basic-addon1"><i class="aki-icon-calenda color-primary"></i></span>
+                    <input name="date" type="text" class="productListDate form-control datepicker hasDatepicker" placeholder="ご利用日" readonly="readonly" id="useDateSideForm" data-id="date-filter">
+                </div>
+            </div>
+            <div class="form-group">
+                {% include 'Product/partials/filter_category.twig' %}
+            </div>
+            <button class="filter_button_side aki-btn aki-btn-primary btn-block w-100" type="submit"><img loading="lazy" src="{{ asset('assets/icon/search-white.svg') }}" class="aki-icon-default" alt="icon"/> 着物を探す</button>
+            {% if not isSalon and APP_ENV != APP_PROD %}
+                <div class="aki-form-group mt15">
+                    <div class="input-group input-group-lg position-relative">
+                        <select class="form-control aki-search-input aki-btn-primary text-center reservation_store_list">
+                            <option value="">お下見来店予約</option>
+                            {# {% for key, index in Stores %}
+                                <option value="{{key}}"
+                                {% if store_name_en is defined and (key ==  store_name_en) %}
+                                    selected
+                                {% endif %}
+                                >{{Stores[key]}}</option>
+                            {% endfor %} #}
+                        </select>
+                        <span class="icon-select-down"><img loading="lazy" src="{{ asset('assets/icon/aki-icon-down-white.svg') }}" alt="kimono"></span>
+                    </div>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+    {% if not isSalon %}
+    <div class="mt20 mb20">
+        <div class="aki-accordion accordion-flush" id="accordionFlushExample">
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/adult">
+                成人式 <img loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/graduation_entrance" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_卒業式・入学式sp'});">
+                卒業式・入学式 <img  loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/wedding" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_結婚式sp'});">
+                結婚式 <img  loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/party" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_パーティー・お茶会sp'});">
+                パーティ・お茶会 <img loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/theater_dinner" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_観劇・お食事会sp'});">
+                観劇・お食事会 <img  loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/shrine_visit">
+                七五三・お宮参り <img loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+            <div class="aki-accordion-item">
+                <a class="aki-accordion-button collapsed" href="/user_data/choose/fireworks_festival">
+                花火・お祭り <img loading="lazy" src="{{ asset('assets/icon/icon-right.svg') }}" class="aki-icon-default" alt="icon"/>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+function initialFormProductSearch() {
+	var search_category_id = "{{ app.request.get('category_id') }}";
+	var search_date = "{{ app.request.get('date') }}";
+	if (search_category_id) {
+        $('select[name="category_id"]').val(search_category_id);
+        if ($('select[name="category_id"]').val() == null) {
+            var category_missing = '<option selected value="' + search_category_id + '">'+'</option>';
+            $('#form1 select[name="category_id"]').append(category_missing)
+        }
+    }
+    var offset = 4;
+    var dateToday = new Date();
+    var dateMin = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() + offset);
+    var dateMax = new Date(dateMin.getFullYear(), dateMin.getMonth() + 1, dateMin.getDate() - 1);
+    var dateFormat = "yy/mm/dd";
+    var useDateChange = false;
+    var initalUseDate = false;
+
+    $('#useDateMainForm').datepicker( {
+        format: 'yyyy-mm-dd',
+        language: 'ja',
+        autoclose : true,
+        keyboardNavigation : false,
+        showMonthAfterYear: true,
+        monthNames: ["1月","2月","3月","4月aa","5月","6月","7月","8月","9月","10月","11月","12月"],
+        todayHighlight : true,
+        startDate: dateMin,
+        //endDate: dateMax
+    }).on("changeDate", function (e) {
+        if (!initalUseDate) {
+            return;
+        }
+        if ($('#useDateSideForm').val() === $(this).val()) {
+            return;
+        }
+        $('#useDateSideForm').datepicker('setDate', new Date($(this).val()));
+    });
+
+    $('#useDateSideForm').datepicker( {
+        format: 'yyyy-mm-dd',
+        language: 'ja',
+        autoclose : true,
+        keyboardNavigation : false,
+        showMonthAfterYear: true,
+        monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+        todayHighlight : true,
+        startDate: dateMin,
+        //endDate: dateMax
+    }).on("changeDate", function (e) {
+        if (!initalUseDate) {
+            return;
+        }
+        if ($('#useDateMainForm').val() === $(this).val()) {
+            return;
+        }
+        $('#useDateMainForm').datepicker('setDate', new Date($(this).val()));
+    });
+
+
+    if (search_date) {
+        search_date = search_date.split('-').join('/');
+        $('#useDateMainForm').datepicker('setDate', new Date(search_date));
+        $('#useDateSideForm').datepicker('setDate', new Date(search_date));
+        initalUseDate = true;
+    }
+    {% if not isSalon %}
+        else {
+            initalUseDate = true;
+        }
+    {% endif %}
+
+    $('.left_search_form select[name=category_id]').change(function(e){
+        $('.main-search-product-form select[name=category_id]').val($(this).val());
+    });
+    $('.main-search-product-form select[name=category_id]').change(function(e) {
+        $('.left_search_form select[name=category_id]').val($(this).val());
+    })
+}
+
+$(function() {
+	initialFormProductSearch();
+	$form = $("form[name=left_search_form]");
+	$form.on("submit", function() {
+		var category_id = $("select[name=category_id]", this).val();
+		var q = [];
+		if (category_id) {
+			q.push("category_id=" + category_id);
+		}
+		var date = $("input[name=date]", this).val();
+		if (date) {
+			q.push("date=" + date.replace(/\//g, '-'));
+		}
+		q = q.join("&");
+		location.href = $form.attr("action") + (q != "" ? "?" + q : "");
+		return false;
+	});
+})
+
+$(document).ready(function() {
+    const specialUrl = ['big', 'hitoenatu'];
+
+    function handleButtonClick(event, categorySelector, calendarSelector) {
+        const category = $(categorySelector).val();
+        const calendar = $(calendarSelector).val();
+        if (specialUrl.includes(category)) {
+            event.preventDefault();
+            const newUrl = `/user_data/${category}?category_id=${category}${calendar ? `&date=${calendar}` : ''}`;
+            window.location.href = newUrl;
+        }
+    }
+
+    $('#filter_button').on('click', function(event) {
+        handleButtonClick(event, '#category_id', '#AkiuseDateSideForm');
+    });
+
+    $('.filter_button_side').on('click', function(event) {
+        handleButtonClick(event, '.category_id_side', '#AkiuseDateSideForm');
+    });
+
+    $('#filter_button_mb').on('click', function(event) {
+        handleButtonClick(event, '.category_id_mb', '#AkiuseDateSideForm');
+    });
+});
+</script>

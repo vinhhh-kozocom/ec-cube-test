@@ -1,0 +1,63 @@
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'favorite' %}
+
+{% set body_class = 'aki-mypage' %}
+
+{% block main %}
+<style>
+    .ec-favoriteRole__itemThumb{
+        min-height: 50px;
+        max-height: 50px;
+    }
+</style>
+    <div class="ec-layoutRole__main">
+        <div class="row text-center">
+            <div class="ec-pageHeader aki-mypage_title">
+                <h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'front.mypage.nav__history'|trans }}</h2>
+                <p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+            </div>
+        </div>
+        {% include 'Mypage/navi.twig' %}
+
+        <div class="ec-favoriteRole">
+            {% if pagination.totalItemCount > 0 %}
+                <div class="ec-favoriteRole__header">
+                    <p>{{ 'aki.front.mypage.favorite_count'|trans({'%count%':pagination.totalItemCount})|raw }}</p>
+                </div>
+                <div class="ec-favoriteRole__detail">
+                    <ul class="aki-row">
+                        {% for FavoriteProduct in pagination %}
+                            {% set Product = FavoriteProduct.Product %}
+                            <li class="col-md-3 col-6 text-center position-relative mb20">
+                                <a class="close-button"
+                                    href="{{ url('mypage_favorite_delete', { id : Product.id }) }}" {{ csrf_token_for_anchor() }}
+                                    data-method="delete">
+                                    <img loading="lazy" src="{{ asset('assets/icon/icon-close.svg') }}" alt="close">
+                                </a>
+                                <p class="ec-favoriteRole__item-image inline_block_before">
+                                    <img loading="lazy" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}">
+                                </p>
+                                <a class="ec-favoriteRole__itemThumb" href="{{ url('product_detail', {'id': Product.id}) }}">
+                                    <p class="ec-favoriteRole__itemTitle">{{ Product.name }}</p>
+                                </a>
+                                <p class="aki-font-semibold gray-sub-text">
+                                    {% if Product.price02_inc_tax_min == Product.price02_inc_tax_max %}
+                                        {{ Product.price02_inc_tax_min|number_format }}円
+                                    {% else %}
+                                        {{ Product.price02_inc_tax_min|number_format }}～{{ Product.price02_inc_tax_max|number_format }}円
+                                    {% endif %}
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="ec-pagerRole">
+                    {% include "pager.twig" with {'pages': pagination.paginationData} %}
+                </div>
+            {% else %}
+                <div class="ec-favoriteRole__header">{{ 'front.mypage.favorite_not_found'|trans }}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

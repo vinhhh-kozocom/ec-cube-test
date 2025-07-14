@@ -1,0 +1,181 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'registration_page' %}
+{% block stylesheet %}
+<style>
+    #entry_address_pref,
+    #entry_birth_year,
+    #entry_birth_month,
+    #entry_birth_day,
+    #entry_job,
+    #entry_sex,
+    .form-check{
+        display: none;
+    }
+    legend {
+        float: none;
+    }
+    .col-form-label {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+	.registration_page dt, .registration_page dt label {
+		font-weight: 500 !important;
+	}
+	span.ec-required {
+		display: none;
+	}
+</style>
+{% endblock %}
+{% block main %}
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h2>新規会員登録確認</h2>
+		</div>
+	</div>
+	<div id="confirm_wrap" class="">
+		<div id="confirm_box" class="row">
+			<div id="confirm_box__body" class="col-md-10 offset-md-1">
+				<p id="confirm_box__message" class="text-center">下記の内容で送信してもよろしいでしょうか？<br/>よろしければ、一番下の「会員登録をする」ボタンをクリックしてください。</p>
+				<form method="post" action="{{ url('entry') }}">
+					{{ form_widget(form._token) }}
+					<div id="confirm_box__body_inner" class="dl_table">
+						<dl id="confirm_box__name">
+							<dt>{{ form_label(form.name, 'common.name') }}</dt>
+							<dd class="form-group input_name">
+                                {{ form.name.name01.vars.data }}
+                                {{ form.name.name02.vars.data }}
+                                {{ form_widget(form.name.name01, { type : 'hidden' }) }}
+                                {{ form_widget(form.name.name02, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+						<dl id="confirm_box__kana">
+							<dt>{{ form_label(form.kana, 'common.kana') }}</dt>
+							<dd class="form-group input_name">
+                                {{ form.kana.kana01.vars.data }}
+                                {{ form.kana.kana02.vars.data }}
+								{{ form_widget(form.kana.kana01, { type : 'hidden' }) }}
+								{{ form_widget(form.kana.kana02, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+						<dl id="confirm_box__company_name">
+							<dt> {{ form_label(form.company_name, 'common.company_name') }}</dt>
+							<dd class="form-group input_name">
+                                {{ form.company_name.vars.data }}
+								{{ form_widget(form.company_name,{ type : 'hidden' }) }}
+							</dd>
+						</dl>
+						<dl id="confirm_box__address_detail">
+							<dt>{{ form_label(form.address, 'common.address') }}</dt>
+							<dd>
+                                〒 {{ form.postal_code.vars.data }} <br /><br />
+								{{ form.address.pref.vars.data }}<br /><br />
+								{{ form.address.addr01.vars.data }}
+								{{ form.address.addr02.vars.data }}
+								{{ form_widget(form.postal_code, { type : 'hidden' }) }}
+								{{ form_widget(form.address.pref, { type : 'hidden' }) }}
+								{{ form_widget(form.address.addr01, { type : 'hidden' }) }}
+								{{ form_widget(form.address.addr02, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+						<dl id="confirm_box__phone_number">
+							<dt>{{ form_label(form.phone_number, 'common.phone_number') }}</dt>
+							<dd class="form-group input_name">
+								{{ form.phone_number.vars.data }}
+								{{ form_widget(form.phone_number, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="confirm_box__fax">
+							<dt>{{ form_label(form.fax, 'common.fax') }}</dt>
+							<dd class="form-group input_name">
+								{{ form.fax.vars.data }}
+								{{ form_widget(form.fax, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+						<dl id="confirm_box__email">
+							<dt>{{ form_label(form.email, 'common.mail_address') }}</dt>
+							<dd>
+								<div class="form-group">
+									{{ form.email.vars.data }}
+									{{ form_widget(form.email.first, { type : 'hidden' }) }}
+									{{ form_widget(form.email.second, { type : 'hidden' }) }}
+								</div>
+							</dd>
+						</dl>
+						{# hidden form, do not need div #}
+						{{form_widget(form.type_customer)}}
+						<dl id="confirm_box__password">
+							<dt>{{ form_label(form.plain_password, 'common.password') }}</dt>
+							<dd>
+								<div class="form-group">
+									********
+									{{ form_widget(form.plain_password.first, { type : 'hidden' }) }}
+									{{ form_widget(form.plain_password.second, { type : 'hidden' }) }}
+								</div>
+							</dd>
+						</dl>
+						<dl id="confirm_box__birth">
+							<dt>{{ form_label(form.birth, 'common.birth_day') }}</dt>
+							<dd>
+								<div class="form-group form-inline">
+									{{ form.birth.vars.data ? form.birth.vars.data|date_day() }}
+                                    {{ form_widget(form.birth.year, { type : 'hidden' }) }}
+                                    {{ form_widget(form.birth.month, { type : 'hidden' }) }}
+                                    {{ form_widget(form.birth.day, { type : 'hidden' }) }}
+								</div>
+							</dd>
+						</dl>
+						<dl id="confirm_box__sex">
+							<dt>{{ form_label(form.sex, 'common.gender') }}</dt>
+							<dd>
+								<div class="form-group form-inline">
+									{{ form.sex.vars.data }}
+                                    {{ form_widget(form.sex, { type: 'hidden'}) }}
+								</div>
+							</dd>
+						</dl>
+						<dl id="confirm_box__job">
+							<dt>{{ form_label(form.job, 'common.job') }}</dt>
+							<dd>
+								<div class="form-group form-inline">
+                                    {{ form.job.vars.data }}
+                                    {{ form_widget(form.job, { type: 'hidden'}) }}
+								</div>
+							</dd>
+						</dl>
+						{# エンティティ拡張の自動出力 #}
+						{% for f in form|filter(f => f.vars.eccube_form_options.auto_render) %}
+							{% if f.vars.eccube_form_options.form_theme %}
+								{% form_theme f f.vars.eccube_form_options.form_theme %}
+								{{ form_row(f) }}
+							{% else %}
+								<dl>
+									<dt>
+										{% set label_class =  f.vars.label_attr.class is defined ? f.vars.label_attr.class : '' %}
+										{{ form_label(f, f.vars.label, { 'label_attr': {'class': label_class ~ ' ec-label' }}) }}
+									</dt>
+									<dd>
+										<div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+											{{ f.vars.data }}
+											{{ form_widget(f, { type: 'hidden'}) }}
+										</div>
+									</dd>
+								</dl>
+							{% endif %}
+						{% endfor %}
+						{{ form_widget(form.user_policy_check, { type: 'hidden'}) }}
+					</div>
+					<div id="confirm_box__footer" class="row no-padding">
+						<div id="confirm_box__button_menu" class="btn_group mx-auto col-sm-offset-3 col-sm-6">
+							<p id="confirm_box__insert_button">
+								<button type="submit" class="aki-btn aki-btn-primary btn-block mb20" name="mode" value="complete">会員登録をする</button>
+							</p>
+							<p id="confirm_box__back_button">
+								<button type="submit" class="aki-btn aki-btn-default btn-block" name="mode" value="back">戻る</button>
+							</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

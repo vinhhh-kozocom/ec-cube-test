@@ -1,0 +1,64 @@
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% set body_class = 'aki-mypage' %}
+
+{% block main %}
+    <div class="ec-layoutRole__main aki-mypage">
+        <div class="row">
+            <div class="ec-pageHeader text-center aki-mypage_title">
+                <h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'front.mypage.nav__history'|trans }}</h2>
+                <p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+            </div>
+        </div>
+        {% include 'Mypage/navi.twig' %}
+        {% if pagination.totalItemCount > 0 %}
+            <p class="ec-para-normal">{{ 'front.mypage.history_count'|trans({'%count%':pagination.totalItemCount})|raw }}。</p>
+            {% for Order in pagination %}
+                <div class="aki-mypage_list-item aki-border">
+                        <div class="aki-mypage_list-title">
+                            <div class="aki-mypage_info">
+                                <p class="aki-mypage_list-time">{{ Order.order_date|date_sec }}</p>
+                                <p>{{ 'front.mypage.order_no'|trans }} : {{ Order.order_no }} <br>
+                                    {% if (BaseInfo.option_mypage_order_status_display) %}
+                                    {{ 'front.mypage.order_status'|trans }} : {{ Order.CustomerOrderStatus }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="aki-mypage_img">
+                                {% for OrderItem in Order.MergedProductOrderItems %}
+                                    <div class="aki-mypage_img-item">
+                                        {% if OrderItem.Product is null %}
+                                            <img loading="lazy" src="{{ asset(''|no_image_product, 'save_image') }}"/>
+                                        {% else %}
+                                            <img loading="lazy" src="{{ asset(OrderItem.Product.MainListImage|no_image_product, 'save_image') }}">
+                                        {% endif %}
+                                        <div>
+                                            <p>{{ OrderItem.product_name }}</p>
+                                            {% if OrderItem.class_category_name1 is not empty %}
+                                                {{ OrderItem.class_category_name1 }}
+                                            {% endif %}
+                                            {% if OrderItem.class_category_name2 is not empty %}
+                                                / {{ OrderItem.class_category_name2 }}
+                                            {% endif %}
+                                            <p class="aki-mypage_list-time"><b>{{ OrderItem.price_inc_tax|price }}
+                                                × {{ OrderItem.quantity }}</b></p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    <div>
+                        <a class="aki-mypage_btn aki-border" href="{{ url('mypage_history', {'order_no': Order.order_no}) }}">{{ 'front.mypage.view_detail'|trans }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="ec-pagerRole">
+                {% include "pager.twig" with {'pages': pagination.paginationData} %}
+            </div>
+        {% else %}
+            <p class="ec-para-normal">{{ 'front.mypage.history_not_found'|trans }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

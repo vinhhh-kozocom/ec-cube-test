@@ -1,0 +1,178 @@
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <style>
+        .cannot-book-date{
+            background-image: url("/html/template/default/assets/icon/can-not-book.svg");
+            background-repeat: no-repeat;
+            background-position: top 5px right 5px;
+            pointer-events: none;
+        }
+        .can-book-date{
+            background-image: url("/html/template/default/assets/icon/can-book-part.svg");
+            background-repeat: no-repeat;
+            background-position: top 5px right 5px;
+        }
+        .empty-date{
+            background-image: url("/html/template/default/assets/icon/can-book.svg");
+            background-repeat: no-repeat;
+            background-position: top 5px right 5px;
+
+        }
+    </style>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function date_format (date) {
+            var mm = date.getMonth() + 1;
+            var dd = date.getDate();
+            return [date.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+            ].join('-');
+        }
+        $(function(){
+            let listBookedDate = [{%- for d in listBookedDate %}"{{d}}", {% endfor -%}];
+            let listCannotBookDate = [{%- for d in listCannotBookDate %}"{{d}}", {% endfor -%}];
+            let listHodiday = [{%- for d in listHodiday %}"{{d}}", {% endfor -%}];
+
+		    var dateFormat = "yyyy-mm-dd";
+            var options = {
+                format: dateFormat,
+                language: 'ja',
+                autoclose : true,
+                keyboardNavigation : false,
+                showMonthAfterYear: true,
+                monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+                todayHighlight : true,
+                startDate: '+' + {{grayoutAfterToDay}} + 'd',
+                beforeShowDay: function(date) {
+                        var date_after_format = date_format(date);
+                        // tuesday grayout, except tuesday of march, july, august and holiday
+                        if(
+                            (date.getDay() == 2) &&
+                            ![2, 6, 7].includes(date.getMonth())
+                            &&
+                            !listHodiday.includes(date_after_format))
+                            {
+                            return false;
+                        }
+                        // if date not in list can not book (can order in this date)
+                        if({{ quantityMaxSetting }} == 0 || listCannotBookDate.indexOf(date_after_format) != -1){
+                            return {
+                                classes: 'cannot-book-date',
+                                enabled: true
+                            }
+                        }
+                        else if ({{ quantityMinSetting }} == 0 || listBookedDate.indexOf(date_after_format) != -1){
+                            return {
+                                classes: 'can-book-date',
+                                enabled: true
+                            }
+                        }
+                        return {
+                            classes: 'empty-date',
+                            enabled: true
+                        }
+                },
+		    };
+            $('#plg_wear_date_detail').datepicker(options).on('changeDate', function(e){
+                url = '{{url('list_time') }}?shop=' + '{{store_name_en}}' + '&date=' + date_format(e.date);
+                if('{{product_code}}'){
+                    url += '&product-code={{product_code}}';
+                }
+                location.href =  url;
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+	<div>
+		<div class="col-md-12">
+        <h3 class="text-center">店頭予約混雑状況</h3>
+        <div class="store-name">{{ store_name }}</div>
+        <div class="d-flex justify-content-between flex-column flex-md-row">
+            <div>{{ "front.reservation.tutorial.select" | trans }}</div>
+            <div class="d-flex justify-content-end flex-column flex-md-row">
+                <div class="d-flex align-items-center mr10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#008000" class="bi bi-record-fill mr05" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10"/>
+                    </svg>
+                    受付中
+                </div>
+                <div class="d-flex align-items-center mr10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFCC00" class="bi bi-caret-up-fill mr05" viewBox="0 0 16 16">
+                        <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                    </svg>
+                    残りわずか
+                </div>
+                <div class="d-flex align-items-center mr10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#E10C0C" class="bi bi-x-octagon mr05" viewBox="0 0 16 16">
+                        <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                    締め切り
+                </div>
+            </div>
+        </div>
+		<div id="plg_wear_date_detail" class="calendar mt20">
+        </div>
+		</div>
+        <div class="contact-message mt30">
+            予約が埋まっていてもお受けできる場合があります。
+            <br/>
+            お気軽にお問い合わせください。
+        </div>
+
+        <div class="d-flex justify-content-between w-25 mt30 mb30 aki-footer-content__left-icon">
+            <div class="ft-icon-phone" id="phone-icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <img loading="lazy" src="{{ asset('assets/icon/ft-phone.svg') }}" alt="icon"/>
+            </div>
+            <div class="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="aki-title-zen" id="exampleModalLabel">電話する店舗をお選び下さい</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-body_content d-block d-md-none text-center">
+                                <p>当店では現在下記の通常営業時間にて営業しております。<br><br>
+                                平日： <s>10:00 ～ 20:00</s>　10:00 ～ 18:00（4月22日～6月30日）<br>※平日は事前予約にて19:30までお下見やレンタルを承ります。<br><br>
+                                【土曜・日曜・祝日】 10：00 ～ 18：00<br>※お見立て受付は17：30迄<br><br>
+                                【定休日】火曜日（3月・7月・8月の火曜は10:00～18：00で休まず営業いたします）</p>
+                            </div>
+                            <div class="modal-body_button">
+
+                                <div class="info-phone ">
+                                    <p>渋谷本店</p>
+                                    <a href="tel:03-3476-3341">03-3476-3341</a>
+                                </div>
+                                <div class="info-phone ">
+                                    <p>池袋店</p>
+                                    <a href="tel:03-6416-0529">03-6416-0529</a>
+                                </div>
+                                <div class="info-phone ">
+                                    <p>銀座店</p>
+                                    <a href="tel:03-5568-0529">03-5568-0529</a>
+                                </div>
+                                <div class="info-phone ">
+                                    <p>横浜店</p>
+                                    <a href="tel:045-441-0529">045-441-0529</a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="aki-btn aki-btn-default" data-bs-dismiss="modal">閉じる</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ft-icon-email">
+                <a href="/contact" onclick="gtag('event', 'クリック', {'event_category': 'フローティングボタン','event_label': 'フローティングボタン（電話アイコン+メール）'});"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" alt="icon"/> </a>
+            </div>
+        </div>
+	</div>
+{% endblock %}

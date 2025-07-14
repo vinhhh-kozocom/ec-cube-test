@@ -1,0 +1,266 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'cart_page' %}
+
+{% block javascript %}
+    <script src="{{PAYMENT_TOKEN}}"></script>
+    <script>
+            var Multipayment,
+            CryptoJS,
+            JSEncryptExports,
+            JSEncrypt,
+            ASN1,
+            Base64,
+            Hex,
+            KJUR;
+            const emptyMessageError = '{{'aki.front.credit.card.validate.empty'|trans}}';
+            const cardnoMessageValidError = '{{'aki.front.credit.card.cardno.valid'|trans}}';
+            const cardnoMessageLengthError = '{{'aki.front.credit.card.cardno.lenght'|trans}}';
+            const cardExpireMessageValidError = '{{'aki.front.credit.card.expire.valid'|trans}}';
+            const cardNameMessageValidError = '{{'aki.front.credit.card.name.valid'|trans}}';
+            const cardSecurityMessageValidError = '{{'aki.front.credit.card.security.valid'|trans}}';
+            const cardSecurityMessageLengthError = '{{'aki.front.credit.card.security.lenght'|trans}}';
+            const cardExpireMessageDateError = '{{'aki.front.credit.card.date.expire'|trans}}';
+            const cardNameMessageLengthError = '{{'aki.front.credit.card.lenght'|trans}}';
+            var isError = false;
+            const shopID = '{{PGCARD_SHOP_ID}}'
+            $("#doPurchase").on("click",async function(){
+                var cardno = $("#card__no").val();
+                var expirYear=$("#credit_card_required_card_year").val();
+                var expirMonth=$("#credit_card_required_card_month").val();
+                var expire = expirYear.slice(-2) + expirMonth;
+                var securitycode = $("#securitycode").val();
+                var holdername = $("#holdername").val();
+                var tokennumber = 1;
+                $('.ec-errorMessage').remove();
+
+                validateForm($(this));
+                function validateInput(value, regex, length, errorMessage, errorContainer) {
+                    return new Promise((resolve, reject) => {
+                        if (value.length <= 0) {
+                            reject(errorMessage.empty);
+                        } else {
+                            if (regex && !regex.test(value)) {
+                                reject(errorMessage.invalidFormat);
+                            }
+                            if (length && (value.length < length.min || value.length > length.max)) {
+                                reject(errorMessage.invalidLength);
+                            }
+                            resolve();
+                        }
+                    });
+                }
+
+                function validateExpirePastDays(value,errorMessage){
+                    return new Promise((resolve, reject) => {
+                        const date = new Date();
+                        const currentYearMonth = date.getFullYear()+''+(date.getMonth()+1).toString().padStart(2, '0');
+                        if(Number(value) < Number(currentYearMonth)){
+                            reject(errorMessage);
+                        }else{
+                            resolve();
+                        }
+                    });
+                }
+
+                async function validateForm(elm) {
+                    let isError = false;
+                    const validateCardNo = async () => {
+                        const cardnoErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardnoMessageValidError,
+                            invalidLength: cardnoMessageLengthError,
+                        };
+                        try {
+                            await validateInput(cardno, /^\d+$/, { min: 10, max: 16 }, cardnoErrorMessages, '.card__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.card__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateExpire = async () => {
+                        const expireErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidLength: cardExpireMessageValidError,
+                        };
+                        try {
+                            await validateInput(expirYear, null, null, expireErrorMessages, '.expire__error-group');
+                            await validateInput(expirMonth, null, null, expireErrorMessages, '.expire__error-group');
+                            await validateExpirePastDays(expirYear+expirMonth, cardExpireMessageDateError);
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.expire__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateHolderName = async () => {
+                        const holderNameErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardNameMessageValidError,
+                            invalidLength: cardNameMessageLengthError,
+                        };
+                        try {
+                            await validateInput(holdername, /^[a-zA-Z\s]+$/, { min: 1, max: 51 }, holderNameErrorMessages, '.name__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.name__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateSecurityCode = async () => {
+                        const securityCodeErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardSecurityMessageValidError,
+                            invalidLength: cardSecurityMessageLengthError
+                        };
+                        try {
+                            await validateInput(securitycode, /^\d+$/, { min: 3, max: 4 }, securityCodeErrorMessages, '.security__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.security__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    await Promise.all([
+                        validateCardNo(),
+                        validateExpire(),
+                        validateHolderName(),
+                        validateSecurityCode(),
+                    ]);
+                    if (!isError) {
+                        Multipayment.init(shopID);
+                        Multipayment.getToken(
+                            {
+                            cardno: cardno,
+                            expire: expire,
+                            securitycode: securitycode,
+                            holdername: holdername,
+                            tokennumber: tokennumber
+                            },
+                        response => {
+                            var tokenError = {
+                                "000": '{{'aki.front.get.token.error.000'|trans}}',
+                                "100": '{{'aki.front.get.token.error.100'|trans}}',
+                                "101": '{{'aki.front.get.token.error.101'|trans}}',
+                                "102": '{{'aki.front.get.token.error.102'|trans}}',
+                                "110": '{{'aki.front.get.token.error.110'|trans}}',
+                                "111": '{{'aki.front.get.token.error.111'|trans}}',
+                                "112": '{{'aki.front.get.token.error.112'|trans}}',
+                                "113": '{{'aki.front.get.token.error.113'|trans}}',
+                                "121": '{{'aki.front.get.token.error.121'|trans}}',
+                                "122": '{{'aki.front.get.token.error.122'|trans}}',
+                                "131": '{{'aki.front.get.token.error.131'|trans}}',
+                                "132": '{{'aki.front.get.token.error.132'|trans}}',
+                                "141": '{{'aki.front.get.token.error.141'|trans}}',
+                                "142": '{{'aki.front.get.token.error.142'|trans}}',
+                                "150": '{{'aki.front.get.token.error.150'|trans}}',
+                                "160": '{{'aki.front.get.token.error.160'|trans}}',
+                                "161": '{{'aki.front.get.token.error.161'|trans}}',
+                                "162": '{{'aki.front.get.token.error.162'|trans}}',
+                                "170": '{{'aki.front.get.token.error.170'|trans}}',
+                                "180": '{{'aki.front.get.token.error.180'|trans}}',
+                                "190": '{{'aki.front.get.token.error.190'|trans}}',
+                                "191": '{{'aki.front.get.token.error.191'|trans}}',
+                                "501": '{{'aki.front.get.token.error.501'|trans}}',
+                                "502": '{{'aki.front.get.token.error.502'|trans}}',
+                                "511": '{{'aki.front.get.token.error.511'|trans}}',
+                                "512": '{{'aki.front.get.token.error.512'|trans}}',
+                                "521": '{{'aki.front.get.token.error.521'|trans}}',
+                                "522": '{{'aki.front.get.token.error.522'|trans}}',
+                                "531": '{{'aki.front.get.token.error.531'|trans}}',
+                                "541": '{{'aki.front.get.token.error.541'|trans}}',
+                                "551": '{{'aki.front.get.token.error.551'|trans}}',
+                                "552": '{{'aki.front.get.token.error.552'|trans}}',
+                                "901": '{{'aki.front.get.token.error.901'|trans}}',
+                                "902": '{{'aki.front.get.token.error.902'|trans}}'
+                            };
+                            if (response.resultCode == "000") {
+                                $("#token").val(response.tokenObject.token);
+                                $("#maskedCardNo").val(response.tokenObject.maskedCardNo);
+                                $("#purchaseForm").submit();
+                            } else if (response.resultCode in tokenError) {
+                                alert(tokenError[response.resultCode]);
+                            } else {
+                                alert('{{'aki.front.get.token.error'|trans}}');
+                            }
+                        }
+                    );}
+                }
+            })
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h2 class="mb20">{{'aki.front.credit.title'|trans}}</h2>
+    <div class="aki-mypage">
+
+        <form id="getTokenForm" class="history-block">
+        <div class="aki-row justify-content-center">
+            <div class="group-block col-md-6 col-12">
+                <label class="control-label">{{'aki.front.credit.card.number'|trans}}<span class="required">*</span>
+                </label>
+                <div>
+                    <div class="pb-0 card__no-group">
+                        <div class="card__no-item">
+                            <input type="text" class="form-control" id="card__no" name="card__no" minlength="10" maxlength="16" placeholder="{{'aki.front.credit.card.placeholder.number'|trans}}">
+                        </div>
+                    </div>
+                    <div class="card__error-group"></div>
+                </div>
+            </div>
+            <div class="group-block col-md-6 col-12">
+                <label class="control-label">{{'aki.front.credit.card.expire'|trans}}<span class="required">*</span>
+                </label>
+                <div>
+                    <div class="card__expire-group d-flex align-items-center">
+                        <div class="w-100 position-relative custom_arrow_select">
+                            {{form_widget(form.card_year,{attr: {placeholder: 'card_year'}})}}
+                        </div>
+                        <div class="ml10 mr10">-</div>
+                        <div class="w-100 position-relative custom_arrow_select">
+                            {{form_widget(form.card_month,{attr: {placeholder: 'card_month'}})}}
+                        </div>
+                    </div>
+                    <div class="expire__error-group"></div>
+                </div>
+            </div>
+            <div class="group-block col-md-6 col-12">
+                <label class="control-label">{{'aki.front.credit.card.security'|trans}}<span class="required">*</span>
+                </label>
+                <div>
+                    <div>
+                        <input class="form-control" id="securitycode" name="securitycode" minlength="3" maxlength="4" placeholder="{{'aki.front.credit.card.placeholder.security'|trans}}"/>
+                    </div>
+                    <div class="security__error-group">
+                    </div>
+                </div>
+            </div>
+            <div class="group-block col-md-6 col-12">
+                <label class="control-label">{{'aki.front.credit.card.name'|trans}}<span class="required">*</span>
+                </label>
+                <div>
+                    <div>
+                        <input type="text" class="form-control" id="holdername" name="holdername" placeholder="{{'aki.front.credit.card.placeholder.name'|trans}}"/>
+                    </div>
+                    <div class="name__error-group"></div>
+                </div>
+            </div>
+            <div class="col-12">
+				<div class="aki-row justify-content-center">
+					<div class="text-center text-md-end">
+						<a href="{{ url(not isJapan ? 'shopping_locale' : 'shopping') }}" class="aki-btn aki-btn-default">{{ 'common.back'|trans }}</a>
+					</div>
+					<div class="text-center text-md-start">
+						<button type="button" class="aki-btn aki-btn-primary credit__submit" id="doPurchase">{{'aki.front.credit.card.button.submit'|trans}}</button>
+					</div>
+				</div>
+			</div>
+        </div>
+        </form>
+
+        <!-- サブミットフォーム -->
+        <form id="purchaseForm" action="{{ url(not isJapan ? 'shopping_confirm_locale' : 'shopping_confirm') }}" method="post">
+            <p>
+                <!-- トークン -->
+                <input type="hidden" value="" id="token" name="token"/>
+                <input type="hidden" value="" id="maskedCardNo" name="maskedCardNo"/>
+            </p>
+        </form>
+    </div>
+{% endblock %}

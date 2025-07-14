@@ -1,0 +1,35 @@
+{% if isSalon %}
+
+{% else %}
+
+<div class="banner mt20 d-block d-md-none {% if Page.url in ['shop/atami', 'shop/atami/english', 'shop/atami/china'] %}d-none{% endif %}">
+    <ul class="list-unstyled">
+        <div class="aki-row">
+            <li class="col-6"><a href="/user_data/location_photo"><img loading="lazy" src="{{ asset('assets/img/aki/side/location_sidebar.webp') }}" class="img-responsive" alt="ロケーションフォト 着物 出張撮影"></a></li>
+            <li class="col-6"><a href="/user_data/online_previews"><img loading="lazy"  src="{{ asset('assets/img/aki/side/online_preview_1050_500_v2.webp') }}" class="img-responsive" alt="オンライン下見サービス"></a></li>
+            <li class="col-6"><a href="/user_data/for_organization"><img loading="lazy" src="{{ asset('assets/img/aki/side/bar003.webp') }}" class="img-responsive" alt="法人・団体のお客様へ　特別プラン"></a></li>
+            <li class="col-6"><a href="/user_data/info_hairmake"><img loading="lazy" src="{{ asset('assets/img/aki/side/bnr_staff.webp') }}" class="img-responsive" alt="ヘアセット　メイクアップスタッフ募集"></a></li>
+            <li class="col-6"><a href="/user_data/big"><img loading="lazy" src="{{ asset('assets/img/aki/side/bar004.webp') }}" class="img-responsive" alt="大きいサイズの着物　豊富にご用意しております"></a></li>
+            <li class="col-6"><a href="/wpaki" target="_blank"><img loading="lazy" src="{{ asset('assets/img/aki/side/bnr_blog.webp') }}" class="img-responsive" alt="着物あきブログ"></a></li>
+            <li class="col-6"><a href="/user_data/tpo"><img loading="lazy" src="{{ asset('assets/img/aki/side/tpo_top.webp') }}" class="img-responsive" alt="着物TPO"></a></li>
+            <!--団体様・スタッフ応募等-->
+            <!--Q&A-->
+            <li class="col-6"><a href="/wpaki/question"><img loading="lazy" src="{{ asset('assets/img/aki/side/bar001.webp') }}" class="img-responsive" alt="教えてあべ先生　着物について何でもご相談ください。"></a></li>
+            <li class="col-6"><a href="/wpaki/?p=448"><img loading="lazy" src="{{ asset('assets/img/aki/side/blogbar150408.webp') }}" class="img-responsive" alt="昭和の着物語り　着物にまつわる様々なお話ををご紹介いたします。"></a></li>
+
+            <!--言語別-->
+            <li class="col-6"><a href="/user_data/english"><img loading="lazy" src="{{ asset('assets/img/aki/side/englishbar.webp') }}" class="img-responsive" alt="for English page welcome to aki kimono Rental"></a></li>
+            <li class="col-6"><a href="/user_data/china"><img loading="lazy" src="{{ asset('assets/img/aki/side/chinabar.webp') }}" class="img-responsive" alt="for Chinese page welcome to aki kimono Rental 中国語サイトへ"></a></li>
+            <li class="col-6"><a href="/user_data/yukata"><img loading="lazy" src="{{ asset('assets/img/aki/side/yukata1050x500px.webp') }}" class="img-responsive" alt="着物レンタルあき (来店着付け無料・全国配送無料)"></a></li>
+            <li class="col-6"><a href="/user_data/753"><img loading="lazy" src="{{ asset('assets/img/aki/side/753_1050×500px.webp') }}?v1.0" class="img-responsive" alt="七五三レンタル"></a></li>
+            <li class="col-6"><a href="/user_data/omiyamairi"><img loading="lazy" src="{{ asset('assets/img/aki/side/omiyamairi_271x129px.webp') }}" class="img-responsive" alt="お宮参りレンタル"></a></li>
+            <li class="col-6"><a href="/user_data/seijin"><img loading="lazy" src="{{ asset('assets/img/aki/side/seijin_1050×500px.webp') }}?v1.0" class="img-responsive" alt="成人式 振袖 袴 レンタル"></a></li>
+            <li class="col-6"><a href="/user_data/hakama"><img loading="lazy" src="{{ asset('assets/img/aki/side/hakama_1050×500px.webp') }}" class="img-responsive" alt="卒業式 卒業袴 レンタル"></a></li>
+            <li class="col-6"><a href="/user_data/sotsunyugaku"><img loading="lazy" height="auto" src="{{ asset('assets/img/aki/side/lp_mother_v1.webp') }}" class="img-responsive" alt="卒業式 卒業袴 お母さんの着物レンタル"></a></li>
+            <li class="col-6"><a href="/user_data/spring"><img loading="lazy" height="auto" src="{{ asset('assets/img/aki/side/spring_338x160px.webp') }}" class="img-responsive" alt="春の装い-結婚式・パーティの着物レンタル（振袖・訪問着・留袖）"></a></li>
+            <li class="col-6"><a href="/user_data/fall" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': '結婚式におすすめ着物レンタル_秋冬バージョン｜着物レンタルあき (来店着付け無料・全国配送無料)'});"><img loading="lazy" height="auto" src="{{ asset('assets/img/aki/side/fall.webp') }}" class="img-responsive" alt="結婚式におすすめ着物レンタル_秋冬バージョン｜着物レンタルあき (来店着付け無料・全国配送無料)"></a></li>
+            <li class="col-6"><a href="/user_data/photo_plan"><img loading="lazy" src="{{ asset('assets/img/aki/side/location_plan_sidebar.webp') }}" class="img-responsive" alt="卒業袴レンタル記念撮影"></a></li>
+        </div>
+    </ul>
+</div>
+{% endif %}

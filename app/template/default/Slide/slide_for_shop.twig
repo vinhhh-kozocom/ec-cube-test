@@ -1,0 +1,143 @@
+{% block stylesheet %}
+    <style>
+        @media only screen and (max-width: 767px){
+            .slick-dotted.slick-slider {
+                margin-bottom: 10px;
+            }
+            .aki-slide .slick-dots {
+                bottom: 30px;
+            }
+        }
+    .slider-bottom .slick-slide{
+        margin: 0 5px;
+    }
+
+    .slick-dots {
+        position: absolute;
+        bottom: -45px;
+        display: block;
+        width: 100%;
+        padding: 0;
+        list-style: none;
+        text-align: center;
+    }
+
+    .slick-dots li {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 0 5px;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .slick-dots li button {
+        font-size: 0;
+        line-height: 0;
+        display: block;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: transparent;
+        border: 0;
+        outline: none;
+        background: transparent;
+    }
+
+    .slick-dots li button:hover,
+    .slick-dots li button:focus {
+        outline: none;
+    }
+
+    .slick-dots li button:hover:before,
+    .slick-dots li button:focus:before {
+        opacity: 1;
+    }
+
+    .slick-dots li button:before {
+        content: " ";
+        line-height: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 12px;
+        height: 12px;
+        text-align: center;
+        opacity: .75;
+        background-color: white;
+        border-radius: 50%;
+
+    }
+    .slick-dots li.slick-active button:before {
+        opacity: .75;
+        background-color: white;
+    }
+    .slick-dots li button.thumbnail img {
+        width: 0;
+        height: 0;
+    }
+    .aki-slide .slick-dots {
+        bottom: 20px;
+    }
+    </style>
+{% endblock %}
+{% block javascript %}
+<script>
+        $(function(){
+            $('.slider-for').slick({
+                dots: true,
+                arrows: true,
+                infinite: true,
+                speed: 500,
+                autoplaySpeed: 6000,
+                autoplay: true,
+                fade: true,
+                cssEase: 'linear',
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                fade: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            dots: true
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            dots: true
+                        }
+                    }
+                ]
+
+            });
+        });
+    </script>
+{% endblock %}
+
+<div class="aki-slide mb10">
+    <div class="slider-for d-none d-md-block">
+        <div>
+            <a href="/user_data/yukata" onclick="gtag('event', 'クリック', {'event_category': 'リンク','event_label': '国内最大級の浴衣(1000着以上)をご用意！東京で浴衣レンタルするなら着物レンタルあき（渋谷・池袋・銀座・横浜）｜着物レンタルあき (来店着付け無料・全国配送無料)'});">
+                <img loading="lazy" class="img-responsive" src="{{ asset('assets/img/aki/shop/slide/yukata2880x1100px.webp') }}" alt="国内最大級の浴衣(1000着以上)をご用意！東京で浴衣レンタルするなら着物レンタルあき（渋谷・池袋・銀座・横浜）｜着物レンタルあき (来店着付け無料・全国配送無料)"/>
+            </a>
+        </div>
+    </div>
+    <div class="slider-for d-block d-md-none">
+        <div>
+            <a href="/user_data/yukata" onclick="gtag('event', 'クリック', {'event_category': 'リンク','event_label': '国内最大級の浴衣(1000着以上)をご用意！東京で浴衣レンタルするなら着物レンタルあき（渋谷・池袋・銀座・横浜）｜着物レンタルあき (来店着付け無料・全国配送無料)'});">
+                <img loading="lazy" class="img-responsive m-auto md-block" src="{{ asset('assets/img/aki/shop/slide/yukata780x640px.webp') }}" alt="国内最大級の浴衣(1000着以上)をご用意！東京で浴衣レンタルするなら着物レンタルあき（渋谷・池袋・銀座・横浜）｜着物レンタルあき (来店着付け無料・全国配送無料)"/>
+            </a>
+        </div>
+    </div>
+</div>

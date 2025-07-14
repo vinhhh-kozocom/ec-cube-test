@@ -1,0 +1,30 @@
+{% if isSalon %}
+
+{% else %}
+<div class="d-block d-md-none">
+	<div class="top_recommend_title top_recommend_title-flow">
+		<span class="top_recommend_title_overlay"></span>
+		<a class="top_recommend_title_inner text-white" href="/user_data/flow" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_ご利用の流れ'});">
+			<h2 class="mb10 text-white">FLOW</h2>
+			<p>ご利用の流れ</p>
+		</a>
+	</div>
+
+	<div class="top_recommend_title top_recommend_title-point">
+		<span class="top_recommend_title_overlay"></span>
+		<a class="top_recommend_title_inner text-white" href="/user_data/good_point" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_着物あきのこだわり'});">
+			<h2 class="mb10 text-white">POINT</h2>
+			<p>着物レンタルあきのこだわり</p>
+		</a>
+	</div>
+
+	<div class="top_recommend_title top_recommend_title-service">
+		<span class="top_recommend_title_overlay"></span>
+		<a class="top_recommend_title_inner text-white" href="/user_data/service" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_オプションサービス'});">
+			<h2 class="mb10 text-white">SERVICE</h2>
+			<p>オプションサービス</p>
+		</a>
+	</div>
+</div>
+
+{% endif %}

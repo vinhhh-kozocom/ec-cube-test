@@ -1,0 +1,82 @@
+{% extends 'default_frame.twig' %}
+{% block main %}
+<div id="">
+	<div id="contents" class="main_only">
+		<div id="login_box" class="">
+            <div id="reset_box__message" class="text-center">
+                <h2 class="mb20">{{ 'front.forgot.reset_title'|trans }}</h2>
+            </div>
+            <div class="column" id="mypage_login_box">
+                <form id="form1" method="post" novalidate >
+                    {{ form_widget(form._token) }}
+                    <div id="mypage_login_box__body" class="aki-mypage">
+                            <div id="mypage_login_box__login_email">
+                            <label class="mb10 aki-font-semibold"
+                                >メールアドレス<span class="required"
+                                    >*</span
+                                ></label
+                            >
+                            {{ form_widget(form.login_email) }}
+                            {{ form_errors(form.login_email) }}
+                            {% if error %}
+                                <p class="ec-errorMessage">{{ error }}</p>
+                            {% endif %}
+                        </div>
+                        <div id="mypage_login_box__login_pass" class="mt25 position-relative">
+                            <label class="mb10 aki-font-semibold"
+                                >パスワード<span class="required"
+                                    >*</span
+                                ></label
+                            >
+                            {{ form_widget(form.password.first, {
+                                'attr': { 'placeholder': '半角英数記号12~50文字' },
+                                'type': 'password'
+                            }) }}
+                            {{ form_errors(form.password.first) }}
+                            <span
+                                toggle="#login_pass"
+                                class="toggle-password"
+                            >
+                                <img loading="lazy" src="{{ asset('assets/icon/eye-slash.svg') }}" class="aki-icon-default" alt="icon"/>
+                                <img loading="lazy" src="{{ asset('assets/icon/eye.svg') }}" class="aki-icon-default aki-navs" alt="icon"/>
+                            </span>
+                        </div>
+                        <div id="mypage_login_box__login_pass" class="mt25 position-relative">
+                            {{ form_widget(form.password.second, {
+                                'attr': { 'placeholder': '確認のためもうー度入力してください' },
+                                'type': 'password'
+                            }) }}
+                            {{ form_errors(form.password.second) }}
+                            <span
+                                toggle="#login_pass"
+                                class="toggle-password"
+                            >
+                                <img loading="lazy" src="{{ asset('assets/icon/eye-slash.svg') }}" class="aki-icon-default" alt="icon"/>
+                                <img loading="lazy" src="{{ asset('assets/icon/eye.svg') }}" class="aki-icon-default aki-navs" alt="icon"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="text-center mt25">
+                        <button class="aki-btn aki-btn-primary" type="submit">{{ 'common.registration'|trans }}</button>
+                    </div>
+
+                </form>
+            </div>
+		</div>
+	</div>
+</div>
+
+<script>
+    $(".toggle-password").click(function () {
+        $(this).children().toggle();
+        let input = $(this).parent('.position-relative').find(".form-control");
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
+{% endblock %}
+
+

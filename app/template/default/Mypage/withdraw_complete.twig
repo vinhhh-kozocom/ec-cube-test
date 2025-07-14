@@ -1,0 +1,28 @@
+{% extends 'default_frame.twig' %}
+{% set mypageno = 'withdraw' %}
+{% set body_class = 'aki-mypage' %}
+{% block main %}
+<div id="">
+	<div class="text-center">
+		<div class="aki-mypage_title">
+			<h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'front.mypage.nav__withdrow'|trans }}</h2>
+		</div>
+	</div>
+
+	<div id="complete_wrap" class="">
+		<div id="complete_box" class="unsubscribe_box">
+			<div id="complete_box__top_button" class="text-center">
+				<div id="withdraw_box__body_inner" class="mx-auto col-md-7">
+					<h3 class="aki-title-zen mb20 mt20">{{ 'front.mypage.withdraw_complete_message__title'|trans }}</h3>
+					<p class="text-start text-md-center">{{ 'front.mypage.withdraw_complete_message__body'|trans|nl2br }}</p>
+				</div>
+				<div id="confirm_box__footer" class="row">
+					<div class="mt20 mb20">
+						<a href="{{ url('mypage') }}" class="aki-btn aki-btn-primary">{{'common.go_to_top'|trans }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'default_frame.twig' %} {% block main %}
+<div class="text-center">
+    <h2>お下見申込み完了</h2>
+    <p class="mt20 text-start text-md-center">お申込みいただき誠にありがとうございます。<br>{{ "aki.front.contact.complete_message__body.top" | trans }}<br class="d-none d-md-block">
+        {{ "aki.front.contact.complete_message__body.center" | trans }}<br>
+        {{ "aki.front.contact.complete_message__body.bottom" | trans }}</p>
+</div>
+<div class="mt20 mb30 d-flex justify-content-center">
+    <a
+        class="aki-btn aki-btn-primary"
+        href="{{ url('homepage') }}"
+    >
+        {{ "common.go_to_top" | trans }}
+    </a>
+</div>
+{% endblock %}

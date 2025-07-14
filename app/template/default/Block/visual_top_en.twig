@@ -1,0 +1,47 @@
+	<div class="aki-container">
+		<div class="aki-row">
+			<div class="col-12">
+				<div class="mb20">
+					<div class="item active">
+						<img loading="lazy" src="{{image_address}}/english/e-main.webp" alt="Kimono rental aki" class="img-responsive w-100 d-none d-md-block">
+						<img loading="lazy" src="{{image_address}}/english/e-main_s.webp" alt="Kimono rental aki" class="img-responsive w-100 d-block d-md-none">
+					</div>
+				</div>
+			</div>
+		</div>
+        {# {% if app.request.pathInfo|slice(0, 18) == "/user_data/english" %}
+            <div class="mb20">
+                <h2 class="mt10 mb10 text-center">Year-End and New Year's Holidays Closure</h2>
+                <span class="w-100 d-block text-start text-md-center">All stores are closed from December 31 (Tue.) to January 3 (Fri.).</span>
+                <span class="w-100 d-block mb-4 text-start text-md-center">Happy holidays!</span>
+            </div>
+        {% elseif app.request.pathInfo|slice(0, 16) == "/user_data/china" %}
+            <div class="mb20">
+                <h2 class="mt10 mb10 text-center">年末年初休息通知</h2>
+                <span class="w-100 d-block text-start text-md-center">我们将于 12 月 31 日（周二）至 1 月 3 日（周五）休息。</span>
+                <span class="w-100 d-block mb-4 text-start text-md-center">節日快樂</span>
+            </div>
+        {% endif %} #}
+
+		<div class="d-none d-md-block mb40">
+			<div class="aki-row">
+				<div class="col-md-4 text-center">
+					<a href="https://m.facebook.com/kimono.rental.aki.tokyo/photos/?ref=page_internal&amp;mt_nav=1" target="_blank"><img loading="lazy" src="{{image_address}}/english/e-menu01.webp" alt="Photo Galleries" class="img-responsive"></a>
+					<h5 class="mt20"><a href="https://facebook.com/kimono.rental.aki.tokyo/photos/?ref=page_internal&amp;mt_nav=1" target="_blank">Photo Galleries</a></h5>
+				</div>
+				<div class="col-md-4 text-center">
+					<a href="/user_data/english/woman#e-tpo"><img loading="lazy" src="{{image_address}}/english/e-menu02.webp" alt="Occation Appropriate Kimonos" class="img-responsive"></a>
+					<h5 class="mt20"><a href="/user_data/english/woman#e-tpo">Occation Appropriate Kimonos</a></h5>
+				</div>
+				<div class="col-md-4 text-center">
+					{% if isSalon %}
+						<a href="/user_data/english/rental_plan#PhotoShootMenu"><img loading="lazy" src="{{image_address}}/english/e-menu03.webp" alt="Photo Shooot Menu" class="img-responsive"></a>
+						<h5 class="mt20"><a href="/user_data/english/rental_plan#PhotoShootMenu">Photo Shooot Menu</a></h5>
+					{% else %}
+						<a href="#PhotoShoot"><img loading="lazy" src="{{image_address}}/english/e-menu03.webp" alt="Photo Shooot Menu" class="img-responsive"></a>
+						<h5 class="mt20"><a href="#PhotoShoot">Photo Shooot Menu</a></h5>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>

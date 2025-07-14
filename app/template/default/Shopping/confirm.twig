@@ -1,0 +1,447 @@
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+    <style>
+    .cart_item .item_box > .td {
+        border-bottom: 1px dotted #ccc;
+    }
+    .table > :not(:first-child) {
+        border-top: 0px;
+    }
+    .text-primary {
+        color: #4d90fe;
+    }
+    .ec-totalBox .ec-totalBox__spec{
+        margin-bottom: 12px;
+    }
+    .total_amount{
+        margin-top: 16px;
+        border-top: 1px dotted #ccc;
+        text-align: right;
+        font-weight: 700;
+    }
+    .total_price strong{
+        font-size: 24px;
+        margin-left: 16px;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2 class="mb20">{{ 'front.shopping.confirm_title'|trans }}</h2>
+    </div>
+</div>
+
+<div>
+    <div class="ec-cartRole__progress">
+        <ul class="ec-progress">
+            {% set step = 1 %}
+            <li class="ec-progress__item">
+                <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                </div>
+                <div class="ec-progress__label">{{ 'front.cart.nav__cart_items'|trans }}
+                </div>
+            </li>
+            {% if is_granted('ROLE_USER') == false %}
+                <li class="ec-progress__item">
+                    <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                    </div>
+                    <div class="ec-progress__label">{{ 'front.cart.nav__customer_info'|trans }}
+                    </div>
+                </li>
+            {% endif %}
+            <li class="ec-progress__item">
+                <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                </div>
+                <div class="ec-progress__label">{{ 'front.cart.nav__order'|trans }}
+                </div>
+            </li>
+            <li class="ec-progress__item is-complete">
+                <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                </div>
+                <div class="ec-progress__label">{{ 'front.cart.nav__confirm'|trans }}
+                </div>
+            </li>
+            <li class="ec-progress__item">
+                <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                </div>
+                <div class="ec-progress__label">{{ 'front.cart.nav__complete'|trans }}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+    <form id="shopping-form" method="post" action="{{ url(not isJapan ? 'shopping_checkout_locale' : 'shopping_checkout') }}" class="shipping-flow">
+    {{ form_widget(form._token) }}
+    <div id="shopping_confirm" class="aki-row aki-mypage">
+        <div id="confirm_main" class="col-md-8 col-12">
+            <div id="cart_box_list" class="history-block">
+                <div class="history-block-white cart_page-form ">
+                    {% set index = 0 %}
+                    {% for shipping in Order.shippings %}
+                        {% for orderItem in shipping.productOrderItems %}
+                            {% if orderItem.productClass.code ?? '' == secure_pack_code %}
+                                {# 安心パック #}
+                            {% else %}
+                                {% if OrderDetailAdditionalInfoList[index] is defined and OrderDetailAdditionalInfoList[index] is not null %}
+                                    {% set addinfo = OrderDetailAdditionalInfoList[index] %}
+                                    <div id="cart_box_list__item_box--{{ loop.index }}" class="history-block-item">
+                                        <div id="cart_box_list__item--{{ loop.index }}" class="d-flex">
+                                            <div id="cart_box_list__photo--{{ loop.index }}" class="item_photo"><img loading="lazy" src="{{ asset((orderItem.product is null ? null : orderItem.product.MainListImage)|no_image_product, 'save_image') }}" alt="{{ orderItem.productName }}" /></div>
+                                            <dl id="cart_box_list__detail--{{ loop.index }}">
+                                                <dd id="cart_box_list__name--{{ loop.index }}" class="text-default gray-sub-text">{{ orderItem.productName }}</dd>
+                                                <dd id="cart_box_list__price--{{ loop.index }}" class="gray-sub-text fw-bold mt10 mb10">{{ orderItem.priceIncTax|price }}</dd>
+                                                {% if isSalon %}
+                                                    <dd>・ご予約方法：
+                                                        {% if addinfo.order_type == "deliv_sal" %}
+                                                            着物レンタル
+                                                        {% elseif addinfo.order_type == 'fitting' %}
+                                                            試着サービス
+                                                        {% else %}
+                                                            来店着付けレンタル
+                                                        {% endif %}
+                                                    </dd>
+
+                                                {% else %}
+                                                    {% if isJapan %}
+                                                        <dd>・{{'aki.front.cart.title.how'|trans}}：
+                                                            {% if addinfo.order_type == "deliv" %}
+                                                                {{'aki.front.cart.title.delivery'|trans}}
+                                                            {% else %}
+                                                                {{'aki.front.cart.title.visit'|trans}}
+                                                            {% endif %}
+                                                        </dd>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <dd>・{{'aki.front.cart.title.useday'|trans}}：{{ addinfo.wear_date|date('Y-m-d') }}</dd>
+                                                {% if addinfo.order_type == "visit" %}
+                                                    <dd>・{{'aki.front.cart.title.store'|trans}}：{{ addinfo.visit_store }}</dd>
+                                                    <dd>・{{'aki.front.detail.form.info.departure'|trans}}：{{ addinfo.time_departure }}</dd>
+                                                {% endif %}
+                                                {% if isJapan %}
+                                                    <dd>・{{'aki.front.detail.form.info.purpose'|trans}}：{{ addinfo.purpose }}</dd>
+                                                {% endif %}
+
+                                                {% if not isJapan %}
+                                                    <dd>・{{'aki.front.detail.form.info.num_of_guests'|trans}}: {{ addinfo.number_of_guests }}
+                                                    {% if addinfo.number_of_guests == 1 %}
+                                                        <dd>・{{'aki.front.detail.form.info.gender'|trans}}: {{ addinfo.gender }}
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                {% if addinfo.number_of_guests is null or addinfo.number_of_guests == 1 %}
+                                                    <dd>・{{'common.reservation.height'|trans}}：{{ addinfo.body_height }}</dd>
+                                                    <dd>・{{'aki.front.detail.form.info.foot'|trans}}：{{ addinfo.foot_size }}</dd>
+                                                {% endif %}
+
+                                                {% if isJapan %}
+                                                    <dd>・{{'aki.front.cart.title.era'|trans}}：{{ addinfo.decade }}</dd>
+                                                {% endif %}
+                                                {% if addinfo.body_type|length  > 0 %}
+                                                    <dd>・{{'aki.front.detail.form.info.body'|trans}}：{% for body_type in addinfo.getBodyTypeJsonDecode() %}{{body_type}}<br />{% endfor %}</dd>
+                                                {% endif %}
+                                                {# secure_pack have only one variable in AKI old #}
+                                                {% if addinfo.secure_pack|length  > 0 %}
+                                                    {% if not isSalon %}
+                                                        <dd>・{{'aki.front.cart.title.secure.pack'|trans}}：{% for secure_pack in addinfo.secure_pack %}{{secure_pack}}<br />{% endfor %}</dd>
+                                                    {% endif %}
+                                                {% endif %}
+                                                {% if addinfo.order_type == "visit" %}
+                                                    {% if not isChina %}
+                                                        <dd>・{{'aki.front.cart.title.photo'|trans}}：{{ addinfo.need_photo }}</dd>
+                                                        <dd>・{{'aki.front.cart.title.hair'|trans}}：{{ addinfo.need_hair_make }}</dd>
+                                                    {% else %}
+                                                        <dd>・{{'aki.front.cart.title.photo.other'|trans}}：{{ addinfo.need_photo }}</dd>
+                                                        <dd>・{{'aki.front.cart.title.hair.other'|trans}}：{{ addinfo.need_hair_make }}</dd>
+                                                    {% endif %}
+                                                {% endif %}
+                                                <dd id="cart_box_list__class_category--{{ loop.index }}" class="item_pattern small">
+                                                    {% if orderItem.productClass.classCategory1 %}
+                                                        {{ orderItem.productClass.classCategory1.className }}：{{ orderItem.productClass.classCategory1 }}
+                                                    {% endif %}
+                                                    {% if orderItem.productClass.classCategory2 %}
+                                                        <br>{{ orderItem.productClass.classCategory2.className }}：{{ orderItem.productClass.classCategory2 }}
+                                                    {% endif %}
+                                                </dd>
+                                                {% if not isJapan %}
+                                                    <dd class="aki-remark">・{{'aki.front.detail.form.info.remark'|trans}}：{{ addinfo.remark }}
+                                                    </dd>
+                                                {% endif %}
+                                            </dl>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% set index = index + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt20">
+                    <p>
+                        <a id="confirm_box__quantity_edit_button" href="{{ url(not isJapan ? 'cart_locale' : 'cart') }}" class="aki-btn aki-btn-primary">{{'aki.front.cart.button.change.cart'|trans}}</a>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="account">
+                    <h3 class="aki-title-zen mb20">{{ 'front.shopping.customer_info'|trans }}</h3>
+                    {% if is_granted('ROLE_USER') == false %}
+                    <div class="history-block">
+                    {% else %}
+                    <div class="history-block">
+                    {% endif %}
+                    <div class="ec-orderAccount__account non-customer-display">
+                        <p class="ec-halfInput">{{ 'common.name.prefix'|trans }}<span class="customer-edit customer-name01">{{ Order.name01 }}</span> <span class="customer-edit customer-name02">{{ Order.name02 }}</span>{% if isJapan %} {{ 'common.name.suffix'|trans }} {% endif %}</p>
+                        <p class="ec-halfInput"><span class="customer-edit customer-kana01">{{ Order.kana01 }}</span> <span class="customer-edit customer-kana02">{{ Order.kana02 }}</span></p>
+                        <p class="ec-input"><span class="customer-edit customer-company_name">{{ Order.companyName }}</span></p>
+                        {% if isJapan %}
+                        <p class="ec-zipInput">〒<span class="customer-edit customer-postal_code">{{ Order.postal_code }}</span></p>
+                        {% endif %}
+                        <p class="ec-input"><span class="customer-edit customer-pref">{{ Order.pref }}</span><span class="customer-edit customer-addr01">{{ Order.addr01 }}</span><span class="customer-edit customer-addr02">{{ Order.addr02 }}</span></p>
+                        <p class="ec-telInput"><span class="customer-edit customer-phone_number">{{ Order.phone_number }}</span></p>
+                        <p class="ec-input"><span class="customer-edit customer-email">{{ Order.email }}</span></p>
+                    </div>
+                    {% if is_granted('ROLE_USER') == false %}
+                        <div class="ec-borderedDefs  non-customer-edit" style="display:none;">
+                            <dl>
+                                <dt>
+                                    <label class="ec-label required">{{ 'common.name'|trans }}</label>
+                                    <span class="ec-required">{{ 'common.required'|trans }}</span>
+                                </dt>
+                                <dd>
+                                    <div class="ec-halfInput">
+                                        <span class="customer-form customer-name01"></span>
+                                        <span class="customer-form customer-name02"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label class="ec-label required">{{ 'common.kana'|trans }}</label>
+                                    <span class="ec-required">{{ 'common.required'|trans }}</span>
+                                </dt>
+                                <dd>
+                                    <div class="ec-halfInput">
+                                        <span class="customer-form customer-kana01"></span>
+                                        <span class="customer-form customer-kana02"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label class="ec-label" for="nonmember_company_name">{{ 'common.company_name'|trans }}</label>
+                                </dt>
+                                <dd>
+                                    <div class="ec-halfInput">
+                                        <span class="customer-form customer-company_name"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label class="ec-label required">{{ 'common.address'|trans }}</label>
+                                    <span class="ec-required">{{ 'common.required'|trans }}</span>
+                                </dt>
+                                <dd>
+                                    <div class="ec-zipInput">
+                                        <span>{{ 'common.postal_symbol'|trans }}</span>
+                                        <span class="customer-form customer-postal_code"></span>
+                                        <div class="ec-zipInputHelp">
+                                            <div class="ec-zipInputHelp__icon">
+                                                <div class="ec-icon">
+                                                    <img loading="lazy" src="{{ asset('assets/icon/question-white.svg') }}" alt="">
+                                                </div>
+                                            </div>
+                                            <a href="https://www.post.japanpost.jp/zipcode/" target="_blank">
+                                                <span>{{ 'common.search_postal_code'|trans }}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ec-select">
+                                        <span class="customer-form customer-address_pref"></span>
+                                    </div>
+                                    <div class="ec-input">
+                                        <span class="customer-form customer-address_addr01"></span>
+                                    </div>
+                                    <div class="ec-input">
+                                        <span class="customer-form customer-address_addr02"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label class="ec-label required" for="nonmember_phone_number">{{ 'common.phone_number'|trans }}</label>
+                                    <span class="ec-required">{{ 'common.required'|trans }}</span>
+                                </dt>
+                                <dd>
+                                    <div class="ec-telInput">
+                                        <span class="customer-form customer-phone_number"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label class="ec-label required">{{ 'common.mail_address'|trans }}</label>
+                                    <span class="ec-required">{{ 'common.required'|trans }}</span>
+                                </dt>
+                                <dd>
+                                    <div class="ec-input">
+                                        <span class="customer-form customer-email"></span>
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="mod-button" style="display:none;">
+                            <span id="customer-ok"><button type="button" class="ec-inlineBtn">{{ 'common.ok'|trans }}</button></span>
+                            <span id="customer-cancel"><button type="button" class="ec-inlineBtn">{{ 'common.cancel'|trans }}</button></span>
+                        </div>
+                        <input type="hidden" id="customer-name01" class="customer-in" name="customer_name01" value="{{ Order.name01 }}">
+                        <input type="hidden" id="customer-name02" class="customer-in" name="customer_name02" value="{{ Order.name02 }}">
+                        <input type="hidden" id="customer-kana01" class="customer-in" name="customer_kana01" value="{{ Order.kana01 }}">
+                        <input type="hidden" id="customer-kana02" class="customer-in" name="customer_kana02" value="{{ Order.kana02 }}">
+                        <input type="hidden" id="customer-company-name" class="customer-in" name="customer_company_name" value="{{ Order.companyName }}">
+                        <input type="hidden" id="customer-postal_code" class="customer-in" name="customer_postal_code" value="{{ Order.postal_code }}">
+                        <input type="hidden" id="customer-pref" class="customer-in" name="customer_pref" value="{{ Order.pref }}">
+                        <input type="hidden" id="customer-addr01" class="customer-in" name="customer_addr01" value="{{ Order.addr01 }}">
+                        <input type="hidden" id="customer-addr02" class="customer-in" name="customer_addr02" value="{{ Order.addr02 }}">
+                        <input type="hidden" id="customer-phone_number" class="customer-in" name="customer_phone_number" value="{{ Order.phone_number }}">
+                        <input type="hidden" id="customer-email" class="customer-in" name="customer_email" value="{{ Order.email }}">
+                    {% endif %}
+                    </div>
+                </div>
+
+
+						<div class="ec-orderDelivery {% if orderType == 'visit' %} d-none {% endif %}">
+                            <h3 class="mb20">{{ 'front.shopping.delivery_info'|trans }}</h3>
+							<div class="history-block">
+                                {% for shipping in Order.shippings %}
+                                    {% set idx = loop.index0 %}
+                                    {% set isShowReducedTaxMess = false %}
+
+                                    <div class="ec-orderDelivery__address">
+                                        <p>{{ 'common.name.prefix'|trans }}{{ shipping.name01 }} {{ shipping.name02 }} ({{ shipping.kana01 }} {{ shipping.kana02 }}){{ 'common.name.suffix'|trans }}</p>
+                                        <p>{{ 'common.postal_symbol'|trans }}{{ shipping.postal_code }} {{ shipping.pref }}{{ shipping.addr01 }}{{ shipping.addr02 }}</p>
+                                        <p>{{ shipping.phone_number }}</p>
+                                    </div>
+                                    <div class="ec-orderDelivery__actions">
+                                        <div class="ec-select d-none">
+                                            <label>{{ 'front.shopping.delivery_provider'|trans }}</label>
+                                            {{ form_widget(form.Shippings[idx].Delivery, { 'attr': { 'class': 'form-control', 'data-trigger': 'change' }}) }}
+                                            {{ form_errors(form.Shippings[idx].Delivery) }}
+                                        </div>
+                                        <div>
+                                        <p>お届け日はご利用日の2日前となります。<br>
+                                        {{ 'front.shopping.delivery_time'|trans }}: {{ Order.Shippings[idx].shipping_delivery_time?: 'common.select__unspecified'|trans }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+							{# according AKI_D spec, it will have problem when use multiple shipping => display:none #}
+							<div class="ec-orderDelivery__edit d-none">
+								<button type="button" class="ec-inlineBtn" data-trigger="click" data-path="{{ path('shopping_shipping_multiple') }}">{{ 'front.shopping.to_multiple'|trans }}</button>
+							</div>
+						</div>
+            <div class="ec-orderPayment" {% if isSalon %} style="display:none" {% endif %}>
+                <h3 class="mb20">{{ 'front.shopping.payment_info'|trans }}</h3>
+                <div class="history-block">
+                    {% set charge = 0 %}
+                    {% for item in Order.order_items|filter(item => item.isCharge) %}
+                        {% set charge = item.total_price %}
+                    {% endfor %}
+                    {# {{ Order.Payment }} {{dump(Order.Payment)}} #}
+                    {% if not isJapan and Order.Payment.method == 'クレジットカード' %}
+                        {% if isEnglish %}
+                            <span>Credit card</span>
+                        {% else %}
+                            <span>信用卡</span>
+                        {% endif %}
+                        {# {% if Order.Payment.method == 'クレジットカード' %}{% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %} ({{'aki.front.shopping.payment.method.installment'|trans}}) {% else %} ({{'aki.front.shopping.payment.method.bulk'|trans}}) {% endif %} {% endif %} #}
+                    {% elseif not isJapan and Order.Payment.method == '銀行振込'  %}
+                        <span>Bank transfer</span>
+                    {% else %}
+                        {{ Order.Payment }} {% if Order.Payment.method == 'クレジットカード' %}{% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %} ({{'aki.front.shopping.payment.method.installment'|trans}}) {% else %} ({{'aki.front.shopping.payment.method.bulk'|trans}}) {% endif %} {% endif %}
+                        {% if Order.Payment.method == 'クレジットカード' %}
+                            {% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %}
+                                <div>{{'aki.front.shopping.payment.method.paytime.select'|trans}} : {{Order.creditcard_paytime}}</div>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endif %}
+                    {% if Order.Payment.method == 'クレジットカード' %}
+                        {% if maskedCardNo %}
+                            <div>{{maskedCardNo}}</div>
+                        {% else %}
+                            <div>{{cardSavedMember}}</div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% if Order.message is not null  %}
+                <div class="ec-orderConfirm">
+                    <h3 class="mb20">{{ 'front.shopping.message_info'|trans }}</h3>
+                    <div class="history-block change">
+                        {{ Order.message|nl2br }}
+                    </div>
+                </div>
+			{% endif %}
+        </div>
+
+        <div class="col-md-4 col-12">
+            <div class="history-price">
+                <div class="ec-totalBox aki-alert-primary">
+                    <dl class="ec-totalBox__spec">
+                        <dt>{{ 'common.subtotal'|trans }}</dt>
+                        <dd class="ec-totalBox__specTotal color-primary">{{ Order.subtotal|price }}</dd>
+                    </dl>
+                    <dl class="ec-totalBox__spec">
+                        <dt>{{ 'common.charge'|trans }}</dt>
+                        <dd>{{ Order.charge|price }}</dd>
+                    </dl>
+                    {% if isJapan %}
+                        <dl class="ec-totalBox__spec">
+                            <dt>{{ 'common.delivery_fee'|trans }}</dt>
+                            <dd>{{ Order.deliveryFeeTotal|price }}</dd>
+                        </dl>
+                    {% endif %}
+                    <dl class="ec-totalBox__spec" id="summary_box__shop_price" style="display:none;">
+                        <dt>ご来店時支払い</dt>
+                        <dd>&yen; <span>0</span></dd>
+                    </dl>
+                    {% if Order.taxable_discount < 0 %}
+                    <dl class="ec-totalBox__spec">
+                        <dt>{{ 'common.discount'|trans }}</dt>
+                        <dd>{{ Order.taxable_discount|price }}</dd>
+                    </dl>
+                    {% endif %}
+                    {% if not isSalon %}
+                        {% if isJapan %}
+                            <p class="mb20">{{'aki.front.cart.title.warnig'|trans}}</p>
+                        {% else %}
+                            <p>{{'aki.front.cart.title.total.warning.1'|trans}}</p>
+                            <p>{{'aki.front.cart.title.total.warning.2'|trans}}</p>
+                        {% endif %}
+                    {% endif %}
+                    {% for item in Order.tax_free_discount_items %}
+                        <dl class="ec-totalBox__spec">
+                            <dt>{{ item.product_name }}</dt>
+                            <dd>{{ item.total_price|price }}</dd>
+                        </dl>
+                    {% endfor %}
+                    <p id="summary_box__total_amount" class="history-price__total total_price d-flex justify-content-between align-items-baseline">{{'aki.front.cart.total'|trans}} <strong class="color-primary">{{ Order.total|price }}</strong></p>
+                </div>
+                <button type="submit"
+                        class="aki-btn aki-btn-primary btn-block prevention-btn prevention-mask mb20"
+                >{{ 'front.shopping.go_to_confirm'|trans }}</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+{% endblock %}

@@ -1,330 +1,270 @@
 <!doctype html>
-{#
-Custom Default Frame Template for EC-CUBE
-Based on original EC-CUBE template with custom modifications
-#}
-<html lang="{{ eccube_config.locale }}">
-<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# product: https://ogp.me/ns/product#">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="eccube-csrf-token" content="{{ csrf_token(constant('Eccube\\Common\\Constant::TOKEN_NAME')) }}">
-    <title>{{ BaseInfo.shop_name }}{% if subtitle is defined and subtitle is not empty %} / {{ subtitle }}{% elseif title is defined and title is not empty %} / {{ title }}{% endif %}</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="eccube-csrf-token" content="{{ csrf_token(constant('Eccube\\Common\\Constant::TOKEN_NAME')) }}">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="google-site-verification" content="PSGbeVfvFIgMbWaDeuKzMd16apUJ4OsiUIyqo3Mc5tA">
+<meta name="facebook-domain-verification" content="qpsjfwb0652wmyai30dv6j6jvxadsm" />
+    {% set isSalon = SALON_URL == app.request.server.get('SERVER_NAME') %}
+    {% if not isSalon %}
+        {% set isSalon = 0 %}
+    {% endif %}
+<title>
+    {% if app.request.get('_route') == "homepage" %}着物レンタル{% if not isSalon %}あき{% endif %} (来店着付け無料・全国配送無料)
+    {% elseif app.request.get('_route') == "english" %}AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/rental_plan" %}Kimono Rental plan/AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/rental_flow" %}The steps for renting kimono/AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/woman" %}kimono styles for women /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/man" %}kimono styles for men /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/kids" %}kimono styles for kids /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/wedding" %}kimono Japanese wedding style /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/faq" %}frequently asked questions /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "english/contact_info" %}Access Map and Contact information /AKI Kimono Rental Professional kimono dressing styling
+    {% elseif app.request.get('_route') == "china" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/rental_plan" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/rental_flow" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/woman" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/man" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/kids" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/wedding" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/faq" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/contact" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% elseif app.request.get('_route') == "china/contact_info" %}{{ title }}/Aki 和服租赁位于交通便利的日本东京市中心
+    {% else %}
+        {% if subtitle is defined and subtitle is not empty %}
+            {{ subtitle }}｜着物レンタル{% if not isSalon %}あき{% endif %} (来店着付け無料・全国配送無料)
+        {% elseif title is defined and title is not empty %}
+            {{ title }}｜着物レンタル{% if not isSalon %}あき{% endif %} (来店着付け無料・全国配送無料)
+        {% endif %}
+    {% endif %}
+</title>
+
+    {% if Page.author is not empty %}<meta name="author" content="{{ Page.author }}">
+    {% else %}<meta name="author" content="着物レンタルあき　有限会社ベルコーポレーション">
+    {% endif %}
+
+    {% if Page.keyword is not empty %}<meta name="keywords" content="{{ Page.keyword }}">
+    {% else %}
+        {% if Page.url == "homepage" %}
+            <meta name="keywords" content="着物,レンタル,東京,都内23区,成人式,卒業式,入学式,パーティー,お茶会,花火,お祭り,結婚式,振袖,成人式,卒業式,浴衣,七五三,ヘアメイク,写真撮影">
+        {% elseif Page.url == "product_list" %}
+            <meta name="keywords" content="{{ subtitle }}の{{ title }},成人式,入学式,卒業式,結婚式,パーティー,お茶会,観劇,お食事会,七五三,お宮参り,花火,お祭り,目的,種類,用途,シチュエーション,ヘアメイク,写真撮影">
+        {% elseif Page.url == "product_detail" %}
+            <meta name="keywords" content="{{ subtitle }},着物,レンタル,東京,都内23区,成人式,卒業式,入学式,パーティー,お茶会,花火,お祭り,結婚式,振袖,成人式,卒業式,浴衣,七五三">
+        {% else %}
+            {% if subtitle is defined and subtitle is not empty %}
+                <meta name="keywords" content="{{ subtitle }},着物,レンタル,東京,都内23区,成人式,卒業式,入学式,パーティー,お茶会,花火,お祭り,結婚式,振袖,成人式,卒業式,浴衣,七五三">
+            {% elseif title is defined and title is not empty %}
+                <meta name="keywords" content="{{ title }},着物,レンタル,東京,都内23区,成人式,卒業式,入学式,パーティー,お茶会,花火,お祭り,結婚式,振袖,成人式,卒業式,浴衣,七五三">
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% if Page.description is not empty %}<meta name="description" content="{{ Page.description }}">
+    {% else %}
+        {% if Page.url == "homepage" %}
+            {% set meta_description = "着物のレンタルなら、首都圏4店舗運営(渋谷、銀座、池袋、横浜)の「着物レンタルあき」にお任せください!フルセットレンタルに、来店着付け無料。店舗での、スタジオ撮影、ヘアーメイクも承ります。七五三から訪問着の着物まで、着物のことならお気軽にご相談ください!遠方のお客様は送料・代引き手数料無料でお届けします。" %}
+        {% elseif Page.url == "product_list" %}
+            {% set meta_description = subtitle ~"の着物のレンタルなら、首都圏4店舗運営(渋谷、銀座、池袋、横浜)の「着物レンタルあき」にお任せください!フルセットレンタルに、来店着付け無料。店舗での、スタジオ撮影、ヘアーメイクも承ります。七五三から訪問着の着物まで、着物のことならお気軽にご相談ください!遠方のお客様は送料・代引き手数料無料でお届けします。" %}
+        {% elseif Page.url == "product_detail" %}
+            {% set meta_description = subtitle ~"の着物のレンタルなら、首都圏4店舗運営(渋谷、銀座、池袋、横浜)の「着物レンタルあき」にお任せください!フルセットレンタルに、来店着付け無料。店舗での、スタジオ撮影、ヘアーメイクも承ります。七五三から訪問着の着物まで、着物のことならお気軽にご相談ください!遠方のお客様は送料・代引き手数料無料でお届けします。" %}
+        {% elseif Page.url == "753" %}
+            {% set meta_description = title ~"なら、「着物レンタルあき」にお任せください!お子様のお祝いにぴったりな華やかな着物を多数取り揃えております。首都圏4店舗運営(渋谷、銀座、池袋、横浜)出張着付けからスタジオ写真撮影まで多数のプランをご用意しております。" %}
+        {% else %}
+            {% if subtitle is defined and subtitle is not empty %}
+                {% set meta_description = subtitle ~"の着物のレンタルなら、首都圏4店舗運営(渋谷、銀座、池袋、横浜)の「着物レンタルあき」にお任せください!フルセットレンタルに、来店着付け無料。店舗での、スタジオ撮影、ヘアーメイクも承ります。七五三から訪問着の着物まで、着物のことならお気軽にご相談ください!遠方のお客様は送料・代引き手数料無料でお届けします。" %}
+            {% elseif title is defined and title is not empty %}
+                {% set meta_description = title ~"の着物のレンタルなら、首都圏4店舗運営(渋谷、銀座、池袋、横浜)の「着物レンタルあき」にお任せください!フルセットレンタルに、来店着付け無料。店舗での、スタジオ撮影、ヘアーメイクも承ります。七五三から訪問着の着物まで、着物のことならお気軽にご相談ください!遠方のお客様は送料・代引き手数料無料でお届けします。" %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    {# {{ include('meta_override.twig') }} #}
+
+{% if Page.meta_robots is not empty %}
+<meta name="robots" content="{{ Page.meta_robots }}">
+{% endif %}
+
+{% if app.request.get('_route') == 'products_discontinued' %}
+<meta name="robots" content="noindex, nofollow">
+{% endif %}
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+<link rel="icon" href="{{ asset('assets/img/common/favicon.ico') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/aki.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/aki-new.min.css') }}">
-    {# Meta tags handling #}
-    {% if Page.meta_tags is not empty %}
-        {{ include(template_from_string(Page.meta_tags), sandboxed = true) }}
-        {% if Page.description is not empty %}
-            <meta name="description" content="{{ Page.description }}">
-        {% endif %}
-    {% else %}
-        {{ include('meta.twig') }}
-    {% endif %}
-    {% if Page.author is not empty %}
-        <meta name="author" content="{{ Page.author }}">
-    {% endif %}
-    {% if Page.keyword is not empty %}
-        <meta name="keywords" content="{{ Page.keyword }}">
-    {% endif %}
-    {% if Page.meta_robots is not empty %}
-        <meta name="robots" content="{{ Page.meta_robots }}">
-    {% endif %}
-    
-    {# Favicon and CSS #}
-    <link rel="icon" href="{{ asset('assets/img/common/favicon.ico', 'user_data') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css" integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    
-    {# Custom CSS for modern design #}
-    <style>
-        /* Custom styles for modern layout */
-        .custom-layout {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .custom-header {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .custom-main {
-            flex: 1;
-            padding: 2rem 0;
-        }
-        
-        .custom-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        .custom-footer {
-            background: #f8f9fa;
-            padding: 2rem 0;
-            margin-top: auto;
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .custom-container {
-                padding: 0 0.5rem;
+<script src="{{ asset('front.bundle.js', 'bundle') }}"></script>
+<script>
+    $(function() {
+        $.ajaxSetup({
+            'headers': {
+                'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content')
             }
-            
-            .custom-main {
-                padding: 1rem 0;
-            }
-        }
-        
-        /* Loading animation */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
-    
-    <script src="{{ asset('front.bundle.js', 'bundle') }}"></script>
-    {% block stylesheet %}{% endblock %}
-    
-    <script>
-        $(function() {
-            $.ajaxSetup({
-                'headers': {
-                    'ECCUBE-CSRF-TOKEN': $('meta[name="eccube-csrf-token"]').attr('content')
-                }
-            });
-            
-            // Custom loading overlay
-            $(document).on('submit', 'form', function() {
-                $('.loading-overlay').show();
-            });
-            
-            // Hide loading overlay on page load
-            $(window).on('load', function() {
-                $('.loading-overlay').hide();
-            });
         });
-    </script>
-    
-    {# Layout: HEAD #}
-    {% if Layout.Head %}
-        {{ include('block.twig', {'Blocks': Layout.Head}) }}
-    {% endif %}
-    
-    {# Plugin assets #}
-    {% if plugin_assets is defined %}{{ include('@admin/snippet.twig', { snippets: plugin_assets }) }}{% endif %}
-    <link rel="stylesheet" href="{{ asset('assets/css/customize.css', 'user_data') }}">
-</head>
-
-<body id="page_{{ app.request.get('_route') }}" class="{{ body_class|default('other_page') }}">
-    {# Loading overlay #}
-    <div class="loading-overlay">
-        <div class="loading-spinner"></div>
-    </div>
-    
-    {# Layout: BODY_AFTER #}
-    {% if Layout.BodyAfter %}
-        {{ include('block.twig', {'Blocks': Layout.BodyAfter}) }}
-    {% endif %}
-
-    {# Maintenance and Debug Mode Alerts #}
-    {% if (isMaintenance is defined and isMaintenance) and (isDebugMode is defined and isDebugMode) %}
-        <div class="ec-twoModeAlert">
-            <div class="ec-maintenanceAlert">
-                <div>
-                    <div class="ec-maintenanceAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
-                    {{ 'front.under_maintenance'|trans }}
-                </div>
-            </div>
-            <div class="ec-debugModeAlert bg-danger d-none">
-                <div>
-                    <div class="ec-debugModeAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
-                    {{ 'front.under_debug_mode'|trans }}
-                </div>
-            </div>
-        </div>
+    });
+    {% if is_granted('ROLE_USER') %}
+        localStorage.setItem('isLogin', true);
     {% else %}
-        {% if (isMaintenance is defined and isMaintenance) %}
-            <div class="ec-maintenanceAlert">
-                <div>
-                    <div class="ec-maintenanceAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
-                    {{ 'front.under_maintenance'|trans }}
-                </div>
-            </div>
-        {% endif %}
-        {% if (isDebugMode is defined and isDebugMode) %}
-            <div class="ec-debugModeAlert bg-danger d-none">
-                <div>
-                    <div class="ec-debugModeAlert__icon"><img src="{{ asset('assets/icon/exclamation-white.svg') }}"/></div>
-                    {{ 'front.under_debug_mode'|trans }}
-                </div>
-            </div>
-        {% endif %}
+       localStorage.setItem('isLogin', false);
     {% endif %}
+ </script>
+{% block stylesheet %}{% endblock %}
+{% if plugin_assets is defined %}{{ include('@admin/snippet.twig', {snippets: plugin_assets}) }}{% endif %}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T5EE9G3EBX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  {% if APP_ENV == APP_PROD %}
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    <div class="custom-layout">
-        {# Custom Header #}
-        <header class="custom-header">
+  gtag('config', 'G-T5EE9G3EBX');
+{% endif %}
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ID_FACEBOOK}}');
+    fbq('track', 'PageView');
+</script>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "q5i2u40rlz");
+</script>
+<noscript>
+ <img height="1" width="1"
+    src="https://www.facebook.com/tr?id={{ID_FACEBOOK}}&ev=PageView
+    &noscript=1"/>
+</noscript>
+<script async type="text/javascript" charset="utf-8" src="https://client.sitelead.net/common.js?service-token=eac4a136e040b73cce070f698b81f816e3d02ef5"></script>
+<!-- End Facebook Pixel Code -->
+</head>
+<body id="page_{{ app.request.get('_route') }}" class="{{ body_class|default('other_page') }}">
+    {% set isJapan = app.request.locale == LOCALE_JAPAN %}
+    {% set isEnglish = app.request.locale == LOCALE_ENGLISH %}
+    {% set isChina = app.request.locale == LOCALE_CHINA %}
+    {% if not isJapan %}
+        {% set isJapan = 0 %}
+    {% endif %}
+    {% if not isEnglish %}
+        {% set isEnglish = 0 %}
+    {% endif %}
+    {% if not isChina %}
+        {% set isChina = 0 %}
+    {% endif %}
+     <div id="wrapper">
+        <header id="header" {% if not Layout.Header %}class="hidden_space_header"{% endif %}>
+            {# ▼HeaderInternal COLUMN #}
             {% if Layout.Header %}
-                {{ include('block.twig', {'Blocks': Layout.Header}) }}
-            {% else %}
-                {# Fallback to include the custom header #}
-                {% include 'Block/header.twig' %}
+            {# ▼上ナビ #}
+            {{ include('block.twig', {'Blocks': Layout.Header}) }}
+            {# ▲上ナビ #}
             {% endif %}
+            {# ▲HeaderInternal COLUMN #}
         </header>
 
-        {# Layout: CONTENTS_TOP #}
-        {% if Layout.ContentsTop %}
-            <div class="ec-layoutRole__contentTop">
-                {{ include('block.twig', {'Blocks': Layout.ContentsTop}) }}
-            </div>
-        {% endif %}
-
-        <div class="custom-main">
-            <div class="custom-container">
-                <div class="ec-layoutRole__contents">
-                    {# Layout: SIDE_LEFT #}
-                    {% if Layout.SideLeft %}
-                        <aside class="ec-layoutRole__left">
-                            {{ include('block.twig', {'Blocks': Layout.SideLeft}) }}
-                        </aside>
-                    {% endif %}
-
-                    {% set layoutRoleMain = 'ec-layoutRole__main' %}
-                    {% if Layout.ColumnNum == 2 %}
-                        {% set layoutRoleMain = 'ec-layoutRole__mainWithColumn' %}
-                    {% elseif Layout.ColumnNum == 3 %}
-                        {% set layoutRoleMain = 'ec-layoutRole__mainBetweenColumn' %}
-                    {% endif %}
-
-                    <main class="{{ layoutRoleMain }}">
-                        {# Layout: MAIN_TOP #}
-                        {% if Layout.MainTop %}
-                            <div class="ec-layoutRole__mainTop">
-                                {{ include('block.twig', {'Blocks': Layout.MainTop}) }}
-                            </div>
-                        {% endif %}
-
-                        {# MAIN AREA #}
-                        {% block main %}{% endblock %}
-
-                        {# Layout: MAIN_Bottom #}
-                        {% if Layout.MainBottom %}
-                            <div class="ec-layoutRole__mainBottom">
-                                {{ include('block.twig', {'Blocks': Layout.MainBottom}) }}
-                            </div>
-                        {% endif %}
-                    </main>
-
-                    {# Layout: SIDE_RIGHT #}
-                    {% if Layout.SideRight %}
-                        <aside class="ec-layoutRole__right">
-                            {{ include('block.twig', {'Blocks': Layout.SideRight}) }}
-                        </aside>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        {# Layout: CONTENTS_BOTTOM #}
-        {% if Layout.ContentsBottom %}
-            <div class="ec-layoutRole__contentBottom">
-                {{ include('block.twig', {'Blocks': Layout.ContentsBottom}) }}
-            </div>
-        {% endif %}
-
-        {# Custom Footer #}
-        <footer class="custom-footer">
-            {% if Layout.Footer %}
-                {{ include('block.twig', {'Blocks': Layout.Footer}) }}
+        <article id="contents">
+            {% if isSalon %}
+            <div id="contents_top">
             {% else %}
-                {# Default footer content #}
-                <div class="custom-container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h5>{{ BaseInfo.shop_name }}</h5>
-                            <p>{{ 'common.footer.copyright'|trans }}</p>
+            <div id="contents_top" {% if Layout.Header %}class="mb40"{% endif %}>
+            {% endif %}
+                {# ▼TOP COLUMN #}
+                {% if Layout.ContentsTop %}
+                {# ▼上ナビ #}
+                {{ include('block.twig', {'Blocks': Layout.ContentsTop}) }}
+                {# ▲上ナビ #}
+                {% endif %}
+                {# ▲TOP COLUMN #}
+            </div>
+            <div class="aki-container">
+                <div class="aki-row banner-top-page">
+                    {# ▼LEFT COLUMN #}
+                    {% if Layout.SideLeft %}
+                    <aside id="" class="col-md-3 side">
+                        {# ▼左ナビ #}
+                        {{ include('block.twig', {'Blocks': Layout.SideLeft}) }}
+                        {# ▲左ナビ #}
+                    </aside>
+                    {% endif %}
+                    {# ▼LEFT COLUMN #}
+
+                    {% if isSalon %}
+                    <div id="" class="mt20 col-md-9">
+                    {% else %}
+                    <div id="" class="col-md-9">
+                    {% endif %}
+                        {# ▼メイン上部 #}
+                        {% if Layout.MainTop %}
+                        <div id="main_top">
+                            {{ include('block.twig', {'Blocks': Layout.MainTop}) }}
                         </div>
-                        <div class="col-md-4">
-                            <h5>{{ 'common.footer.quick_links'|trans }}</h5>
-                            <ul class="list-unstyled">
-                                <li><a href="{{ url('homepage') }}">{{ 'common.footer.home'|trans }}</a></li>
-                                <li><a href="{{ url('help_about') }}">{{ 'common.footer.about'|trans }}</a></li>
-                                <li><a href="{{ url('contact') }}">{{ 'common.footer.contact'|trans }}</a></li>
-                            </ul>
+                        {% endif %}
+                        {# ▲メイン上部 #}
+
+                        <div id="main_middle">
+                            {% block main %}{% endblock %}
                         </div>
-                        <div class="col-md-4">
-                            <h5>{{ 'common.footer.customer_service'|trans }}</h5>
-                            <ul class="list-unstyled">
-                                <li><a href="{{ url('help_guide') }}">{{ 'common.footer.guide'|trans }}</a></li>
-                                <li><a href="{{ url('help_privacy') }}">{{ 'common.footer.privacy'|trans }}</a></li>
-                                <li><a href="{{ url('help_legal') }}">{{ 'common.footer.legal'|trans }}</a></li>
-                            </ul>
-                        </div>
+
+                        {# ▼メイン下部 #}
+                        {% if Layout.MainBottom %}
+                            <div id="main_bottom">
+                            {{ include('block.twig', {'Blocks': Layout.MainBottom}) }}
+                            </div>
+                        {% endif %}
+                        {# ▲メイン下部 #}
                     </div>
                 </div>
+                <div id="contents_bottom">
+                    {# ▼BOTTOM COLUMN #}
+                    {% if Layout.ContentsBottom %}
+                    {# ▼下ナビ #}
+                    {{ include('block.twig', {'Blocks': Layout.ContentsBottom}) }}
+                    {# ▲下ナビ #}
+                    {% endif %}
+                    {# ▲BOTTOM COLUMN #}
+                </div>
+            </div>
+        </article>
+
+        <footer id="footer" class="footer_link">
+            {# ▼Footer COLUMN#}
+            {% if Layout.Footer %}
+            {# ▼上ナビ #}
+            {{ include('block.twig', {'Blocks': Layout.Footer}) }}
+            {# ▲上ナビ #}
             {% endif %}
+            {# ▲Footer COLUMN#}
         </footer>
+        <div id="drawer" class="drawer sp"></div>
     </div>
 
-    {# Drawer and overlay components #}
-    <div class="ec-overlayRole"></div>
-    <div class="ec-drawerRoleClose"><i class="fas fa-times"></i></div>
-    <div class="ec-drawerRole">
-        {# Layout: DRAWER #}
-        {% if Layout.Drawer %}
-            {{ include('block.twig', {'Blocks': Layout.Drawer}) }}
-        {% endif %}
-    </div>
-    
-    {# Page top button #}
-    <div class="ec-blockTopBtn pagetop">{{'common.pagetop'|trans}}</div>
-    
-    {# Language selector #}
-    {% include('@common/lang.twig') %}
-    
-    {# JavaScript files #}
-    <script src="{{ asset('assets/js/function.js') }}"></script>
-    <script src="{{ asset('assets/js/eccube.js') }}"></script>
-    {% block javascript %}{% endblock %}
-    
-    {# Layout: CLOSE_BODY_BEFORE #}
-    {% if Layout.CloseBodyBefore %}
-        {{ include('block.twig', {'Blocks': Layout.CloseBodyBefore}) }}
-    {% endif %}
-    
-    {# Plugin snippets #}
-    {% if plugin_snippets is defined %}
-        {{ include('snippet.twig', { snippets: plugin_snippets }) }}
-    {% endif %}
-    
-    <script src="{{ asset('assets/js/customize.js', 'user_data') }}"></script>
+<div class="overlay"></div>
+
+{% include('@common/lang.twig') %}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.ja.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-TW.min.js"></script>
+
+<script src="{{ asset('assets/js/eccube.js') }}"></script>
+<script src="{{ asset('assets/js/function.js') }}"></script>
+<script src="{{ asset('assets/aki/js/eccube.js') }}"></script>
+
+{% block javascript %}{% endblock %}
+{% if plugin_snippets is defined %}
+    {{ include('snippet.twig', { snippets: plugin_snippets }) }}
+{% endif %}
 </body>
-</html> 
+</html>

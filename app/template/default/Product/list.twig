@@ -1,0 +1,538 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'product_page' %}
+
+{% block main %}
+<style type="text/css">
+.aki-btn-default {
+	background-color: #cacaca;
+}
+.form-select{
+	color: #333333;
+}
+.caption-price strong{
+	color: #333333;
+	font-weight: 600;
+}
+.caption-price li:last-child {
+	margin-top: 5px;
+}
+</style>
+
+	<div class="row">
+		<div class="col-12 text-center">
+			<h2 class="aki-title-zen mb20">{{ subtitle }}の{{ title }}</h2>
+			<p>
+				{% if Category is not null %}
+				  {% if Category.id == 34 %}
+					花嫁様のハレの日の装い、白無垢に綿帽子、色打掛、引き着など多数ご用意いたしました。<br>
+					ヘア、メイク、着つけ、写真撮影まで全て承ります。詳細はご相談ください。
+				  {% elseif Category.id == 35 %}
+					七五三は成長の節目の数え年三歳、五歳、七歳の身祝いです。<br>
+					千歳飴を手に11月15日に氏神様にお参りしますが、天候やお子様の体調を考慮した日程でもよろしいでしょう。<br>
+					<br>
+					七歳の女児は「帯解の祝い」と言われ、着物のつけ紐を取り、帯を結ぶ儀式です。<br>
+					七歳は、花嫁の子供バージョンになります。新日本髪に結って、三点セットの髪飾りで華やかに装いましょう。
+				  {% elseif Category.id == 36 %}
+					七五三は成長の節目の数え年三歳、五歳、七歳の見祝いです。<br>
+					千歳飴を手に11月15日に氏神様にお参りしますが、天候やお子様の体調を考慮した日程でもよろしいでしょう。<br>
+					<br>
+					男児は五歳になると幼年から少年になったことを祝い、初めて袴をつける儀式で「袴着の祝い」といわれます。<br>
+					凛々しい袴スタイルのお祝い着を多数ご用意いたしました。
+				  {% elseif Category.id == 37 %}
+					七五三は成長の節目の数え年三歳、五歳、七歳の見祝いです。<br>
+					千歳飴を手に11月15日に氏神様にお参りしますが、天候やお子様の体調を考慮した日程でもよろしいでしょう。<br>
+					<br>
+					かつては数え年三歳の男女は、髪を伸ばし、すが糸を白髪になぞらえて子供の頭にのせ、<br>
+					健康と長寿を祝う儀式「髪置の祝い」を行っていました。三歳のお子様は、可愛らしい被布セットがお楽でしょう。
+				  {% elseif Category.id == 38 %}
+					新生児の健康と長寿を祈るお宮参りは、地方によって異なる場合もありますが、<br>
+					男児は生後30日、女児は32日に氏神様にお参りします。<br>
+					<br>
+					この前後で天候や日の良い日程に行ってもよろしいでしょう。<br>
+					{% if isSalon %}
+					当店では、晴れの日にふさわしい男児、女児のお祝い着をご用意いたしました。
+					{% else %}
+					「着物レンタル{% if not isSalon %}あき{% endif %}」では、晴れの日にふさわしい男児、女児のお祝い着をご用意いたしました。
+					{% endif %}
+				  {% elseif Category.id == 39 %}
+					男性の正礼装は紋付袴です。伝統的な黒紋付からスタイリッシュなカラーの紋付、<br>
+					袴は仙台平からアバンギャルドな殿様袴まで多数取り揃えております。<br>
+					<br>
+					{% if isSalon %}
+					当店の袴はメディア関連のご利用も多くテレビ、雑誌の撮影、<br>
+					{% else %}
+					「着物レンタル{% if not isSalon %}あき{% endif %}」の袴はメディア関連のご利用も多くテレビ、雑誌の撮影、<br>
+					{% endif %}
+					イベントなどで多くのタレントさんにご利用頂いております。<br>
+					紋付袴はその他、結婚式、成人式、卒業式、パーティ等にお召しください。
+				  {% elseif Category.id == 40 %}
+					旅立ちの春、それぞれ思い入れの袴姿で卒業式に臨みましょう。<br>
+					教え子を見送る先生はじめ大学生、専門学校生の他、小学生、中学生、高校生のご利用も多くなりました。<br>
+					{% if isSalon %}
+					当店では、皆様の個性を尊重したコーディネートのアドバイスをさせて頂いています。<br>
+					{% else %}
+					「着物レンタル{% if not isSalon %}あき{% endif %}」では、皆様の個性を尊重したコーディネートのアドバイスをさせて頂いています。<br>
+					{% endif %}
+				  {% elseif Category.id == 41 %}
+					男性の着物姿が人気上昇中です。いつものスーツスタイルから変身して<br>
+					一味違った男らしさで周囲を魅了しましょう。<br>
+					<br>
+					着物と羽織の着流しに袴を着用すれば、<br>
+					お茶会（羽織は着用しません）、結婚式、パーティ等に略礼装としてお召し頂けます。
+				  {% elseif Category.id == 42 %}
+					浴衣は、平安時代に高貴な人が湯浴みをする時に、麻で作った単衣の着物を着用したのが始まりで、<br>
+					江戸時代になって湯上りに着るようになりました。現代では夏のおしゃれ着として若い人々に人気です。<br>
+					<br>
+					カンサイ等のデザイナーズブランドはもちろん、涼しげな棉麻のクオリティの高いメンズ浴衣を<br>
+					ご用意いたしました。 <br>
+					<br>
+					<span class="font-bold">おすすめの浴衣を掲載した特集ページもご用意しております。<br>
+					<a href="/user_data/yukata" class="underline color-primary">浴衣レンタルの特集ページはこちら</a><br></span>
+					<br>
+					※浴衣は所属店舗のみでの取り扱いとなります
+				  {% elseif Category.id == 43 %}
+					浴衣は、平安時代に高貴な人が湯浴みをする時に、麻で作った単衣の着物を着用したのが始まりで、<br>
+					江戸時代になって湯上りに着るようになりました。現代では夏のおしゃれ着として若い人々に人気です。<br>
+					<br>
+					今年も個性的なツモリチサト、大島優子、松田聖子、カンサイ等の人気デザイナーズブランドを<br>
+					コレクションしました。<br>
+					<br>
+					<span class="font-bold">おすすめの浴衣を掲載した特集ページもご用意しております。<br>
+					<a href="/user_data/yukata" class="underline color-primary">浴衣レンタルの特集ページはこちら</a><br></span>
+					<br>
+					※浴衣は所属店舗のみでの取り扱いとなります
+				  {% elseif Category.id == 44 %}
+					日本の着物は、都が永らく京都にあった関係で、夏暑く冬寒い京都の気候風土の影響を<br>
+					受けたワンピース形式の南方系衣服です。<br>
+					夏物は、うす物とも言われ7月と8月の盛夏に着用します。<br>
+					<br>
+					絽や紗、羅等の透ける材質、あるいはセミの羽のように薄い麻の着物など、<br>
+					周囲に一陣の涼風を与える夏の装いをお楽しみください。
+				  {% elseif Category.id == 45 %}
+					日本の着物には約束事があります。更衣（ころもがえ）もその一つです。<br>
+					「ころもがえ」は季節に合わせて着物を着替えると言う意味です。<br>
+					6月と9月には裏のついた袷（あわせ）から裏を取った単衣（ひとえ）を着用します。<br>
+					<br>
+					軽やかな単衣を纏って、ワンランク上のおしゃれを楽しみましょう。<br>
+					単衣の着物に合わせる帯は月の前半と後半では変わります。<br>
+					帯のコーディネートにつきましては、ご相談の上決めさせて頂きます。
+				  {% elseif Category.id == 47 %}
+					小紋が白生地から染めた染の着物に対して、つむぎ（紬）は糸を先に染めて紡いで織った織の着物です。<br>
+					小紋よりはカジュアルになります。丈夫な材質はお稽古着や街着、家庭着として重宝します。<br>
+					<br>
+					しかし一方でつむぎ（紬）の訪問着もありますが、おしゃれ着として観劇やパーティ、グレードの高いお食事会にいかがでしょうか。
+				  {% elseif Category.id == 48 %}
+					反物の柄全体に同じ模様が連続して描かれたカジュアルな着物です。<br>
+					伝統的なお茶や踊りのお稽古やママ友同士のお食事会など、気軽なお出かけにお召し頂ける普段使いの着物です。<br>
+					しかし武士の裃が発生の起源とする鮫小紋等の江戸小紋は別格で、色無地と同格と考えてよろしいでしょう。
+				  {% elseif Category.id == 49 %}
+					色無地は、袋帯を合わせて結婚式、パーティ、お茶会等の略礼装として、<br>
+					名古屋帯を合わせて観劇や街着にお召し頂いたり、あるいは黒共帯を合わせて、<br>
+					お通夜、法事などの半喪の装いとして幅広くお召し頂けます。<br>
+					<br>
+					半喪としてご利用の場合は、色彩や地紋に配慮しましょう。
+				  {% elseif Category.id == 50 %}
+					訪問着は明治時代に考案され大正時代に普及しました。<br>
+					絵羽模様は衣桁にかけると一幅の絵のような柄付けです。<br>
+					<br>
+					略礼装として結婚式披露宴、お茶会、パーティなど既婚・未婚の別なくお召し頂ける応用範囲の広い着物です。<br>
+					<br>
+					{% if not isSalon %}
+					<span class="font-bold">おすすめの訪問着を掲載した特集ページもご用意しております。<br>
+					<a href="/user_data/houmongi" class="underline color-primary">訪問着レンタルの特集ページはこちら</a><br></span>
+					{% endif %}
+				  {% elseif Category.id == 51 %}
+					黒留袖同様、比翼仕立てであること、染め抜き五つ紋、裾は引き返し等の条件を満たしていれば、<br>
+					黒留袖と同格の正礼装になります。しかし紋の数や比翼を省略すれば、着用範囲が広がります。<br>
+					<br>
+					宮中では黒は喪の色とされるため、園遊会、叙勲その他の宮中参内には色留袖を着用します。
+				  {% elseif Category.id == 52 %}
+					留袖は既婚女性の正礼装です。江戸時代は女性が結婚すると袖を短くして脇に留めたのが留袖の由来です。<br>
+					江戸褄模様の模様付けから、江戸褄とも言われます。<br>
+					<br>
+					かつては主に親族が着用していましたが、最近では、新郎・新婦のお母様、仲人夫人が着用し、<br>
+					その他の既婚女性親族は色留袖を着用するケースが多いようです。
+				  {% elseif Category.id == 53 %}
+					振袖は未婚女性の正礼装です。永い人生の中で一度きりの成人式。<br>
+					ご両親様はもとよりご家族の皆様にとっても感慨深いものがあると思います。<br>
+					<br>
+					振袖は成人式の他にも、結婚式、ご結納、パーティ、メディア関係等巾広いシーンでご利用頂いております。<br>
+					{% if isSalon %}
+					当店ではハレの日の装いにふさわしい振袖を多数ご用意いたしました。
+					{% else %}
+					「着物レンタル{% if not isSalon %}あき{% endif %}」ではハレの日の装いにふさわしい振袖を多数ご用意いたしました。
+					{% endif %}
+				  {% elseif Category.id == 157 %}
+					お通夜、告別式、以降の法事に際し、どのような装いをしたら良いかお迷いではないでしょうか。<br>
+					喪の装いは地方により違う場合もありますが、一般的には喪主や親族は通夜、告別式とも黒喪服を着用します。<br>
+					お悔やみに参列される方はお通夜は半喪の装い、告別式は黒喪服が一般的です。<br>
+					<br>
+					半喪の装いとは、蓮などが描かれた着物、<br>
+					色無地又は鮫小紋に黒共帯、又は灰色や紫の喪用の帯を合わせます。<br>
+					なお色無地や江戸小紋の色彩は暖色を避け、地紋も吉祥模様は避けてお悔やみの気持ちを表します。
+				  {% elseif Category.id == 158 %}
+					最初の厄年を迎える数え年13歳の身祝いです。<br>
+					広く知られるところでは、京都嵐山の虚空蔵菩薩法輪寺にお参りし、渡月橋を渡り切るまで後ろを向かないと<br>
+					智恵を授けられるとの言い伝えがあります。主に関西を中心に行われて来ましたが<br>
+					最近では虚空蔵菩薩に限定せず、近くの氏神様にお参りするなど全国的に広まってきたようです。
+				  {% else %}
+				{% endif %}
+			  {% endif %}
+			  </p>
+		</div>
+	</div>
+	<form name="form1" id="form1" method="get" action="?" class="main-search-product-form">
+		<input type="hidden" id="name" name="name" maxlength="50" value="{{  app.request.get('name') }}" />
+        <div class="row">
+			<div class="col-md-12">
+				<div class="panel-group mb00" id="accordion_search" role="tablist" aria-multiselectable="true">
+					<div class="panel panel-primary aki-border">
+						<div class="panel-heading" role="tab" id="search_filter">
+							<h4 class="panel-title">
+								<a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion_search" href="#search_filter_1" aria-expanded="true" aria-controls="search_filter_1" class="fas fa-plus" onclick="gtag('event', 'クリック', {'event_category': '条件検索関連','event_label': '条件検索を開くボタン'});">
+									<span class="aki-title-collaps">
+										サイズ・予算・店舗から絞り込む（クリックすると開閉します）</a>
+									</span>
+							</h4>
+						</div>
+						<div id="search_filter_1" class="panel-collapse collapse show" role="tabpanel" aria-bs-labelledby="search_filter" aria-bs-expanded="false">
+							<div class="panel-body">
+								<div class="aki-row">
+									<div class="col-12 col-md-6">
+										<div class="form-group date">
+											<div class="input-group input-group-lg">
+												<span class="input-group-addon" id="basic-addon1">
+													<i class="aki-icon-calenda color-primary"></i>
+												</span>
+												<input name="date" type="text" class="productListDate form-control date datepicker hasDatepicker" placeholder="ご利用日" readonly="readonly" id="useDateMainForm" data-id="date-main-form">
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-md-6">
+										{% include 'Product/partials/filter_category.twig' %}
+									</div>
+									<div class="col-12 mb10 mt10">
+										<p>ご利用いただく着物の条件を選択してください</p>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="panel panel-default">
+										<div class="panel-background_white panel-body aki-border">
+												<div class="mb20 fw-bold">価格</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_0[]" value="179" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '10,000円以下'});">10,000円以下</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_0[]" value="180" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '10,001円〜30,000円'});">10,001円〜30,000円</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_0[]" value="185" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '30,001円〜50,000円'});">30,001円～50,000円</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_0[]" value="186" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '50,001円～100,000円'});">50,001円～100,000円</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_0[]" value="191" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '100,000円以上'});">100,000円以上</label>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-background_white panel-body aki-border">
+												<div class="mb20 fw-bold">大きさ（身長）</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_1[]" value="187" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'Sサイズ(女性149cm以下/男性160以下)'});">Sサイズ(女性149cm以下/男性160以下)</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_1[]" value="188" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'Mサイズ(女性150-167cm/男性161-170cm)'});">Mサイズ(女性150-167cm/男性161-170cm)</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_1[]" value="189" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'Lサイズ(女性168-173cm/男性171-180cm)'});">Lサイズ(女性168-173cm/男性171-180cm)</label>
+												</div>
+												<div class="checkbox">
+													<label><input type="checkbox" name="category_id_1[]" value="190" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '大きいサイズ(女性174cm以上/男性181cm以上)'});">大きいサイズ(女性174cm以上/男性181cm以上)</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 col-12">
+										<div class="panel panel-default">
+											<div class="panel-background_white panel-body aki-border">
+												<div class="mb20 fw-bold">イメージ</div>
+												<div class="checkbox">
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_2[]" value="198" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'かわいい'});">かわいい</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_2[]" value="199" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '華やか'});">華やか</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_2[]" value="200" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'おしとやか'});">おしとやか</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_2[]" value="201" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '古典'});">古典</label>
+												</div>
+											</div>
+										</div>
+										<div class="panel panel-default">
+											<div class="panel-background_white panel-body aki-border">
+												<div class="mb20 fw-bold">カラー</div>
+												<div class="checkbox">
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="175" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '青・紺・水色'});">青・紺・水色</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="176" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '赤・ピンク・紫'});">赤・ピンク・紫</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="177" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '白'});">白</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="192" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '黄色・オレンジ'});">黄色・オレンジ</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="193" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '緑'});">緑</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="194" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '黒'});">黒</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="195" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'グレー'});">グレー</label>
+													<label class="checkbox-inline"><input type="checkbox" name="category_id_3[]" value="196" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': 'クリーム・ベージュ・茶色'});">クリーム・ベージュ・茶色</label>
+												</div>
+											</div>
+										</div>
+										{% if not isSalon %}
+											<div class="panel panel-default">
+												<div class="panel-background_white panel-body aki-border mb-20-md">
+													<div class="mb20 fw-bold">取扱店舗</div>
+													<div class="checkbox">
+														<label class="checkbox-inline"><input type="checkbox" name="category_id_4[]" value="217" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '渋谷本店'});">渋谷本店</label>
+														<label class="checkbox-inline"><input type="checkbox" name="category_id_4[]" value="218" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '銀座店'});">銀座店</label>
+														<label class="checkbox-inline"><input type="checkbox" name="category_id_4[]" value="219" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '池袋店'});">池袋店</label>
+														<label class="checkbox-inline"><input type="checkbox" name="category_id_4[]" value="220" onclick="gtag('event', 'クリック', {'event_category': '条件検索分岐','event_label': '横浜店'});">横浜店</label>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									</div>
+									<div class="col-12 text-center">
+										<div class="aki-row aki-well align-items-center">
+											<div class="col-md-6 text-md-end">
+												<p class="aki-btn aki-btn-default aki-btn-refresh"><i class="aki-icon-refresh"></i> 検索条件をクリア</p>
+											</div>
+											<div class="col-md-6 text-md-start">
+												<button id="filter_button_search" class="aki-btn aki-btn-primary" onclick="gtag('event', 'クリック', {'event_category': '条件検索関連','event_label': '選択した条件で検索ボタン'});">
+													<img loading="lazy" src="{{ asset('assets/icon/search-white.svg') }}" class="aki-icon-default" alt="icon"/>
+													選択した条件で検索</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="product">
+			<div class="row pb00">
+				<div id="topicpath" class="col-md-5 col-md-12 mt05">
+					<ol id="list_header_menu" class="mb00 product_top">
+						{# <li>
+							<a href="{{ url('product_list') }}">全商品</a>
+						</li> #}
+						{% if Category is not null %}
+							{% for Path in Category.path %}
+								<li>
+									<a href="{{ url('product_list') }}?category_id={{ Path.id }}">{{ Path.name }}</a>
+								</li>
+							{% endfor %}
+						{% endif %}
+						{% if search_form.vars.value.name %}
+							<li>「{{ search_form.vars.value.name }}」の検索結果</li>
+						{% endif %}
+						<li><a href="/products/list">全商品　</a><strong><span id="productscount">{{ pagination.totalItemCount }}</span>件</strong>の商品</li>
+						<li>
+							<div class="pb00 product_title">
+								<span class="gray-sub-text">並べ替え</span>
+								<div class="pl00 position-relative custom_arrow_select">
+									{{ form_widget(order_by_form, {'id': '', 'attr': {'onchange': "javascript:fnChangeOrderBy(this.value);"}}) }}
+								</div>
+							</div>
+						</li>
+					</ol>
+				</div>
+				{% if pagination.totalItemCount and pagination.totalItemCount is not null %}
+				<div class="col-12">
+					<div class="product_pager">
+						<div class="product_pager_all-count">
+							<span class="">表示件数: </span>
+							<div class="disp_number_form position-relative custom_arrow_select">
+								{{ form_widget(disp_number_form, {'id': '', 'class':'form-control','attr': {'onchange': "javascript:fnChangeDispNumber(this.value);"}}) }}
+							</div>
+						</div>
+						<div class="ec-pagerRole">
+							{% include "pager.twig" with {'pages': pagination.paginationData} %}
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		<div id="item_list">
+			<ul
+				class="thumbnails list-unstyled row">
+				{% for Product in pagination %}
+                    <li id="result_list_box--{{ Product.id }}" class="col-md-3 col-6 list_product">
+                            <div class="thumbnail" id="result_list__detail--{{ Product.id }}">
+                                <a href="{{ url('product_detail', {'id': Product.id}) }}">
+                                    <div class="inline_block_before">
+                                        <img loading="lazy" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}" class="img-responsive" {% if loop.index > 5 %} loading="lazy"{% endif %}>
+                                    </div>
+                                </a>
+                                <div class="caption">
+                                    {% if Product.ProductTag is not empty %}
+                                        <!--▼商品タグ-->
+                                        <div id="product_tag_box" class="product_tag text-center mt-10">
+                                            {% for ProductTag in Product.ProductTag %}
+                                                <div id="product_tag_box__product_tag--{{ ProductTag.Tag.id }}" class="new-tag">
+                                                    {{ ProductTag.Tag.name }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <h3 id="result_list__name--{{ Product.id }}">
+                                {% if __EX_PRODUCT_LIST[Product.id][5] is defined %}
+                                    {% if __EX_PRODUCT_LIST[Product.id][5].value is not empty %}
+                                        {% if __EX_PRODUCT_LIST[Product.id][5].value.value != LOCALE_JAPAN and __EX_PRODUCT_LIST[Product.id][5].value.value != '' %}
+                                            <a href="{{ url('product_detail_locale', {'id': Product.id, '_locale':  __EX_PRODUCT_LIST[Product.id][5].value.value}) }}">{{ Product.name }}</a>
+                                        {% else %}
+                                            <a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a>
+                                        {% endif %}
+                                    {% else %}
+                                        <a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{{ url('product_detail', {'id': Product.id}) }}">{{ Product.name }}</a>
+                                {% endif %}
+                                    </h3>
+                                    <ul class="caption-price">
+                                        {% if Product.hasProductClass %}
+                                            {% if Product.getPrice02Min == Product.getPrice02Max %}
+                                                <li>
+                                                    <strong id="result_list__price02_inc_tax--{{ Product.id }}">kore{{ Product.getPrice02IncTaxMin|price }}</strong>
+                                                </li>
+                                            {% else %}
+                                                <li>
+                                                    <strong id="result_list__price02_inc_tax--{{ Product.id }}">{{ Product.getPrice02IncTaxMin|price }}
+                                                        ～
+                                                        {{ Product.getPrice02IncTaxMax|price }}
+                                                    </strong>
+                                                </li>
+                                            {% endif %}
+                                        {% else %}
+                                            <li>
+                                                <strong id="result_list__price02_inc_tax--{{ Product.id }}">{{ Product.getPrice02IncTaxMin|number_format }}円</strong>
+                                            </li>
+                                        {% endif %}
+                                        {% if __EX_PRODUCT_LIST is defined %}
+                                            <li>&nbsp;</li>
+                                                {% if (__EX_PRODUCT_LIST[Product.id][4]['value']) %}
+                                                    <li>素材:{{__EX_PRODUCT_LIST[Product.id][4]['value'].value}}</li>
+                                                {% else %}
+                                                    <li>&nbsp;</li>
+                                                {% endif %}
+                                            <li>&nbsp;</li>
+                                        {% endif %}
+                                        <li>商品コード :
+                                            <span id="item_code_default" data-id="{{ Product.id }}">{{ Product.code_min }}
+                                                {% if Product.code_min != Product.code_max %}
+                                                    ～
+                                                    {{ Product.code_max }}
+                                                {% endif %}
+                                            </span>
+                                        </li>
+										{% if not isSalon %}
+											<li>
+												{% if Product.belongsToCategory(217) %}
+													取扱店舗 :<a class="text-green text-decoration-underline" href="/user_data/shop/shibuya">渋谷本店</a>
+												{% elseif Product.belongsToCategory(218) %}
+													取扱店舗 :<a class="text-green text-decoration-underline" href="/user_data/shop/ginza">銀座店</a>
+												{% elseif Product.belongsToCategory(219) %}
+													取扱店舗 :<a class="text-green text-decoration-underline" href="/user_data/shop/ikebukuro">池袋店</a>
+												{% elseif Product.belongsToCategory(220) %}
+													取扱店舗 :<a class="text-green text-decoration-underline" href="/user_data/shop/yokohama">横浜店</a>
+												{% else %}
+												{% endif %}
+											</li>
+										{% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                    </li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% if pagination.totalItemCount and pagination.totalItemCount is not null %}
+		<div class="product">
+			<div class="row pb00">
+				<div class="col-12">
+					<div class="product_pager">
+						<div class="product_pager_all-count product_pager_all-count_down">
+							<span>表示件数: </span>
+						</div>
+						<div class="ec-pagerRole">
+							{% include "pager.twig" with {'pages': pagination.paginationData} %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</form>
+
+
+{% endblock %}
+{% block javascript %}
+<script>
+
+	$(window).on('load', function() {
+		$('.aki-btn-refresh').click(function() {
+			$('#search_filter_1 input').prop('checked', false);
+		});
+		if($('.product_pager_all-count_down').length > 0){
+			$('.product_pager_all-count_down').append( $('.disp_number_form')[0].outerHTML)
+		}
+	})
+
+	// 並び順を変更
+	function fnChangeOrderBy(orderby) {
+		eccube.setValue('orderby', orderby);
+		eccube.setValue('pageno', 1);
+		eccube.submitForm();
+	}
+
+	// 表示件数を変更
+	function fnChangeDispNumber(dispNumber) {
+		eccube.setValue('disp_number', dispNumber);
+		eccube.setValue('pageno', 1);
+		eccube.submitForm();
+	}
+
+	$(document).ready(function() {
+		$('#filter_button_search').on('click', function(event) {
+			const specialUrl = [
+				'big',
+				'hitoenatu'
+			]
+			const category = $('.category_id_side').val();
+			const calendar = $('#AkiuseDateSideForm').val();
+			if (specialUrl.includes(category)) {
+				event.preventDefault();
+				const newUrl = `/user_data/${category}?category_id=${category}${calendar ? `&date=${calendar}` : ''}`;
+				window.location.href = newUrl;
+			}
+		});
+	});
+	</script>
+	{% if app.request.get('category_id_0') or app.request.get('category_id_1') or app.request.get('category_id_2') or app.request.get('category_id_3') or app.request.get('category_id_4') %}
+		<script>
+			$('#search_filter a').removeClass('collapsed');
+			$('#search_filter_1').addClass('in');
+			// Check selected checkbox in search filter
+			$checked_id = [];{% if app.request.get('category_id_0') %}{% for id in app.request.get('category_id_0') %}$checked_id.push('{{ id }}');{% endfor %}{% endif %}{% if app.request.get('category_id_1') %}
+			{% for id in app.request.get('category_id_1') %}
+			$checked_id.push('{{ id }}');{% endfor %}{% endif %}{% if app.request.get('category_id_2') %}
+			{% for id in app.request.get('category_id_2') %}
+			$checked_id.push('{{ id }}');{% endfor %}{% endif %}{% if app.request.get('category_id_3') %}
+			{% for id in app.request.get('category_id_3') %}
+			$checked_id.push('{{ id }}');{% endfor %}{% endif %}{% if app.request.get('category_id_4') %}
+			{% for id in app.request.get('category_id_4') %}
+			$checked_id.push('{{ id }}');{% endfor %}{% endif %}$('#search_filter_1 .checkbox input').each(function () {
+			if ($.inArray($(this).val(), $checked_id) !== -1) {
+			$(this).prop('checked', true);
+			}
+			});
+		</script>
+	{% endif %}
+{% endblock %}

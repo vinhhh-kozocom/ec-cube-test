@@ -1,0 +1,58 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+<style type="text/css">
+    .aki-border:hover{
+        opacity: 1;
+    }
+    .help-flow dl dd{
+        min-width: 180px ;
+    }
+</style>
+<div class="aki-row mb20">
+    <div class="col-12 text-center">
+        <h2>{{ 'front.tradelaw.title'|trans }}</h2>
+    </div>
+</div>
+
+<div class="help-flow aki-border">
+    {% set zipcode = tradelaws|filter(k => k.name == '〒')|first %}
+    {% for tradelaw in tradelaws|filter(t => t.name and t.description)  %}
+            {% if tradelaw.name == '住所' %}
+                <dl>
+                    <dd>
+                        {{tradelaw.name }}
+                    </dd>
+                    <span class="gray-sub-text">{{zipcode.name}}{{zipcode.description}} <br> {{ tradelaw.description|nl2br }}</span>
+                </dl>
+            {% elseif tradelaw.name == '〒' %}
+            {% elseif tradelaw.name == 'URL' %}
+            <dl>
+                <dd>
+                    {{ tradelaw.name }}
+                </dd>
+                <a class="color-primary text-decoration-underline" href="{{tradelaw.description}}">{{ tradelaw.description|raw }}</a>
+            </dl>
+            {% elseif tradelaw.name == 'メールアドレス' %}
+            <dl>
+                <dd>
+                    {{ tradelaw.name }}
+                </dd>
+                {# <a class="color-primary text-decoration-underline" href="mailto:{{tradelaw.description}}">{{ tradelaw.description|raw }}</a> #}
+                <img loading="lazy"
+                src="{{ asset('assets/img/aki/contact/contact1_background_gray.webp') }}"
+                alt="kr-aki.jp"
+                class="image-contact">
+            </dl>
+            {% elseif tradelaw.name == "利用規約" %}
+            {% else %}
+            <dl>
+                <dd>
+                    {{ tradelaw.name }}
+                </dd>
+                <span class="gray-sub-text">{{ tradelaw.description|nl2br }}</span>
+            </dl>
+            {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

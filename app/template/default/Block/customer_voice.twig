@@ -1,0 +1,15 @@
+{% if isSalon %}
+	<div class="mb10">
+		<a href="https://www.facebook.com/pg/kimono.rental.aki.tokyo/photos/?tab=photos_albums">
+			<img loading="lazy" src="{{ front_urlpath }}/img/common/voice_bar.webp" alt="着物レンタルをご利用したお客様の声" class="img-responsive hidden-xs">
+			<img loading="lazy" src="{{ front_urlpath }}/img/common/voice_bar_sp.webp" alt="着物レンタルをご利用したお客様の声" class="img-responsive visible-xs">
+		</a>
+	</div>         
+{% else %}
+	<div class="mb10">
+		<a href="https://www.facebook.com/pg/kimono.rental.aki.tokyo/photos/?tab=photos_albums">
+			<img loading="lazy" src="{{ front_urlpath }}/img/common/voice_bar.webp" alt="着物レンタルあきをご利用したお客様の声" class="img-responsive hidden-xs">
+			<img loading="lazy" src="{{ front_urlpath }}/img/common/voice_bar_sp.webp" alt="着物レンタルあきをご利用したお客様の声" class="img-responsive visible-xs">
+		</a>
+	</div>            
+{% endif %}

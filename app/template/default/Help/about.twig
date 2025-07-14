@@ -1,0 +1,90 @@
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+
+<div>
+	<div class="aki-row">
+		<div class="col-12 text-center mb30">
+			<h2>{{ 'front.about.title'|trans }}</h2>
+		</div>
+	</div>
+	<div class="help-flow aki-border">
+		{% if BaseInfo.shop_name|default is not empty %}
+			<dl id="help_about_box__shop_name">
+				<dd>
+					{{ 'common.shop_name'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.shop_name }}</span>
+			</dl>
+		{% endif %}
+		{% if BaseInfo.company_name|default is not empty %}
+			<dl id="help_about_box__company_name">
+				<dd>
+					{{ 'common.company_name'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.company_name }}</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.postal_code|default is not empty %}
+			<dl id="help_about_box__address">
+				<dd>
+					{{ 'common.address'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ 'common.postal_symbol'|trans }}{{ BaseInfo.postal_code }}<br />
+					{{ BaseInfo.pref }}{{ BaseInfo.addr01 }}{{ BaseInfo.addr02 }}
+				</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.phone_number|default is not empty %}
+			<dl id="help_about_box__phone_number">
+				<dd>
+					{{ 'common.phone_number'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.phone_number }}</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.fax|default is not empty %}
+			<dl id="help_about_box__fax">
+				<dd>
+					{{ 'common.fax'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.fax }}</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.business_hour|default is not empty %}
+			<dl id="help_about_box__business_hour">
+				<dd>
+					{{ 'aki.front.about.business_hour'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.business_hour }}</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.good_traded|default is not empty %}
+			<dl id="help_about_box__good_traded">
+				<dd>
+					{{ 'front.about.good_traded'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.good_traded|nl2br }}</span>
+			</dl>
+		{% endif %}
+
+		{% if BaseInfo.message|default is not empty %}
+			<dl id="help_about_box__message">
+				<dd>
+					{{ 'front.about.message'|trans }}
+				</dd>
+				<span class="gray-sub-text">{{ BaseInfo.message|nl2br }}</span>
+			</dl>
+		{% endif %}
+	</div>
+	<div class="maps aki-border mt30 mb30">
+		<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d810.4431994695469!2d139.694324!3d35.657969!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188caa65808355%3A0x9df2b03b05b1f1c0!2sKimono%20Rental%20Aki%20Shibuya%20Main%20Store!5e0!3m2!1sen!2sus!4v1713940633608!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+	</div>
+</div>
+
+{% endblock %}

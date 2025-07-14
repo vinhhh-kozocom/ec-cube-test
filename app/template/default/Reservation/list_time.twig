@@ -1,0 +1,130 @@
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+<style>
+    .detail__header-item{
+        border:1px solid #ccc;
+        padding:4px 10px;
+        margin-right: 10px;
+        border-radius: 2px;
+    }
+    .btn-reload{
+        max-width: 110px;
+        border:1px solid #ccc;
+        border-radius: 2px;
+        padding: 4px 0 0;
+    }
+    .detail__main-day{
+        padding-top: 4px
+    }
+    .detail__main{
+        margin:10px 0;
+        border:1px solid #ccc;
+        border-radius:4px;
+        padding:10px;
+    }
+    .detail__main-header{
+        display:flex;
+        justify-content:space-between;
+    }
+    .detail__main-day{
+        display:block;
+    }
+    .detail__main-header > button{
+        border:none;
+        padding: 2px 4px;
+    }
+    .detail__main-action{
+        display:flex;
+        margin:20px auto;
+        width:70%;
+    }
+    .detail__main-action-group{
+        width: 100%;
+    }
+    .detail__main-action-item{
+        padding:4px;
+        border:1px solid #ccc;
+        border-radius:4px;
+        min-width:200px;
+        margin:4px 0;
+        display:block;
+    }
+    .detail__main-action-group-item {
+        display:block;
+        position: relative;
+    }
+    .detail__main-action-icon{
+        position: absolute;
+        top: 4px;
+        right: 50%;
+        color: blue;
+    }
+    .disabled{
+        cursor: not-allowed;
+        background-color: #8c9397;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+    <script>
+        function reload() {
+            location.reload();
+        }
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div>{{ "front.reservation.tutorial.select" | trans }}</div>
+    <div class="detail__main">
+        <div class="detail__main-header">
+            <div class="detail__header">
+                <a
+                    class="aki-btn aki-btn-default btn-block detail__header-item"
+                    href="{{url('reservation_store', {'shop': app.session.get('shop_name_for_show_calendar')})}}"
+                    >{{ "reservation.entry.back" | trans }}
+                </a>
+            </div>
+            <span class="detail__main-day">
+                {{date_slected}}
+            </span>
+            <a class="aki-btn aki-btn-default btn-block btn-reload" onclick="reload()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alexa" viewBox="0 0 16 16">
+                    <path d="M7.996 0A8 8 0 0 0 0 8a8 8 0 0 0 6.93 7.93v-1.613a1.06 1.06 0 0 0-.717-1.008A5.6 5.6 0 0 1 2.4 7.865 5.58 5.58 0 0 1 8.054 2.4a5.6 5.6 0 0 1 5.535 5.81l-.002.046-.012.192-.005.061a5 5 0 0 1-.033.284l-.01.068c-.685 4.516-6.564 7.054-6.596 7.068A7.998 7.998 0 0 0 15.992 8 8 8 0 0 0 7.996.001Z"/>
+                </svg>{{ 'common.reservation.reload'|trans }}
+            </a>
+        </div>
+        <div class="detail__main-action">
+            <div class="detail__main-action-group">
+            {% for time in list_time %}
+                <span class="detail__main-action-group-item">
+                    {% if time['total_people'] is not null and time['total_people'] >= quantity_reservation_max %}
+                        <span class="detail__main-action-item disabled">{{time['time_slot'].start_time | date('H:i')}} ~ {{time['time_slot'].end_time | date('H:i')}}</span>
+                    {% else %}
+                        <a class="detail__main-action-item" href="{{url('reservation_form',
+                        {id_slot:time['time_slot'].id , 'product-code': product_code })}}
+                        ">{{time['time_slot'].start_time | date('H:i')}} ~ {{time['time_slot'].end_time | date('H:i')}}</a>
+                    {% endif %}
+                    <span class="detail__main-action-icon">
+                        {% if time['total_people'] < quantity_reservation_min %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#008000" class="bi bi-record-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 13A5 5 0 1 0 8 3a5 5 0 0 0 0 10"/>
+                            </svg>
+                            {% elseif time['total_people'] is not null and time['total_people'] >= quantity_reservation_min and time['total_people'] < quantity_reservation_max %}
+                            {# triangle #}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FFCC00" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                            </svg>
+                            {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#e10c0c" class="bi bi-x-octagon" viewBox="0 0 16 16">
+                                <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        {% endif %}
+                    </span>
+                </span>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

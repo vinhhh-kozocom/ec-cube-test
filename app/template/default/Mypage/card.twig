@@ -1,0 +1,436 @@
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'card' %}
+
+{% set body_class = 'aki-mypage' %}
+
+{% block main %}
+<style>
+    .ec-favoriteRole__itemThumb {
+        min-height: 50px;
+        max-height: 50px;
+    }
+    .card-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #e1e1e1;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+    .card-box__details {
+        text-align: left;
+    }
+    .card-box__number {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    .card-box__name {
+        margin-top: 8px;
+        font-size: 1em;
+    }
+    .card-box__date {
+        text-align: right;
+        color: #666;
+        font-size: 0.9em;
+        padding-left: 30px;
+        font-family: sans-serif;
+    }
+    .card-box__button {
+        cursor: pointer;
+        color: #d9534f;
+        font-size: 0.9em;
+        border: none;
+        background: none;
+        padding: 4px 8px;
+        transition: background-color 0.3s ease;
+    }
+    .card-box__button:hover {
+        background-color: #f8d7da;
+    }
+
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    .popup-container {
+        background: #fff;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 350px;
+    }
+    .popup-title {
+        font-size: 1.2em;
+        margin-bottom: 16px;
+    }
+    .popup-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+    }
+    .popup-button {
+        padding: 8px 16px;
+        border: none;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .popup-button--confirm {
+        background-color: #d9534f;
+        color: #fff;
+    }
+    .popup-button--confirm:hover {
+        background-color: #c9302c;
+    }
+    .popup-button--cancel {
+        background-color: #e7e7e7;
+        color: #333;
+    }
+    .popup-button--cancel:hover {
+        background-color: #e2e6ea;
+    }
+    {% if card %}
+    #cardForm {
+        display: none;
+    }
+    {% endif %}
+    .alert.alert-success, .alert.alert-danger {
+        border-radius: 0;
+    }
+</style>
+    <div class="ec-layoutRole__main">
+        <div class="row text-center">
+            <div class="ec-pageHeader aki-mypage_title">
+                <h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'front.mypage.nav__card'|trans }}</h2>
+                <p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+            </div>
+        </div>
+        {% include 'Mypage/navi.twig' %}
+
+        <div class="ec-favoriteRole">
+            {% for type, messages in app.flashes %}
+                <div class="alert alert-{{ type }}">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+           {% if card %}
+            <div class="card-box">
+                <div class="card-box__details">
+                    <span>{{'aki.front.credit.card.number'|trans}}</span>
+                    <div class="card-box__number">{{ card.card_no }}</div>
+                </div>
+                <div class="card-box__date"> <span>{{ 'admin.common.create_date'|trans }}</span><br>{{ card.update_date|date('Y/m/d') }}</div>
+                <div class="d-flex">
+                    <button id="cardEdit" class="card-box__button">
+                        <i class="aki-icon-pencil color-primary"></i>
+                    </button>
+                    <button class="card-box__button"
+                            onclick="showPopup('{{ path('mypage_card_delete', {'id': card.id}) }}')">
+                        <i class="aki-icon-delete color-primary"></i>
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+            <div id="cardForm" class="aki-mypage">
+                <form id="getTokenForm" class="history-block">
+                    <div class="aki-row justify-content-center">
+                        <div class="group-block col-md-6 col-12">
+                            <label class="control-label">{{'aki.front.credit.card.number'|trans}}<span class="required">*</span>
+                            </label>
+                            <div>
+                                <div class="pb-0 card__no-group">
+                                    <div class="card__no-item">
+                                        <input type="text" class="form-control w-100" id="card__no" name="card__no" minlength="10" maxlength="16" placeholder="{{'aki.front.credit.card.placeholder.number'|trans}}">
+                                    </div>
+                                </div>
+                                <div class="card__error-group"></div>
+                            </div>
+                        </div>
+                        <div class="group-block col-md-6 col-12">
+                            <label class="control-label">{{'aki.front.credit.card.expire'|trans}}<span class="required">*</span>
+                            </label>
+                            <div>
+                                <div class="card__expire-group d-flex align-items-center">
+                                    <div class="w-100 position-relative custom_arrow_select">
+                                        {{form_widget(form.card_year,{attr: {placeholder: 'card_year'}})}}
+                                    </div>
+                                    <div class="ml10 mr10">-</div>
+                                    <div class="w-100 position-relative custom_arrow_select">
+                                        {{form_widget(form.card_month,{attr: {placeholder: 'card_month'}})}}
+                                    </div>
+                                </div>
+                                <div class="expire__error-group"></div>
+                            </div>
+                        </div>
+                        <div class="group-block col-md-6 col-12">
+                            <label class="control-label">{{'aki.front.credit.card.security'|trans}}<span class="required">*</span>
+                            </label>
+                            <div>
+                                <div>
+                                    <input class="form-control w-100" id="securitycode" name="securitycode" minlength="3" maxlength="4" placeholder="{{'aki.front.credit.card.placeholder.security'|trans}}"/>
+                                </div>
+                                <div class="security__error-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group-block col-md-6 col-12">
+                            <label class="control-label">{{'aki.front.credit.card.name'|trans}}<span class="required">*</span>
+                            </label>
+                            <div>
+                                <div>
+                                    <input type="text" class="form-control w-100" id="holdername" name="holdername" placeholder="{{'aki.front.credit.card.placeholder.name'|trans}}"/>
+                                </div>
+                                <div class="name__error-group"></div>
+                            </div>
+                        </div>
+                        <div class="group-block col-md-6">
+                            <div class="text-center text-md-end">
+                                    <button type="button" class="aki-btn aki-btn-default" id="cancelButton">キャンセル</button>
+                                </div>
+                        </div>
+                        <div class="group-block col-md-6">
+                            <div class="text-center text-md-start">
+                                    <button type="button" class="aki-btn aki-btn-primary credit__submit" id="doPurchase">保存</button>
+                                </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- サブミットフォーム -->
+                <form id="purchaseForm" action="{{ path('create_or_update_card') }}" method="post">
+                    <p>
+                        <!-- トークン -->
+                        <input type="hidden" value="" id="token" name="token"/>
+                        <input type="hidden" value="" id="maskedCardNo" name="maskedCardNo"/>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="confirmPopup">
+        <div class="popup-container">
+            <div class="popup-title">クレジットカード情報を削除しますか？</div>
+            <div class="popup-buttons">
+                <button class="popup-button popup-button--cancel" onclick="closePopup()">キャンセル</button>
+                <button class="popup-button popup-button--confirm" id="confirmDeleteBtn">削除する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPopup(deleteUrl) {
+            const popup = document.getElementById('confirmPopup');
+            popup.style.display = 'flex';
+
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            confirmBtn.onclick = () => {
+                window.location.href = deleteUrl;
+            };
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('confirmPopup');
+            popup.style.display = 'none';
+        }
+        $('#cardEdit').click(function() {
+            $('#cardForm').show();
+        })
+        $('#cancelButton').click(function() {
+            $('#cardForm').hide();
+        })
+    </script>
+
+    <script src="{{PAYMENT_TOKEN}}"></script>
+    <script>
+            var Multipayment,
+            CryptoJS,
+            JSEncryptExports,
+            JSEncrypt,
+            ASN1,
+            Base64,
+            Hex,
+            KJUR;
+            const emptyMessageError = '{{'aki.front.credit.card.validate.empty'|trans}}';
+            const cardnoMessageValidError = '{{'aki.front.credit.card.cardno.valid'|trans}}';
+            const cardnoMessageLengthError = '{{'aki.front.credit.card.cardno.lenght'|trans}}';
+            const cardExpireMessageValidError = '{{'aki.front.credit.card.expire.valid'|trans}}';
+            const cardNameMessageValidError = '{{'aki.front.credit.card.name.valid'|trans}}';
+            const cardSecurityMessageValidError = '{{'aki.front.credit.card.security.valid'|trans}}';
+            const cardSecurityMessageLengthError = '{{'aki.front.credit.card.security.lenght'|trans}}';
+            const cardExpireMessageDateError = '{{'aki.front.credit.card.date.expire'|trans}}';
+            const cardNameMessageLengthError = '{{'aki.front.credit.card.lenght'|trans}}';
+            var isError = false;
+            const shopID = '{{PGCARD_SHOP_ID}}'
+            $("#doPurchase").on("click",async function(){
+                var cardno = $("#card__no").val();
+                var expirYear=$("#credit_card_required_card_year").val();
+                var expirMonth=$("#credit_card_required_card_month").val();
+                var expire = expirYear.slice(-2) + expirMonth;
+                var securitycode = $("#securitycode").val();
+                var holdername = $("#holdername").val();
+                var tokennumber = 1;
+                $('.ec-errorMessage').remove();
+
+                validateForm($(this));
+                function validateInput(value, regex, length, errorMessage, errorContainer) {
+                    return new Promise((resolve, reject) => {
+                        if (value.length <= 0) {
+                            reject(errorMessage.empty);
+                        } else {
+                            if (regex && !regex.test(value)) {
+                                reject(errorMessage.invalidFormat);
+                            }
+                            if (length && (value.length < length.min || value.length > length.max)) {
+                                reject(errorMessage.invalidLength);
+                            }
+                            resolve();
+                        }
+                    });
+                }
+
+                function validateExpirePastDays(value,errorMessage){
+                    return new Promise((resolve, reject) => {
+                        const date = new Date();
+                        const currentYearMonth = date.getFullYear()+''+(date.getMonth()+1).toString().padStart(2, '0');
+                        if(Number(value) < Number(currentYearMonth)){
+                            reject(errorMessage);
+                        }else{
+                            resolve();
+                        }
+                    });
+                }
+
+                async function validateForm(elm) {
+                    let isError = false;
+                    const validateCardNo = async () => {
+                        const cardnoErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardnoMessageValidError,
+                            invalidLength: cardnoMessageLengthError,
+                        };
+                        try {
+                            await validateInput(cardno, /^\d+$/, { min: 10, max: 16 }, cardnoErrorMessages, '.card__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.card__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateExpire = async () => {
+                        const expireErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidLength: cardExpireMessageValidError,
+                        };
+                        try {
+                            await validateInput(expirYear, null, null, expireErrorMessages, '.expire__error-group');
+                            await validateInput(expirMonth, null, null, expireErrorMessages, '.expire__error-group');
+                            await validateExpirePastDays(expirYear+expirMonth, cardExpireMessageDateError);
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.expire__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateHolderName = async () => {
+                        const holderNameErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardNameMessageValidError,
+                            invalidLength: cardNameMessageLengthError,
+                        };
+                        try {
+                            await validateInput(holdername, /^[a-zA-Z\s]+$/, { min: 1, max: 51 }, holderNameErrorMessages, '.name__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.name__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    const validateSecurityCode = async () => {
+                        const securityCodeErrorMessages = {
+                            empty: emptyMessageError,
+                            invalidFormat: cardSecurityMessageValidError,
+                            invalidLength: cardSecurityMessageLengthError
+                        };
+                        try {
+                            await validateInput(securitycode, /^\d+$/, { min: 3, max: 4 }, securityCodeErrorMessages, '.security__error-group');
+                        } catch (error) {
+                            isError = true;
+                            elm.parents('form').find('.security__error-group').append(`<div class="ec-errorMessage">${error}</div>`);
+                        }
+                    };
+                    await Promise.all([
+                        validateCardNo(),
+                        validateExpire(),
+                        validateHolderName(),
+                        validateSecurityCode(),
+                    ]);
+                    if (!isError) {
+                        Multipayment.init(shopID);
+                        Multipayment.getToken(
+                            {
+                            cardno: cardno,
+                            expire: expire,
+                            securitycode: securitycode,
+                            holdername: holdername,
+                            tokennumber: tokennumber
+                            },
+                        response => {
+                            var tokenError = {
+                                "000": '{{'aki.front.get.token.error.000'|trans}}',
+                                "100": '{{'aki.front.get.token.error.100'|trans}}',
+                                "101": '{{'aki.front.get.token.error.101'|trans}}',
+                                "102": '{{'aki.front.get.token.error.102'|trans}}',
+                                "110": '{{'aki.front.get.token.error.110'|trans}}',
+                                "111": '{{'aki.front.get.token.error.111'|trans}}',
+                                "112": '{{'aki.front.get.token.error.112'|trans}}',
+                                "113": '{{'aki.front.get.token.error.113'|trans}}',
+                                "121": '{{'aki.front.get.token.error.121'|trans}}',
+                                "122": '{{'aki.front.get.token.error.122'|trans}}',
+                                "131": '{{'aki.front.get.token.error.131'|trans}}',
+                                "132": '{{'aki.front.get.token.error.132'|trans}}',
+                                "141": '{{'aki.front.get.token.error.141'|trans}}',
+                                "142": '{{'aki.front.get.token.error.142'|trans}}',
+                                "150": '{{'aki.front.get.token.error.150'|trans}}',
+                                "160": '{{'aki.front.get.token.error.160'|trans}}',
+                                "161": '{{'aki.front.get.token.error.161'|trans}}',
+                                "162": '{{'aki.front.get.token.error.162'|trans}}',
+                                "170": '{{'aki.front.get.token.error.170'|trans}}',
+                                "180": '{{'aki.front.get.token.error.180'|trans}}',
+                                "190": '{{'aki.front.get.token.error.190'|trans}}',
+                                "191": '{{'aki.front.get.token.error.191'|trans}}',
+                                "501": '{{'aki.front.get.token.error.501'|trans}}',
+                                "502": '{{'aki.front.get.token.error.502'|trans}}',
+                                "511": '{{'aki.front.get.token.error.511'|trans}}',
+                                "512": '{{'aki.front.get.token.error.512'|trans}}',
+                                "521": '{{'aki.front.get.token.error.521'|trans}}',
+                                "522": '{{'aki.front.get.token.error.522'|trans}}',
+                                "531": '{{'aki.front.get.token.error.531'|trans}}',
+                                "541": '{{'aki.front.get.token.error.541'|trans}}',
+                                "551": '{{'aki.front.get.token.error.551'|trans}}',
+                                "552": '{{'aki.front.get.token.error.552'|trans}}',
+                                "901": '{{'aki.front.get.token.error.901'|trans}}',
+                                "902": '{{'aki.front.get.token.error.902'|trans}}'
+                            };
+                            if (response.resultCode == "000") {
+                                $("#token").val(response.tokenObject.token);
+                                $("#maskedCardNo").val(response.tokenObject.maskedCardNo);
+                                $("#purchaseForm").submit();
+                            } else if (response.resultCode in tokenError) {
+                                alert(tokenError[response.resultCode]);
+                            } else {
+                                alert('{{'aki.front.get.token.error'|trans}}');
+                            }
+                        }
+                    );}
+                }
+            })
+    </script>
+{% endblock %}

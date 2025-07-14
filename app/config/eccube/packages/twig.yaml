@@ -3,6 +3,13 @@ twig:
       BaseInfo: null
       eccube_config: '@Eccube\Common\EccubeConfig'
       event_dispatcher: '@event_dispatcher'
+      SALON_URL: '%env(SALON_URL)%'
+      APP_ENV: '%env(APP_ENV)%'
+      APP_PROD: prod
+      ID_FACEBOOK: '%env(ID_FACEBOOK)%'
+      LOCALE_JAPAN: ja
+      LOCALE_ENGLISH: en
+      LOCALE_CHINA: zh
     paths:
       '%eccube_theme_front_dir%': ~
       '%eccube_theme_front_default_dir%': ~

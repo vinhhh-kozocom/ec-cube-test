@@ -1,0 +1,240 @@
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% set body_class = 'aki-mypage' %}
+
+{% block stylesheet %}
+    <style>
+        .ec-totalBox .ec-totalBox__paymentTotal .ec-totalBox__price, .ec-totalBox .ec-totalBox__paymentTotal .ec-totalBox__taxLabel {
+            color: #4d90fe;
+        }
+		.table > :not(:first-child) {
+			border-top: 0px;
+		}
+    </style>
+{% endblock %}
+
+{% block main %}
+		<div class="ec-pageHeader aki-mypage_title text-center mb30">
+			<h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'front.mypage.nav__history_detail'|trans }}</h2>
+			<p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+		</div>
+	{% include 'Mypage/navi.twig' %}
+
+	{% set remessage = false %}
+
+	<div class="row history" id="shopping_confirm">
+		<div class="col-md-8">
+			<div class="history-block">
+				<p class="d-flex justify-content-between mb10"><span>{{ 'front.mypage.order_date'|trans }} :</span> <span>{{ Order.order_date|date_sec }}</span>  </p>
+				<p class="d-flex justify-content-between mb10"><span>{{ 'front.mypage.order_no'|trans }} :</span> <span>{{ Order.order_no }}</span>  </p>
+				{% if BaseInfo.option_mypage_order_status_display %}
+				<p class="d-flex justify-content-between"><span>{{ 'front.mypage.order_status'|trans }} :</span> <span>{{ Order.CustomerOrderStatus }}</span>  </p>
+				{% endif %}
+			</div>
+			<div id="detail_list_box__list" class="history-block-white gray-sub-text mb25">
+				{% set remessage = '' %}
+				{% for orderItem in Order.getMergedProductOrderItems %}
+					<div class="history-block-item">
+						<div>
+							{% if orderItem.product is null %}
+								<img loading="lazy" src="{{ asset(''|no_image_product, 'save_image') }}"/>
+							{% else %}
+								<img loading="lazy" src="{{ asset(orderItem.Product.MainListImage|no_image_product, 'save_image') }}" alt="{{ orderItem.productName }}"/>
+							{% endif %}
+						</div>
+						<div>
+							<p class="mb10">
+								{% if orderItem.Product is not null and orderItem.Product.Status.id == constant('Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW') %}
+									<a href="{{ url('product_detail', {'id': orderItem.Product.id}) }}">{{ orderItem.productName }}</a>
+								{% else %}
+									{{ orderItem.productName }}
+								{% endif %}
+
+								{% if is_reduced_tax_rate(orderItem) %}
+									{% set isShowReducedTaxMess = true %}
+								{% endif %}
+							</p>
+							{% if orderItem.ProductClass is not null %}
+								{% if orderItem.ProductClass.ClassCategory1 is not null %}
+									{{ orderItem.productClass.classCategory1.className.name }}：{{ orderItem.productClass.classCategory1 }}
+								{% endif %}
+								{% if orderItem.ProductClass.ClassCategory2 %}
+									<br>{{ orderItem.productClass.classCategory2.className.name }}：{{ orderItem.productClass.classCategory2 }}
+								{% endif %}
+							{% endif %}
+							<p class="mb5">{{ orderItem.price_inc_tax|price }}
+								×
+								{{ orderItem.quantity|number_format }}  <span class="ml10"><b>小計：{{ orderItem.total_price|price }}</b></span> </p>
+
+							{% if orderItem.product and orderItem.price_inc_tax != orderItem.productClass.price02IncTax %}
+								<p class="ec-color-accent">
+									{{ 'front.mypage.current_price'|trans }}{{ orderItem.productClass.price02IncTax|price }}</p>
+								{% set remessage = true %}
+							{% endif %}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+
+			<div class="history-delivery">
+				<h3 class="aki-title-zen mb20">{{ 'front.mypage.delivery_info'|trans }}</h3>
+				<div class="history-block gray-sub-text">
+					{% for Shipping in Order.Shippings %}
+						{% set isShowReducedTaxMess = false %}
+						<div class="history-block-white mb20">
+							{% for orderItem in Shipping.productOrderItems %}
+								<div class="history-block-item">
+									<div>
+										{% if orderItem.product is null %}
+											<img loading="lazy" src="{{ asset(''|no_image_product, 'save_image') }}"/>
+										{% else %}
+											<img loading="lazy" src="{{ asset(orderItem.Product.MainListImage|no_image_product, 'save_image') }}" alt="{{ orderItem.productName }}"/>
+										{% endif %}
+									</div>
+									<div>
+										<p>
+											{% if orderItem.Product is not null and orderItem.Product.Status.id == constant('Eccube\\Entity\\Master\\ProductStatus::DISPLAY_SHOW') %}
+												<a href="{{ url('product_detail', {'id': orderItem.Product.id}) }}">{{ orderItem.productName }}</a>
+											{% else %}
+												{{ orderItem.productName }}
+											{% endif %}
+											×{{ orderItem.quantity }}
+											{% if is_reduced_tax_rate(orderItem) %}
+												{% set isShowReducedTaxMess = true %}
+											{% endif %}
+										</p>
+										{% if orderItem.ProductClass is not null %}
+											{% if orderItem.ProductClass.ClassCategory1 is not null %}
+												{{ orderItem.productClass.classCategory1.className.name }}：{{ orderItem.productClass.classCategory1 }}
+											{% endif %}
+											{% if orderItem.ProductClass.ClassCategory2 %}
+												<br>{{ orderItem.productClass.classCategory2.className.name }}：{{ orderItem.productClass.classCategory2 }}
+											{% endif %}
+										{% endif %}
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+
+						<div class="history-block-white mb20">
+							<p class="mb15">{{ Shipping.name01 }}&nbsp;{{ Shipping.name02 }}&nbsp;
+																({{ Shipping.kana01 }}&nbsp;{{ Shipping.kana02 }}) 様</p>
+							<p class="mb15">{{ 'common.postal_symbol'|trans }}{{ Shipping.postal_code }}
+								{{ Shipping.Pref }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}</p>
+							<p>{{ Shipping.phone_number }}</p>
+						</div>
+
+						<div class="history-block-white">
+							<p class="mb10">{{ 'front.mypage.delivery_provider'|trans }} :  {{ Shipping.shipping_delivery_name }} </p>
+							<p class="mb10">{{ 'front.mypage.delivery_date'|trans }} :  {{ Shipping.shipping_delivery_date|date_day_with_weekday|default('common.select__unspecified'|trans) }}</p>
+							<p>{{ 'front.mypage.delivery_time'|trans }} :  {{ Shipping.shipping_delivery_time|default('common.select__unspecified'|trans) }}</p>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div class="history-payment">
+				<h3 class="aki-title-zen mb20">{{ 'aki.front.mypage.payment_info'|trans }}</h3>
+				<div class="history-block">
+				<p>{{ 'aki.front.mypage.payment'|trans }}
+					:
+					{{ Order.PaymentMethod }}
+                    {% if Order.Payment.id|default('') == CREDIT_CARD_ID %}
+                        {% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %}
+                            ({{'aki.front.shopping.payment.method.installment'|trans}})
+                        {% else %}
+                            ({{'aki.front.shopping.payment.method.bulk'|trans}})
+                        {% endif %}
+                    {% endif %}
+                </p>
+				</div>
+			</div>
+
+			<div class="history-confirm">
+				<h3 class="aki-title-zen mb20">{{ 'front.mypage.message'|trans }}</h3>
+				<div class="history-block">
+					<p>{{ Order.message|default('front.mypage.message_not_found'|trans)|nl2br }}</p>
+				</div>
+			</div>
+
+			<div class="history-email">
+				<h3 class="aki-title-zen mb20">{{ 'front.mypage.mail_list'|trans }}</h3>
+				{% for MailHistory in Order.MailHistories %}
+				<div class="history-block">
+					<div class="history-block-white ec-orderMail">
+						<p class="gray-sub-text mb15">{{ MailHistory.send_date|date_sec }}</p>
+						<a class="ec-orderMail__link text-green">{{ MailHistory.mail_subject }}</a>
+						<div class="ec-orderMail__body mt15">
+							{{ MailHistory.mail_body|nl2br }}
+							<p class="ec-orderMail__close">
+								<a>{{ 'common.close'|trans }}</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				{% else %}
+				<div class="history-block">
+					<p>{{ 'front.mypage.mail_not_found'|trans }}</p>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div id="summary_box" class="aki-alert-primary pa20 history-price">
+				<p class="d-flex justify-content-between mb10">
+					<span>{{ 'common.subtotal'|trans }}</span>
+					<span>{{ Order.subtotal|price }}</span>
+				</p>
+				<p class="d-flex justify-content-between mb10">
+					<span>{{ 'common.charge'|trans }}</span>
+					<span>{{ Order.charge|price }}</span>
+				</p>
+				<p class="d-flex justify-content-between mb10">
+					<span>{{ 'common.delivery_fee'|trans }}</span>
+					<span>{{ Order.delivery_fee_total|price }}</span>
+				</p>
+					{% if Order.taxable_discount < 0 %}
+						<p class="d-flex justify-content-between mb10">
+							<span>{{ 'common.discount'|trans }}</span>
+							<span>{{ Order.taxable_discount|price }}</span>
+						</p>
+					{% endif %}
+					{% for item in Order.tax_free_discount_items %}
+						<p class="d-flex justify-content-between mb10">
+							<span>{{ item.product_name }}</span>
+							<span>{{ item.total_price|price }}</span>
+						</p>
+					{% endfor %}
+
+					<div class="history-price__total d-flex justify-content-between align-items-baseline">
+						<span>{{ 'common.total'|trans }}</span>
+						<div class="color-primary">
+							<span class="history-price__price">{{ Order.payment_total|price }}</span>
+							<span>{{ 'common.tax_include'|trans }}</span>
+						</div>
+					</div>
+
+					{% for rate, total in Order.total_by_tax_rate %}
+							<p class="mt10">{{ 'common.tax_rate_target'|trans({ '%rate%': rate }) }}</p>
+							<p class="mt10">{{ total|price }}
+								({{ 'common.tax_amount'|trans }}
+								{{ Order.tax_by_tax_rate[rate]|price }})</p>
+					{% endfor %}
+
+					{% if remessage %}
+						<p class="ec-color-accent mt10">
+							<strong>{{ 'front.mypage.reorder_message'|trans }}</strong>
+						</p>
+					{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<div class="row text-center">
+		<div class="col-md-8">
+			<a href="{{ url('mypage') }}" class="aki-btn aki-btn-default">{{ 'common.back'|trans }}</a>
+		</div>
+	</div>
+{% endblock %}

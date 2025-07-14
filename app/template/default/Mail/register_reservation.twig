@@ -1,0 +1,53 @@
+
+    {{customer_name}} 様 <br/><br/>
+    下記ご予約内容にお間違えがないかご確認下さい。<br/><br/>
+    後に店舗担当者より「お下見予約確定メール」を送らせていただきます。<br/>
+    ★本メールでは予約は確定しておりませんのでご注意ください★<br/><br/><br/>
+    ************************************************<br/>
+    ご予約内容<br/>
+    ************************************************<br/><br/>
+    ご来店店舗：{{shop}}<br/>
+    ご来店日時: {{visit_day | date('Y-m-d')}}  {{time_start | date('H:i')}} - {{time_end | date('H:i')}}<br/>
+    お名前：{{customer_name}}<br/>
+    お名前（フリガナ）：{{customer_kana}}<br/>
+    電話番号：{{tel}}<br/>
+    メールアドレス：{{email}}<br/>
+    ご利用日: {{use_day|date('Y-m-d')}}<br/>
+    {% if use_people is not null %}
+    ご利用人数：{{use_people}}<br/>
+    {% endif %}
+    {% if purpose is not null %}
+    用途：{{purpose}}<br/>
+    {% endif %}
+    {% if height is not null %}
+        身長：{{height}}<br/>
+    {% endif %}
+    {% if item is not null %}
+    ご希望の商品コード（3点まで）：{{item}}<br/>
+    {% endif %}
+    {% if budget is not null %}
+    ご希望の予算：{{budget}}<br/>
+    {% endif %}
+    {% if body_type is not null %}
+    {% for bodyTypeItem in body_type %}
+    {{bodyTypeItem}}&nbsp;&nbsp;
+    {% endfor %}
+    <br/>
+    {% endif %}
+    {% if note is not null %}
+    備考: {{note}}<br/>
+    {% endif %}
+    <br/><br/><br/>
+    このメッセージはお客様へのお知らせ専用ですので、<br/>
+    このメッセージへの返信としてご質問をお送りいただいても回答できません。<br/>
+    ご了承ください。<br/><br/>
+    ご質問やご不明な点がございましたら、以下よりお願いいたします。<br/><br/>
+    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+    着物レンタルあき<br/>
+    TEL：03-3476-3341～2 （渋谷店）<br/>
+    TEL：03-5568-0529（銀座店）<br/>
+    TEL：03-6416-0529（池袋店）<br/>
+    TEL：045-441-0529 （横浜店）<br/>
+    http://kr-aki.co.jp/<br/>
+    e-meil:contact@kr-aki.jp<br/>
+    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>

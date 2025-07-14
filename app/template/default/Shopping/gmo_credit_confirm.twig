@@ -1,0 +1,209 @@
+{% extends 'default_frame.twig' %}
+{# {% form_theme form 'Form/form_div_layout.twig' %} #}
+{% block stylesheet %}
+	<style>
+		.cart_item .item_box > .td {
+			border-bottom: 1px dotted #ccc;
+		}
+		.table >:not(:first-child) {
+			border-top: 0;
+		}
+		.text-primary {
+			color: #4d90fe;
+		}
+		.ec-totalBox .ec-totalBox__spec {
+			margin-bottom: 20px;
+		}
+		.total_amount {
+			margin-top: 16px;
+			border-top: 1px dotted #ccc;
+			text-align: right;
+			font-weight: 700;
+		}
+		.total_price strong {
+			font-size: 24px;
+			margin-left: 16px;
+		}
+		.ec-input input[type="number"] {
+			text-align: left;
+			font-size: 14px;
+		}
+		.form__card {
+			width: 100%;
+			max-width: 870px;
+			height: 490px;
+			border: 1px solid #ccc;
+			background-color: rgba(225, 225, 225, 0.5);
+		}
+		.method__name {
+			font-weight: bold;
+			font-size: 34px;
+            margin:10px 20px;
+		}
+		.card__no,
+		.card__expire,
+        .card__name,
+        .card__securitycode {
+			display: flex;
+			min-width: 100px;
+			margin: 10px 0;
+		}
+		.card__no-label,
+		.card__expire-label,
+        .card__name-label,
+        .card__securitycode-label {
+			display: flex;
+			min-width: 200px;
+			margin-left: 20px;
+		}
+		.card__no-group{
+			display: flex;
+		}
+		.card__no-item input {
+			/* max-width: 80px; */
+		}
+		.card__expire-group select {
+			width: 75px;
+		}
+		.card__no-gap {
+			margin: 10px 8px 0;
+		}
+		.card__expire-gap{
+            margin: 4px 8px 0;
+        }
+		.card__expire-group, .card__name-group {
+			display: flex;
+		}
+        .card-error{
+            display: block;
+            margin-top: 10px;
+            color: red;
+        }
+        .credit__submit{
+            margin-left: 20px;
+            width: 100px;
+        }
+        .credit__other{
+            margin-left: 20px;
+            /* width: 100px; */
+        }
+	</style>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function() {
+            $("#create__confirm").on("click", function() {
+                $(".form__card-confirm").submit();
+            })
+        })
+    </script>
+{% endblock %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<h2 class="title">
+				{{ 'front.shopping.title'|trans }}
+			</h2>
+			<p>
+				{{ 'front.shopping.shipping_sub_title'|trans }}
+			</p>
+		</div>
+	</div>
+	<div class="ec-cartRole">
+		<div class="ec-cartRole__progress">
+			<ul class="ec-progress">
+				{% set step = 1 %}
+				<li class="ec-progress__item">
+					<div class="ec-progress__number">
+						{{ step }}{% set step = step + 1 %}
+					</div>
+					<div class="ec-progress__label">
+						{{ 'front.cart.nav__cart_items'|trans }}
+					</div>
+				</li>
+				{% if is_granted('ROLE_USER') == false %}
+					<li class="ec-progress__item">
+						<div class="ec-progress__number">
+							{{ step }}{% set step = step + 1 %}
+						</div>
+						<div class="ec-progress__label">
+							{{ 'front.cart.nav__customer_info'|trans }}
+						</div>
+					</li>
+				{% endif %}
+				<li class="ec-progress__item is-complete">
+					<div class="ec-progress__number">
+						{{ step }}{% set step = step + 1 %}
+					</div>
+					<div class="ec-progress__label">
+						{{ 'front.cart.nav__order'|trans }}
+					</div>
+				</li>
+				<li class="ec-progress__item">
+					<div class="ec-progress__number">
+						{{ step }}{% set step = step + 1 %}
+					</div>
+					<div class="ec-progress__label">
+						{{ 'front.cart.nav__confirm'|trans }}
+					</div>
+				</li>
+				<li class="ec-progress__item">
+					<div class="ec-progress__number">
+						{{ step }}{% set step = step + 1 %}
+					</div>
+					<div class="ec-progress__label">
+						{{ 'front.cart.nav__complete'|trans }}
+					</div>
+				</li>
+			</ul>
+		</div>
+		{{ include('Shopping/alert.twig') }}
+	</div>
+	<form class="form__card-confirm" method="post" action="{{url('shopping_confirm')}}" method="post">
+        <h2 class="method__name">
+            クレジットカード
+        </h2>
+		<div class="card__no">
+			<div class="card__no-label">
+				<label class="control-label">お名前<span class="required">*</span>
+				</label>
+			</div>
+			<div>
+                <div class="pb-0 card__no-group">
+                    <div class="card__no-item">
+                        <span>{{payment_card_member['CardNo']}}</span>
+                    </div>
+                </div>
+			</div>
+		</div>
+        <div class="card__expire">
+            <div class="card__no-label">
+				<label class="control-label">有効期限<span class="required">*</span></label>
+			</div>
+            <div>
+                <div class="card__expire-group">
+                    <div class="card__expire-item">
+                        <span>{{payment_card_member['Expire']}}</span>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div class="card__name">
+            <div class="card__name-label">
+				<label class="control-label">カード名義（ローマ字）<span class="required">*</span>
+				</label>
+			</div>
+            <div>
+                <div>
+                    <span>{{payment_card_member['HolderName']}}</span>
+                </div>
+            </div>
+        </div>
+		<button type="button" id="create__confirm" class="btn btn-primary credit__submit">
+			続く
+		</button>
+	</form>
+
+{% endblock %}

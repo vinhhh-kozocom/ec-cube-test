@@ -1,0 +1,283 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'cart_page' %}
+
+{% block main %}
+
+	<div class="ec-role">
+		<div class="ec-pageHeader text-center mb20">
+			<h2>{{ 'front.cart.title'|trans }}</h2>
+		</div>
+	</div>
+
+	<div class="">
+		<ul class="ec-progress">
+			{% set step = 1 %}
+			<li class="ec-progress__item is-complete">
+				<div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+				</div>
+				<div class="ec-progress__label">{{ 'front.cart.nav__cart_items'|trans }}
+				</div>
+			</li>
+			{% if is_granted('ROLE_USER') == false %}
+				<li class="ec-progress__item">
+					<div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+					</div>
+					<div class="ec-progress__label">{{ 'front.cart.nav__customer_info'|trans }}
+					</div>
+				</li>
+			{% endif %}
+			<li class="ec-progress__item">
+				<div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+				</div>
+				<div class="ec-progress__label">{{ 'front.cart.nav__order'|trans }}
+				</div>
+			</li>
+			<li class="ec-progress__item">
+				<div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+				</div>
+				<div class="ec-progress__label">{{ 'front.cart.nav__confirm'|trans }}
+				</div>
+			</li>
+			<li class="ec-progress__item">
+				<div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+				</div>
+				<div class="ec-progress__label">{{ 'front.cart.nav__complete'|trans }}
+				</div>
+			</li>
+		</ul>
+		{% set productStr = app.session.flashbag.get('eccube.front.request.product') %}
+		{% for error in app.session.flashbag.get('eccube.front.request.error') %}
+			{% set idx = loop.index0 %}
+				<div class="ec-alert-warning">
+					<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"></div>
+					<div class="ec-alert-warning__text">
+						{% if productStr[idx] is defined %}
+							{{ error|trans({'%product%':productStr[idx]})|nl2br }}
+						{% else %}
+							{{ error|trans|nl2br }}
+						{% endif %}
+					</div>
+				</div>
+		{% endfor %}
+		{% for error in app.session.flashbag.get('eccube.front.cart.error') %}
+				<div class="ec-alert-warning">
+					<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"></div>
+					<div class="ec-alert-warning__text">
+						{{ error|trans|nl2br }}
+					</div>
+				</div>
+		{% endfor %}
+		{% if totalQuantity > 0 %}
+			{% if Carts|length > 1 %}
+					<div class="ec-alert-warning">
+						<div class="ec-alert-warning__text">
+							{{ 'front.cart.divide_cart'|trans|nl2br }}
+						</div>
+					</div>
+			{% endif %}
+
+			<form name="form" id="form_cart" method="post" action="{{ url('cart') }}" class="aki-mypage mb20" >
+
+				{% for CartIndex,Cart in Carts %}
+					{% set cartKey = Cart.cart_key %}
+					<div class="aki-row">
+						<div id="cart_item_list" class="col-md-8 col-12">
+							<div class="history-block-white mb-20-md">
+								<div class="d-none">
+									<ol id="cart_item_list__header">
+										<li id="cart_item_list__header_cart_remove">削除</li>
+										<li id="cart_item_list__header_product_detail">商品内容</li>
+										<li id="cart_item_list__header_total">数量</li>
+										<li id="cart_item_list__header_sub_total">小計</li>
+									</ol>
+								</div>
+								<div id="cart_item_list__body" class="cart_page-form">
+									{% set original_total_price = 0 %}
+									{% set index = 0 %}
+									{% for CartItem in Cart.CartItems %}
+										{% set ProductClass = CartItem.ProductClass %}
+										{% set Product = ProductClass.Product %}
+										{% if ProductClass.code == secure_pack_code %}
+											{# 安心パック #}
+										{% else %}
+											{% set addinfo = CartItem %}
+											<div id="cart_item_list__item" class="history-block-item d-flex justify-content-between">
+												<div class="d-flex">
+													<div id="cart_item_list__product_image" class="item_photo">
+														<a target="_blank" href="{{ url('product_detail', {id : Product.id} ) }}">
+															<img loading="lazy" src="{{ asset(Product.main_list_image|no_image_product, 'save_image') }}" alt="{{ Product.name }}" {% if loop.index > 5 %} loading="lazy" {% endif %}>
+														</a>
+													</div>
+													<div class="td d-flex">
+														<dl>
+															<dd id="cart_item_list__product_detail" class="text-default gray-sub-text">
+																<a target="_blank" href="{{ url('product_detail', {id : Product.id} ) }}">{{ Product.name }}</a>
+															</dd>
+															<dd id="cart_item_list__class_category" class="item_pattern small">
+																{% if ProductClass.ClassCategory1 and ProductClass.ClassCategory1.id %}
+																	{{ ProductClass.ClassCategory1.ClassName }}：{{ ProductClass.ClassCategory1 }}
+																{% endif %}
+																{% if ProductClass.ClassCategory2 and ProductClass.ClassCategory2.id %}
+																	<br>{{ ProductClass.ClassCategory2.ClassName }}：{{ ProductClass.ClassCategory2 }}
+																{% endif %}
+															</dd>
+															<dd id="cart_item_list__item_price" class="gray-sub-text fw-bold mt10 mb10">￥{{ CartItem.price|number_format }}</dd>
+															{# <dd id="cart_item_list__item_subtotal" class="item_subtotal">小計：￥{{ CartItem.total_price|number_format }}</dd> #}
+															{% if isSalon %}
+																<dd>・ご予約方法：
+																	{% if addinfo.order_type == "deliv_sal" %}
+																		着物レンタル
+																	{% elseif addinfo.order_type == 'fitting' %}
+																		試着サービス
+																	{% else %}
+																		来店着付けレンタル
+																	{% endif %}
+																</dd>
+															{% else %}
+																{% if isJapan %}
+                                                                    <dd>・{{'aki.front.cart.title.how'|trans}}：
+                                                                        {% if addinfo.order_type == "deliv" %}
+                                                                            {{'aki.front.cart.title.delivery'|trans}}
+                                                                        {% else %}
+                                                                            {{'aki.front.cart.title.visit'|trans}}
+                                                                        {% endif %}
+																    </dd>
+                                                                {% endif %}
+															{% endif %}
+															<dd>・{{'aki.front.cart.title.useday'|trans}}：{{ addinfo.wear_date|date('Y-m-d') }}</dd>
+															{% if addinfo.order_type == "visit" %}
+																<dd>・{{'aki.front.cart.title.store'|trans}}：{{ addinfo.visit_store }}</dd>
+																<dd>・{{'aki.front.cart.title.schedule'|trans}}：{{ addinfo.time_departure }}</dd>
+															{% endif %}
+															{% if isJapan %}
+                                                                <dd>・{{'common.reservation.purpose'|trans}}：{{ addinfo.purpose }}</dd>
+                                                            {% endif %}
+
+															{% if not isJapan %}
+																<dd>・{{'aki.front.detail.form.info.num_of_guests'|trans}}: {{ addinfo.number_of_guests }}
+																{% if addinfo.number_of_guests == 1 %}
+																	<dd>・{{'aki.front.detail.form.info.gender'|trans}}: {{ addinfo.gender }}
+																{% endif %}
+															{% endif %}
+
+															{% if addinfo.number_of_guests is null or addinfo.number_of_guests == 1 %}
+																<dd>・{{'common.reservation.height'|trans}}：{{ addinfo.body_height }}</dd>
+																<dd>・{{'aki.front.detail.form.info.foot'|trans}}：{{ addinfo.foot_size }}</dd>
+															{% endif %}
+															
+															{% if isJapan %}
+                                                                <dd>・{{'aki.front.detail.form.info.era'|trans}}：{{ addinfo.decade }}</dd>
+                                                            {% endif %}
+
+															{% if addinfo.body_type|length  > 0 %}
+																<dd>・{{'common.reservation.body_type'|trans}}：
+																	{% for body_type in addinfo.getBodyTypeJsonDecode() %}
+																		{{body_type}}<br/>
+																	{% endfor %}
+																</dd>
+															{% endif %}
+															{# secure_pack have only one variable in AKI old #}
+															{% if addinfo.secure_pack|length  > 0 %}
+																{% if not isSalon %}
+																	<dd>・{{'aki.front.cart.title.secure.pack'|trans}}：
+																		{% for secure_pack in addinfo.secure_pack %}
+																			{{secure_pack}}
+																			<br/>
+																		{% endfor %}
+																	</dd>
+																{% endif %}
+															{% endif %}
+															{% if addinfo.order_type == "visit" %}
+                                                                {% if not isChina %}
+                                                                    <dd>・{{'aki.front.detail.form.info.photo'|trans}}：{{ addinfo.need_photo }}</dd>
+                                                                    <dd>・{{'aki.front.cart.title.hair'|trans}}：{{ addinfo.need_hair_make }}</dd>
+                                                                {% else %}
+                                                                    <dd>・{{'aki.front.cart.title.photo.other'|trans}}：{{ addinfo.need_photo }}</dd>
+                                                                    <dd>・{{'aki.front.cart.title.hair.other'|trans}}：{{ addinfo.need_hair_make }}</dd>
+                                                                {% endif %}
+															{% endif %}
+                                                            {% if not isJapan %}
+                                                                <dd class="aki-remark">・{{'aki.front.detail.form.info.remark'|trans}}：{{ addinfo.remark }}</dd>
+                                                            {% endif %}
+														</dl>
+													</div>
+												</div>
+												<div id="cart_item_list__cart_remove">
+													<a href="{{ url(isJapan ? 'cart_handle_item' : 'cart_handle_item_locale' ,{'operation': 'remove', 'productClassId': ProductClass.id }  ) }}" {{ csrf_token_for_anchor() }} data-method="put" data-message="{{'aki.front.cart.title.message.delete'|trans}}">
+														<i class="aki-icon-delete"></i>
+													</a>
+												</div>
+
+											</div>
+											{% set index = index + 1 %}
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-12">
+							<div class="history-price">
+								<div class="aki-alert-primary pa20 mb20">
+									<div class="d-flex justify-content-between align-items-baseline mb10">
+										<span>{{'aki.front.cart.title.total'|trans}}：</span>
+										<div class="color-primary">
+											<span class="history-price__price">￥{{ Cart.total_price|number_format }}</span>
+											<span>{{'aki.front.cart.title.tax'|trans}}</span>
+										</div>
+									</div>
+									{# if common #}
+									{% if not isSalon %}
+											<p class="history-price__total">{{'aki.front.cart.title.total.warning.1'|trans}}</br>
+												{{'aki.front.cart.title.total.warning.2'|trans}}</p>
+									{% endif %}
+								</div>
+								<div id="total_box__user_action_menu" class="btn_group">
+									<p id="total_box__next_button" class="mb20">
+										<a href="{{ path(not isJapan ? 'cart_buystep_locale' : 'cart_buystep', {'cart_key':cartKey}) }}"
+											class="aki-btn aki-btn-primary btn-block"
+										>{{'aki.front.cart.title.checkout'|trans}}</a>
+									</p>
+									<p id="total_box__top_button">
+                                        {% if isChina %}
+                                            <a href="/user_data/china" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_中文'});" class="aki-btn aki-btn-default btn-block">{{'aki.front.cart.title.continue.shopping'|trans}}</a>
+                                        {% elseif isEnglish %}
+                                            <a href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});" class="aki-btn aki-btn-default btn-block">{{'aki.front.cart.title.continue.shopping'|trans}}</a>
+                                        {% else %}
+                                            <a href="{{ url('homepage') }}" class="aki-btn aki-btn-default btn-block">{{'aki.front.cart.title.continue.shopping'|trans}}</a>
+                                        {% endif %}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+
+			</form>
+		{% else %}
+			{% for CartIndex,Cart in Carts %}
+				{% set cartKey = Cart.cart_key %}
+				{% for error in app.session.flashbag.get('eccube.front.cart.' ~ cartKey ~ '.request.error') %}
+					<div class="ec-cartRole__error">
+						<div class="ec-alert-warning">
+							<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"></div>
+							<div class="ec-alert-warning__text">
+								{{ error|trans|nl2br }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			{% endfor %}
+			<div class="ec-role">
+				<div class="ec-off3Grid">
+					<div class="ec-off3Grid__cell">
+						<div class="ec-alert-warning">
+							<div class="ec-alert-warning__icon"><img loading="lazy" src="{{ asset('assets/icon/exclamation-white.svg') }}"></div>
+							<div class="ec-alert-warning__text">{{ 'front.cart.no_items'|trans }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock %}

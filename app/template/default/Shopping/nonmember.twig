@@ -1,0 +1,304 @@
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'cart_page' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+   <script>
+    $(document).ready(function() {
+        if({{isChina}}){
+            $('.ec-errorMessage').each(function() {
+                if ($(this).text() === "有効なメールアドレスではありません。") {
+                    $(this).text('此值不是有效的电子邮件地址。');
+                }
+            });
+        }
+    })
+   </script>
+{% endblock javascript %}
+
+{% block main %}
+
+<div class="">
+    <div class="row">
+		<div class="col-md-12 text-center">
+			<h2 class="mb20">{{ 'front.shopping.nonmember'|trans }}</h2>
+			<p>
+				{{ 'front.shopping.nonmember_text1'|trans }} <br>
+                {% if isJapan %}
+                    {{ 'front.shopping.nonmember_text2'|trans }} <br>
+                    {{ 'front.shopping.nonmember_text3'|trans }}
+                {% endif %}
+			</p>
+		</div>
+    </div>
+    <div>
+        <div>
+            <ul class="ec-progress">
+                {% set step = 1 %}
+                <li class="ec-progress__item">
+                    <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                    </div>
+                    <div class="ec-progress__label">{{ 'front.cart.nav__cart_items'|trans }}
+                    </div>
+                </li>
+                {% if is_granted('ROLE_USER') == false %}
+                    <li class="ec-progress__item is-complete">
+                        <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                        </div>
+                        <div class="ec-progress__label">{{ 'front.cart.nav__customer_info'|trans }}
+                        </div>
+                    </li>
+                {% endif %}
+                <li class="ec-progress__item">
+                    <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                    </div>
+                    <div class="ec-progress__label">{{ 'front.cart.nav__order'|trans }}
+                    </div>
+                </li>
+                <li class="ec-progress__item">
+                    <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                    </div>
+                    <div class="ec-progress__label">{{ 'front.cart.nav__confirm'|trans }}
+                    </div>
+                </li>
+                <li class="ec-progress__item">
+                    <div class="ec-progress__number">{{ step }}{% set step = step + 1 %}
+                    </div>
+                    <div class="ec-progress__label">{{ 'front.cart.nav__complete'|trans }}
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="ec-off1Grid__cell">
+            <form method="post" action="{{ url(not isJapan ? 'shopping_nonmember_locale' : 'shopping_nonmember') }}" class="h-adr form-block">
+                <span class="p-country-name" style="display: none">Japan</span>
+                {{ form_widget(form._token) }}
+                <div>
+                    <div class="group-block">
+                        <div>
+                            <label class="control-label"
+                                >{{'common.name'|trans}}<span class="required">*</span></label
+                            >
+                        </div>
+                        <div
+                            class="row pb-0{{ has_errors(form.name.name01, form.name.name02) ? ' error' }}"
+                        >
+                            <div class="col-md-6">
+                                {{
+                                    form_widget(form.name.name01, {
+                                        attr: {
+                                            placeholder: "common.last_name",
+                                            class: "form-control w-100"
+                                        }
+                                    })
+                                }}
+                            </div>
+                            <div class="col-md-6">
+                                {{
+                                    form_widget(form.name.name02, {
+                                        attr: {
+                                            placeholder:
+                                                "common.first_name",
+                                            class: "form-control w-100"
+                                        }
+                                    })
+                                }}
+                            </div>
+                            {{ form_errors(form.name.name01) }}
+                            {{ form_errors(form.name.name02) }}
+                        </div>
+                    </div>
+                    {% if isJapan %}
+                        <div class="group-block">
+                            <div>
+                                {{
+                                    form_label(form.kana, "common.kana", {
+                                        label_attr: { class: "control-label" }
+                                    })
+                                }}
+                            </div>
+                            <div
+                                class="row pb-0{{ has_errors(form.kana.kana01, form.kana.kana02) ? ' error' }}"
+                            >
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.kana.kana01, {
+                                            attr: {
+                                                placeholder:
+                                                    "common.last_name_kana",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{
+                                        form_widget(form.kana.kana02, {
+                                            attr: {
+                                                placeholder:
+                                                    "common.first_name_kana",
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                </div>
+                                {{ form_errors(form.kana.kana01) }}
+                                {{ form_errors(form.kana.kana02) }}
+                            </div>
+                        </div>
+                        <div class="group-block">
+                            <div>
+                                {{ form_label(form.company_name, 'common.company_name', { 'label_attr': { 'class': 'ec-label' }}) }}
+                            </div>
+                            <div class="ec-halfInput{{ has_errors(form.company_name) ? ' error' }}">
+                                {{ form_widget(form.company_name) }}
+                                {{ form_errors(form.company_name) }}
+                            </div>
+                        </div>
+                        <div class="group-block group-block-custom">
+                            <label class="control-label"
+                                >住所 <span class="required">*</span></label
+                            >
+                            <div
+                                class="{{ has_errors(form.postal_code) ? ' error' }} group-block"
+                            >
+                                <div class="row pb-0">
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <span class="mr10">{{
+                                            "common.postal_symbol" | trans
+                                        }}</span>
+                                        {{
+                                            form_widget(form.postal_code)
+                                        }}
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <img loading="lazy"
+                                                src="{{
+                                                    asset('assets/icon/Help.svg')
+                                                }}"
+                                                alt="icon-help"
+                                            />
+                                            <a
+                                                href="https://www.post.japanpost.jp/zipcode/"
+                                                target="_blank"
+                                                class="ml10 text-green text-decoration-underline"
+                                                ><span>{{
+                                                    "common.search_postal_code"
+                                                        | trans
+                                                }}</span></a
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_errors(form.postal_code) }}
+                            </div>
+
+                            <div class="row group-block pb-0">
+                                <div
+                                    class="col-md-6{{ has_errors(form.address.pref) ? ' error' }}"
+                                >
+                                    <div class="position-relative custom_arrow_select">
+                                        {{ form_widget(form.address.pref) }}
+                                        {{ form_errors(form.address.pref) }}
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="col-md-6{{ has_errors(form.address.addr01) ? ' error' }}"
+                                >
+                                    {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': 'aki-common.address_sample_01'}}) }}
+                                    {{ form_errors(form.address.addr01) }}
+                                </div>
+                            </div>
+                            <div
+                                class="{{ has_errors(form.address.addr02) ? ' error' }}"
+                            >
+                                {{
+                                    form_widget(form.address.addr02, {
+                                        attr: {
+                                            placeholder: "aki-common.address_sample_02",
+                                            class: "form-control"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.address.addr02) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="group-block">
+                            <label class="control-label"
+                                >{{'common.phone_number'|trans}}<span class="required">*</span></label
+                            >
+                        <div>
+                            <div class="{{ has_errors(form.phone_number) ? ' error' }}">
+                                    {{
+                                        form_widget(form.phone_number, {
+                                            attr: {
+                                                class: "form-control w-100"
+                                            }
+                                        })
+                                    }}
+                                    {{ form_errors(form.phone_number) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="top_box__email" class="group-block">
+                        <label class="control-label"
+                            >{{'common.mail_address'|trans}}<span class="required"
+                                >*</span
+                            ></label
+                        >
+                        <div class="row pb-0">
+                            <div
+                                class="col-md-6 {{ has_errors(form.email.first) ? ' error' }} email__first"
+                            >
+                                {{
+                                    form_widget(form.email.first, {
+                                        attr: {
+                                            placeholder:
+                                                "common.mail_address_sample",
+                                            class: "form-control"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.email.first) }}
+                            </div>
+                            <div
+                                class="col-md-6 {{ has_errors(form.email.second) ? ' error' }} email__second"
+                            >
+                                {{
+                                    form_widget(form.email.second, {
+                                        attr: {
+                                            placeholder:
+                                                "common.repeated_confirm",
+                                            class: "form-control"
+                                        }
+                                    })
+                                }}
+                                {{ form_errors(form.email.second) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="divide group-block"
+                    style="background-color: var(--bs-gray-300)"
+                ></div>
+                <div id="top_box__footer" class="row no-padding">
+                    <div id="detail_box__button_menu" class="btn_group d-flex justify-content-center">
+                        <p id="detail_box__back_button"><a href="{{ url(not isJapan ? 'cart_locale' : 'cart') }}" class="aki-btn aki-btn-default">{{ 'common.back'|trans }}</a></p>
+                        <p id="detail_box__next_button"><button type="submit" class="aki-btn aki-btn-primary ml30">{{ 'common.next'|trans }}</button></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

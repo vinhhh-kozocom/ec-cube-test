@@ -1,0 +1,66 @@
+{% extends 'default_frame.twig' %} {% block main %}
+<div>
+    <div class="text-center">
+        <h2>パスワードの再発行</h2>
+        <p class="mt20 text-start text-md-center">{{ "front.forgot.message1" | trans }}</p>
+        <p class="text-start text-md-center">
+            {{ "aki-front.forgot.message2" | trans }}
+        </p>
+    </div>
+
+    <div id="contents" class="main_only mt30">
+        <div>
+            <div id="top_wrap">
+                <div id="top_box">
+                    <div
+                        id="top_box__body"
+                        class="form-block d-flex justify-content-center"
+                    >
+                        <form
+                            name="form1"
+                            id="form1"
+                            method="post"
+                            action="{{ url('forgot') }}"
+                        >
+                            {{ form_widget(form._token) }}
+                            <div id="top_box__body_inner" class="dl_table">
+                                <div id="top_box__login_email">
+                                    <label class="mb10 fw-600"
+                                        >メールアドレス<span class="required"
+                                            >*</span
+                                        ></label
+                                    >
+                                    <div class="form-group">
+                                        {{ form_widget(form.login_email) }}
+                                        {{ form_errors(form.login_email) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% for f in form %} {% if f.vars.name matches
+                            '[^plg*]' %}
+                            <div class="extra-form dl_table">
+                                {{ form_row(f) }}
+                            </div>
+                            {% endif %} {% endfor %}
+                            <div id="top_box__footer" class="row no-padding">
+                                <div
+                                    id="top_box__next_button"
+                                    class="d-flex justify-content-center"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="aki-btn aki-btn-primary"
+                                    >
+                                        次のページへ
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

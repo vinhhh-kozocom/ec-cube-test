@@ -1,0 +1,1847 @@
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'product_page' %}
+{% block stylesheet %}
+<style>
+	.errormsg {
+		display: none;
+	}
+	#detail_cart_box__cart_quantity {
+		display: none;
+	}
+	#reset_form{
+		display: none;
+	}
+    .modal-header{
+		display:block
+	}
+	.ec-blockBtn--cancel:disabled{
+		font-size: 13px;
+	}
+	.aki-btn-detail{
+		padding: 16px;
+	}
+	.tooltip-container {
+		position: relative;
+		display: inline-block;
+	}
+
+	.tooltip-trigger {
+		cursor: pointer;
+	}
+
+	.tooltip-content {
+		max-width: 490px;
+		width: max-content;
+		word-break: break-word;
+		display: none;
+		position: absolute;
+		bottom: calc(100% + 5px);
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: rgba(0, 0, 0, 0.8);
+		color: #fff;
+		padding: 4px 8px;
+		border-radius: 4px;
+	}
+	@media(max-width: 768px){
+		.tooltip-content {
+			max-width: 315px;
+			left: 0px;
+			transform: translateX(0px);
+		}
+		.tooltip-content-sp {
+			left: 50%;
+   			transform: translateX(-50%);
+		}
+    }
+
+	.tooltip-content.active {
+		display: block;
+	}
+
+    .form-remark{
+        height:100px;
+    }
+	#detail_cart_box__insert_button {
+		background: none;
+	}
+	.btn-blue {
+		background-color: #59C1DB !important;
+	}
+</style>
+{% endblock %}
+
+{% block javascript %}
+<script>
+
+if({{ isSalon }}){
+	window.productId = {{ Product.getId() }};
+	window.productNotAvailableDates = JSON.parse({{ productNotAvailableDates|json_encode|raw }});
+}
+
+$(window).on('load', function() {
+
+	$('.tooltip-trigger').click(function(e) {
+		e.stopPropagation();
+		var $tooltipContent = $(this).closest('.tooltip-container').find('.tooltip-content');
+		if ($tooltipContent.hasClass('active')) {
+			$tooltipContent.removeClass('active');
+		} else {
+			$('.tooltip-content').removeClass('active');
+			$tooltipContent.addClass('active');
+		}
+	});
+
+	$(document).click(function(event) {
+	if (!$(event.target).closest('.tooltip-container').length) {
+		$('.tooltip-content').removeClass('active');
+	}
+	});
+
+	if({{ isSalon }}){
+		function date_format (date) {
+			var mm = date.getMonth() + 1;
+			var dd = date.getDate();
+			return [date.getFullYear(),
+				(mm>9 ? '' : '0') + mm,
+				(dd>9 ? '' : '0') + dd
+			].join('-');
+		}
+	}
+
+   $('.slides img').each(function() {
+           if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+                   $(this).parent().remove();
+           }
+   });
+
+	eccube.classCategories = {{class_categories_as_json(Product)|raw }};
+	// 規格2に選択肢を割り当てる。
+	function fnSetClassCategories(form, classcat_id2_selected) {
+		var $form = $(form);
+		var product_id = $form.find('input[name=product_id]').val();
+		var $sele1 = $form.find('select[name=classcategory_id1]');
+		var $sele2 = $form.find('select[name=classcategory_id2]');
+		eccube.setClassCategories($form, product_id, $sele1, $sele2, classcat_id2_selected);
+	}
+
+	{% if form.classcategory_id2 is defined %}
+		fnSetClassCategories(
+			document.form1, {{ form.classcategory_id2.vars.value|json_encode|raw }}
+		);
+	{% endif %}
+
+	$(function(){
+		var switchSelect;
+
+	// if salon
+	if({{ isSalon }}){
+		(switchSelect = function() {
+			var listNotShowDays = [];
+			if ($("#plg_order_type").val() == "visit") {
+				$(".only_visit").show();
+				$(".only_visit input, .only_visit select").removeAttr("disabled");
+			} else {
+				$(".only_visit").hide();
+				$(".only_visit, .only_visit select").attr("disabled", "disabled");
+			}
+			if ($("#plg_order_type").val() === "fitting") {
+				listNotShowDays = window.productNotAvailableDates.fitting;
+			} else {
+				listNotShowDays = window.productNotAvailableDates.normal;
+			}
+			var options1 = {
+				format: "yyyy-mm-dd",
+				language: 'ja',
+				autoclose : true,
+				keyboardNavigation : false,
+				showMonthAfterYear: true,
+				monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+				todayHighlight : true,
+				startDate: '+4d',
+				beforeShowDay: function(date, da) {
+					var string = date_format(date);
+					return listNotShowDays.not_available_dates.indexOf(string) == -1;
+				},
+			};
+			$('#plg_wear_date').datepicker('clearDates');
+			$('#plg_wear_date').datepicker('destroy');
+			$('#plg_wear_date').datepicker(options1);
+		})();
+	}else{
+		(switchSelect = function() {
+			if ($("#plg_order_type").val() == "visit") {
+				$(".only_visit").show();
+				$(".only_visit input, .only_visit select").removeAttr("disabled");
+			} else {
+				$(".only_visit").hide();
+				$(".only_visit, .only_visit select").attr("disabled", "disabled");
+			}
+		})();
+	}
+		switchSelect();
+
+		$("#plg_order_type").on("change", switchSelect);
+
+		$('#add-cart').attr('disabled', 'disabled');
+
+		if({{ isSalon }}){
+			if ( $(this).prop('checked') == false ) {
+				$('#add-cart').attr('disabled', 'disabled');
+			} else {
+				$('#add-cart').removeAttr('disabled');
+			}
+		}
+
+		$('#check').click(function() {
+			if ( $(this).prop('checked') == false ) {
+				$('#add-cart').attr('disabled', 'disabled');
+			} else {
+				$('#add-cart').removeAttr('disabled');
+			}
+		});
+
+		$('.carousel').slick({
+			infinite: false,
+			speed: 300,
+			prevArrow:'<button type="button" class="slick-prev"><span class="angle-circle"><svg class="cb cb-angle-right"><use xlink:href="#cb-angle-right" /></svg></span></button>',
+			nextArrow:'<button type="button" class="slick-next"><span class="angle-circle"><svg class="cb cb-angle-right"><use xlink:href="#cb-angle-right" /></svg></span></button>',
+			slidesToShow: 4,
+			slidesToScroll: 4,
+			responsive: [
+				{
+					breakpoint: 768,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 3
+					}
+				}
+			]
+		});
+
+		$('.slides').slick({
+			dots: true,
+			arrows: false,
+			speed: 100,
+			lazyLoad: 'progressive',
+			customPaging: function(slider, i) {
+				if ($('p').attr('id') == 'text') {
+				}
+				return '<button class="thumbnail" type="button">' + $(slider.$slides[i]).find('img').prop('outerHTML') + '</button>';
+			}
+		});
+
+		$('#favorite').click(function() {
+			$('#form_favorite').submit();
+		});
+
+		$("#plg_order_type, #plg_wear_date, #plg_purpose, #plg_body_height, #plg_foot_size, #plg_decade, #plg_time_departure, #plg_remark, input[type='radio'][name='plg_gender']").on("change", function() {
+			if ($(this).val()) {
+				$(this).parents('.form-group').find('.alert-danger').hide()
+			}
+		});
+		$("#add-cart").on("click", function(e) {
+			e.preventDefault();
+            const isJapan = {{isJapan}}
+			var is_valid = true;
+			if (!$("#plg_order_type").val()) {
+				$("#plg_order_type").next().show();
+				is_valid = false;
+			}
+			if ($("#plg_wear_date").val() == '選択してください。' ||
+			    $("#plg_wear_date").val() == 'ご利用日'||
+				$("#plg_wear_date").val() == ''||
+                $("#plg_wear_date").val() == 'please select'||
+                $("#plg_wear_date").val() == '請選擇' ||
+				$("#plg_wear_date").val() == 'Date of use'
+				) {
+				$("#plg_wear_date").next().show();
+				is_valid = false;
+			}
+			if (!$("#plg_purpose").val() && isJapan) {
+				$("#plg_purpose").next().show();
+				is_valid = false;
+			}
+			if (!$("#plg_body_height").val() && isJapan ||
+				!$("#plg_body_height").val() && $('#plg_number_of_guests').val() == 1
+			) {
+				$("#plg_body_height").next().show();
+				is_valid = false;
+			}
+			if (!$("#plg_foot_size").val() && isJapan ||
+				!$("#plg_foot_size").val() && $('#plg_number_of_guests').val() == 1
+			) {
+				$("#plg_foot_size").next().show();
+				is_valid = false;
+			}
+            if (!$("#plg_decade").val() && isJapan) {
+				$("#plg_decade").next().show();
+				is_valid = false;
+			}
+			// 来店着付けレンタルの場合
+			if ($("#plg_order_type").val() == "visit") {
+				// 着付けご来店希望店舗
+				if (!$("#plg_visit_store").val()) {
+					$("#plg_visit_store").next().show();
+					is_valid = false;
+				}
+				// ご出発予定時間
+				if (!$("#plg_time_departure").val()) {
+					$("#plg_time_departure").next().show();
+					is_valid = false;
+				}
+			}
+            if(!{{isJapan}}){
+                if($("#plg_remark").val().length>3000) {
+                    $("#plg_remark").next().next().show();
+                    is_valid = false;
+                }
+
+				if(!$("input[name=plg_gender]:checked").val() && $('#plg_number_of_guests').val() == 1 ){
+					$(".radio_plg_gender").next().show();
+					is_valid = false;
+				}
+
+            }
+			if (is_valid) {
+                loadingOverlay();
+				$('#mode').val('add_cart');
+				$("#cart_form").submit();
+			}
+		});
+		// bfcache無効化
+		$(window).bind('pageshow', function(event) {
+			if (event.originalEvent.persisted) {
+				location.reload(true);
+			}
+		});
+	});
+	$(function() {
+		function date_format (date) {
+			var mm = date.getMonth() + 1;
+			var dd = date.getDate();
+			return [date.getFullYear(),
+				(mm>9 ? '' : '0') + mm,
+				(dd>9 ? '' : '0') + dd
+			].join('-');
+		}
+        // Check locale china
+        function changeLocale(locale){
+            return locale == 'zh' ? 'zh-TW' : locale
+        }
+		if({{ isSalon }}){
+			var listNotShowDays = [];
+			listNotShowDaysDefault = window.productNotAvailableDates.normal;
+			listNotShowDaysFlex = window.productNotAvailableDates.flex;
+		}
+
+		//var dateToday = new Date();
+		var dateFormat = "yyyy-mm-dd";
+		var options = {
+			format: dateFormat,
+			language: changeLocale('{{app.request.locale}}'),
+			autoclose : true,
+			keyboardNavigation : false,
+			showMonthAfterYear: true,
+			todayHighlight : true,
+			startDate: '+4d',
+			beforeShowDay: function(date, da) {
+					var string = date_format(date);
+
+					if({{ isSalon }}){
+						return listNotShowDaysFlex.not_available_dates.indexOf(string) == -1;
+					}else
+						return  [{%- for d in not_available_dates %}"{{d}}", {% endfor -%}].indexOf(string) == -1;
+			},
+		};
+
+		if({{ isSalon }}){
+			var options1 = {
+				format: dateFormat,
+				language: 'ja',
+				autoclose : true,
+				keyboardNavigation : false,
+				showMonthAfterYear: true,
+				monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+				todayHighlight : true,
+				startDate: '+4d',
+				beforeShowDay: function(date, da) {
+						var string = date_format(date);
+						return listNotShowDaysDefault.not_available_dates.indexOf(string) == -1;
+				}
+			};
+			$('#plg_wear_date').datepicker(options1);
+		} else{
+			$('#plg_wear_date').datepicker(options);
+		}
+
+		$('#plg_wear_date_detail').datepicker(options);
+	});
+
+    function loadingOverlay(action) {
+
+    if (action == 'hide') {
+        $('.bg-load-overlay').remove();
+    } else {
+        $overlay = $('<div class="bg-load-overlay">');
+        $('body').append($overlay);
+    }
+}
+	$(function(){
+		{% set request = app.request %}
+		if('{{request.locale}}' != 'ja'){
+			$('#plg_number_of_guests').on('change', function(){
+				if($(this).val() == 1){
+					$('.body-height-div').show().find('select').prop('disabled', false);
+					$('.foot-size-div').show().find('select').prop('disabled', false);
+					$('.gender-div').show().find('input').prop('disabled', false);
+				} else {
+					$('.body-height-div').hide().find('select').prop('disabled', true);
+					$('.foot-size-div').hide().find('select').prop('disabled', true);
+					$('.gender-div').hide().find('input').prop('disabled', true);
+
+				}
+			})
+            // change position
+			$('.time-departure-div').insertBefore('.visit-store-div');
+		}
+	})
+
+});
+
+function goToVisitReservation() {
+    var productCode = $('#item_code_default').text() || '';
+    var shopName = $('#shop_name').text() || '';
+    window.location.href = '/visit-reservation?product_code=' + productCode + '&shop_name=' + shopName;
+}
+</script>
+{% endblock %}
+{% block main %}
+
+{# This code is for plugin maker. If the maker plugin is not installed the error will be avoided #}
+{% if Product.Maker.name is not defined %}
+	{% set maker_name = "" %}
+{% else %}
+	{% set maker_name = Product.Maker.name %}
+{% endif %}
+
+{% set maker_name_locale = maker_name %}
+{% if app.request.locale == 'en'%}
+	{% set storeEn = {'渋谷本店': 'Shibuya main store', '銀座店': 'Ginza store', '池袋店': 'Ikebukuro store', '横浜店': 'Yokohama store', '': ''} %}
+	{% set maker_name_locale = storeEn[maker_name] %}
+{% endif %}
+
+{% if app.request.locale == 'zh'%}
+    {% set storeChina = {'渋谷本店': '澀谷總店', '銀座店': '銀座店', '池袋店': '池袋店', '横浜店': '橫濱店', '': ''} %}
+    {% set maker_name_locale = storeChina[maker_name] %}
+{% endif %}
+
+
+{% if not isSalon %}
+    {# {% set Stores = repository('Customize\\Entity\\ReservationSetting').getList() %} #}
+{% endif %}
+
+<form action="{{url(not isJapan ? 'product_add_cart_locale' : 'product_add_cart', {id:Product.getId()})}}" method="post" id="cart_form" name="form1">
+	{{ form_widget(form._token) }}
+	<!-- ▼item_detail▼ -->
+	<div id="item_detail" class="product-detail">
+		<div id="detail_wrap" class="aki-row">
+			<!--★画像★-->
+			<div class="col-md-6 col-12">
+				<div id="item_photo_area" class="list_product">
+					<div id="detail_image_box__slides" class="slides">
+						{% if Product.ProductImage|length > 0 %}
+							{% for ProductImage in Product.ProductImage %}
+								<div id="detail_image_box__item--{{ loop.index }}"><img src="{{ asset(ProductImage, 'save_image') }}" alt="{{ Product.name }}" class="w-100"/></div>
+							{% endfor %}
+						{% else %}
+							<div id="detail_image_box__item"><img src="{{ asset(''|no_image_product, 'save_image') }}" alt="{{ Product.name }}" class="w-100"/></div>
+						{% endif %}
+					</div>
+					{% if Product.ProductTag is not empty %}
+						<div id="product_tag_box" class="new-tag text-center mt-10">
+							{% for ProductTag in Product.ProductTag %}
+								<div id="product_tag_box__product_tag--{{ ProductTag.Tag.id }}">
+									{{ ProductTag.Tag.name }}
+								</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+
+				</div>
+				<div class="col-12 d-none d-md-block">
+					{% if isJapan or isSalon %}
+						<h2 class="aki-title-zen mb30">{{'aki.front.detail.policy.title'|trans}}</h2>
+					{% endif %}
+					{% if isSalon %}
+						<p>ご利用日の<b>翌日</b>迄にご返却をお願い致します（計 1 泊）</p>
+					{% else %}
+                        {% if isJapan %}
+                            <h3 class="mb20">{{'aki.front.detail.policy.store.title'|trans}}</h3>
+                            {{"aki.front.detail.policy.store.content"|trans|raw}}
+                            <h3 class="mb20">{{'aki.front.detail.policy.delivery.title'|trans}}</h3>
+                            {{'aki.front.detail.policy.delivery.content'|trans|raw}}
+                        {% endif %}
+					{% endif %}
+				</div>
+			</div>
+
+			<section id="item_detail_area" class="col-md-6 col-12">
+				<!--★商品名★-->
+				<h2 id="detail_description_box__name" class="aki-title-zen mb20">{{ Product.name }}</h3>
+				<div id="detail_description_box__body" class="item_detail">
+					<!--▼商品コード-->
+					<p id="detail_description_box__item_range_code" class="item_code pt00">
+						{{'aki.front.detail.product.code'|trans}}： <span id="item_code_default">
+						{{ Product.code_min }}
+						{% if Product.code_min != Product.code_max %} ～ {{ Product.code_max }}{% endif %}
+						</span>
+					</p>
+					{% if Product.hasProductClass -%}
+						{% if Product.getPrice02IncTaxMin == Product.getPrice02IncTaxMax %}
+							<span id="detail_description_box__class_sale_price" class="sale_price color-primary"> <span class="price02_default">{{ Product.getPrice02IncTaxMin|price }}</span> </span><span>({{'aki.front.cart.tax.included'|trans}})</span>
+						{% else %}
+							<span id="detail_description_box__class_range_sale_price" class="sale_price color-primary"> <span class="price02_default">{{ Product.getPrice02IncTaxMin|price }} ～ {{  Product.getPrice02IncTaxMax|price }}</span> </span><span>({{'aki.front.cart.tax.included'|trans}})</span>
+						{% endif %}
+					{% else -%}
+						<span id="detail_description_box__sale_price" class="sale_price color-primary"> <span class="price02_default">{{ Product.getPrice02IncTaxMin|price }}</span> </span><span>({{'aki.front.cart.tax.included'|trans}})</span>
+					{% endif -%}
+
+					<p class="p-bg-gray mt30 mb30"></p>
+					<!--★商品説明★-->
+					<p id="detail_not_stock_box__description_detail" class="item_comment text-break">{{ Product.description_detail|raw|nl2br }}</p>
+					<!--★女の子画像★-->
+					<!-- if not salon -->
+					{% if not isSalon %}
+                        {% if isJapan %}
+                            <div class="pb00">
+                                {% if Product.belongsToCategory(37) or Product.belongsToCategory(36) or Product.belongsToCategory(35) or Product.belongsToCategory(158) %}
+                                    <img loading="lazy" src="{{ front_urlpath }}/img/753/yuki.jpg" width="50%" class="img-responsive mb10">
+                                {% endif %}
+                            </div>
+
+                            <div class="alert aki-alert-primary">
+                                <ul class="mb00">
+                                {% if Product.belongsToCategory(40) %}
+                                    <li></li>
+                                {% elseif Product.belongsToCategory(42) %}
+                                    <li>{{"aki.front.detail.product.yukata"|trans}}</li>
+                                {% elseif Product.belongsToCategory(43) %}
+                                    <li>{{"aki.front.detail.product.yukata"|trans}}</li>
+                                {% else %}
+                                {% endif %}
+                                {% if Product.belongsToCategory(39) %}
+                                    {% set title='aki.front.detail.product.title.montsuki_hakama'|trans %}
+                                {% else %}
+                                    {% set title='aki.front.detail.product.title'|trans %}
+                                {% endif %}
+
+                                {% if Product.belongsToCategory(217) %}
+                                    <li>{{ title }}</li>
+                                    <li><strong>{{'aki.front.detail.product.info.shibuya'|trans}}: 03-3476-3341</strong></li>
+                                    <li>{{'aki.front.detail.product.info.close'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.under.20000'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.present.id'|trans}}</li>
+                                {% elseif Product.belongsToCategory(218) %}
+                                    <li>{{ title }}</li>
+                                    <li><strong>{{'aki.front.detail.product.info.ginza'|trans}}: 03-5568-0529</strong></li>
+                                    <li>{{'aki.front.detail.product.info.close'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.under.20000'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.present.id'|trans}}</li>
+                                {% elseif Product.belongsToCategory(219) %}
+                                    <li>{{ title }}</li>
+                                    <li><strong>{{'aki.front.detail.product.info.ikebukuro'|trans}}: 03-6416-0529</strong></li>
+                                    <li>{{'aki.front.detail.product.info.close'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.under.20000'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.present.id'|trans}}</li>
+                                {% elseif Product.belongsToCategory(39) %}
+                                    <li>{{'aki.front.detail.product.info.montsuki'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.under.20000'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.present.id'|trans}}</li>
+                                {% elseif Product.belongsToCategory(220) %}
+                                    <li>{{ title }}</li>
+                                    <li><strong>{{'aki.front.detail.product.info.yokohama'|trans}}: 045-441-0529</strong></li>
+                                    <li>{{'aki.front.detail.product.info.close'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.under.20000'|trans}}</li>
+                                    <li>{{'aki.front.detail.product.info.present.id'|trans}}</li>
+                                {% else %}
+                                {% endif %}
+								<p>【宅配レンタルご希望の方へ】<a class="color-primary" href="/user_data/shipping_return">ご配送とご返却について</a></p>
+                                </ul>
+                            </div>
+                            <div>
+                                <!--<ul class="mb00">-->
+                                {% if Product.belongsToCategory(217) %}
+                                    <p>{{'aki.front.detail.product.info.please.check'|trans}}</p>
+                                    <p class="mt10"><a class="color-primary" href="/user_data/shop/shibuya"><i class="aki-icon-map color-primary"></i> {{'aki.front.detail.store.shibuya'|trans}}</a></p>
+									<span id="shop_name" hidden>{{'aki.front.detail.product.info.shibuya'|trans}}</span>
+                                {% elseif Product.belongsToCategory(218) %}
+                                    <p>{{'aki.front.detail.product.info.please.check'|trans}}</p>
+                                    <p class="mt10"><a class="color-primary" href="/user_data/shop/ginza"><i class="aki-icon-map color-primary"></i> {{'aki.front.detail.store.ginza'|trans}}</a></p>
+									<span id="shop_name" hidden>{{'aki.front.detail.product.info.ginza'|trans}}</span>
+                                {% elseif Product.belongsToCategory(219) %}
+                                    <p>{{'aki.front.detail.product.info.please.check'|trans}}</p>
+                                    <p class="mt10"><a class="color-primary" href="/user_data/shop/ikebukuro"><i class="aki-icon-map color-primary"></i> {{'aki.front.detail.store.ikebukuro'|trans}}</a></p>
+									<span id="shop_name" hidden>{{'aki.front.detail.product.info.ikebukuro'|trans}}</span>
+                                {% elseif Product.belongsToCategory(220) %}
+                                    <p>{{'aki.front.detail.product.info.please.check'|trans}}</p>
+                                    <p class="mt10"><a class="color-primary" href="/user_data/shop/yokohama"><i class="aki-icon-map color-primary"></i> {{'aki.front.detail.store.yokohama'|trans}}</a></p>
+									<span id="shop_name" hidden>{{'aki.front.detail.product.info.yokohama'|trans}}</span>
+                                {% else %}
+                                {% endif %}
+                                <!--</ul>-->
+                            </div>
+                        {% endif %}
+					{% endif %}
+					<!--▼買い物かご-->
+					<div id="detail_cart_box" class="cart_area">
+						{% if isJapan %}
+						<p class="p-bg-gray-detail"></p>
+						{% else %}
+						<p class="p-bg-gray-detail d-none d-md-block"></p>
+						{% endif %}
+                        {% if isJapan %}
+						    <h3 class="aki-title-zen reserv pa00 mb15">{{'aki.front.detail.reservation.status'|trans}}</h3>
+                        {% endif %}
+						{% if not isSalon %}
+                            {% if isJapan %}
+                                <p class="mb20 d-none d-md-block" style="font-size: 110%; font-weight: bold; color: #074dea;">{{'aki.front.detail.use.now'|trans}}</p>
+                                <p class="mb20 d-block d-md-none" style="font-size: 110%; font-weight: bold; color: #074dea;">{{'aki.front.detail.use.now'|trans}}</p>
+                            {% endif %}
+						{% endif %}
+					{% if Product.stock_find %}
+						{# 規格 #}
+                        {% if isJapan %}
+                            {% if form.classcategory_id1 is defined %}
+                                <ul id="detail_cart_box__cart_class_category_id" class="classcategory_list">
+                                    {# 規格1 #}
+                                    <li>
+                                        {{ form_widget(form.classcategory_id1) }}
+                                        {{ form_errors(form.classcategory_id1) }}
+                                    </li>
+                                    {# 規格2 #}
+                                    {% if form.classcategory_id2 is defined %}
+                                    <li>
+                                        {{ form_widget(form.classcategory_id2) }}
+                                        {{ form_errors(form.classcategory_id2) }}
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        {% endif %}
+
+							{# 数量 #}
+                            {% if isJapan %}
+                                <dl id="detail_cart_box__cart_quantity" class="quantity">
+                                    <dt>{{'aki.front.detail.use.quantity'|trans}}</dt>
+                                    <dd>
+                                        <input id="quantity" name="quantity" type="number" required="required" min="1" max="999999999" value="1" class="form-control" />
+                                        {#  luanlt {{ form_widget(form.quantity,{'attr': {'value': '1'}}) }} #}
+                                        {{ form_errors(form.quantity) }}
+                                    </dd>
+                                </dl>
+                                <div class="aki-row">
+                                    <div class="col-12">
+                                        <div id="plg_wear_date_detail" class="calendar clickable"></div>
+                                    </div>
+                                    {% if not isSalon %}
+                                        <div class="col-12 mt10 mb10">
+                                            {{'aki.front.detail.service'|trans}}<br><br>
+                                            <a class="text-decoration-underline color-primary" href="/user_data/service#s07">{{'aki.front.detail.service.redirect'|trans}}</a><br>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+							<div class="extra-form">
+								<!--
+
+								{% for f in form.getIterator %}
+									{% if f.vars.name matches '[^plg*]' %}
+										{{ form_row(f) }}
+									{% endif %}
+								{% endfor %}
+							-->
+							</div>
+							{# カートボタン #}
+							{# if salon #}
+							{% if isSalon %}
+								{# カートボタン #}
+								{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+									<div id="detail_cart_box__button_area" class="btn_area">
+										<div  id="detail_cart_box__insert_button" role="group" aria-label="...">
+											<button id="detail_cart_modal" type="button" class="aki-btn aki-btn-detail aki-btn-primary btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#ModalCart">予約に進む</button>
+										</div>
+									</div>
+								{% else %}
+								{% endif %}
+							{% else %}
+                                {% if isJapan and APP_ENV != APP_PROD %}
+                                    <div class="aki-form-group mt15 mb20">
+                                        <div class="input-group input-group-lg position-relative">
+                                            <select class="form-control aki-search-input aki-btn-primary text-center reservation_store_list">
+                                                <option value="">お下見来店予約</option>
+                                                {# {% for key, index in Stores %}
+                                                    <option value="{{key}}"
+                                                    {% if store_name_en is defined and (key ==  store_name_en) %}
+                                                        selected
+                                                    {% endif %}
+                                                    >{{Stores[key]}}</option>
+                                                {% endfor %} #}
+                                            </select>
+                                            <span class="icon-select-down"><img loading="lazy" src="{{ asset('assets/icon/aki-icon-down-white.svg') }}" alt="kimono"></span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+								<div id="detail_cart_box__button_area" class="btn_area d-none d-md-block">
+									<div  id="detail_cart_box__insert_button" role="group" aria-label="...">
+										<button id="detail_cart_modal" type="button" class="aki-btn aki-btn-detail aki-btn-primary btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#ModalCart">{{'aki.front.detail.btn.order'|trans}}</button>
+									</div>
+									{% if isJapan %}
+									<div class="mt20">
+										<a href="javascript:void(0)" onclick="goToVisitReservation()" class="aki-btn aki-btn-detail aki-btn-primary btn-block btn-lg btn-blue">下見を申し込む</a>
+									</div>
+									{% endif %}
+								</div>
+								<div id="detail_cart_box__button_area_mb" class="btn_area d-block d-md-none">
+									<div id="detail_cart_box__insert_button" class="d-flex gap-3" role="group" aria-label="...">
+										{% set btn_class = isJapan ? 'w-50' : 'w-100' %}
+										<button id="detail_cart_modal" type="button" class="aki-btn aki-btn-detail aki-btn-primary btn-lg {{ btn_class }}" data-bs-toggle="modal" data-bs-target="#ModalCart">
+											{{ 'aki.front.detail.btn.order'|trans }}
+										</button>
+										{% if isJapan %}
+										<button type="button" onclick="goToVisitReservation()" class="aki-btn aki-btn-detail aki-btn-primary btn-lg w-50 btn-blue">下見を申し込む</button>
+										{% endif %}
+									</div>
+									<div class="mt20">
+										<a href="javascript:void(0)" onclick="goToVisitReservation()" class="aki-btn aki-btn-detail aki-btn-primary btn-block btn-lg d-none d-md-block btn-blue">下見を申し込む</a>
+									</div>
+								</div>
+							{% endif %}
+                            {% if isJapan %}
+                                {% if BaseInfo.option_favorite_product %}
+                                    <div>
+                                        <div class="ec-productRole__btn btn_area mt20">
+                                            {% if is_favorite == false %}
+                                                <button type="button" id="favorite" class="aki-btn aki-btn-detail aki-btn-orange btn-block ">
+                                                    {{ 'front.product.add_favorite'|trans }}
+                                                </button>
+                                            {% else %}
+                                                <button type="button" id="favorite" class="aki-btn aki-btn-detail aki-btn-default btn-block btn-lg pe-none"
+                                                        disabled="disabled">{{ 'front.product.add_favorite_alrady'|trans }}
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+						{% else %}
+							{# 在庫がない場合は品切れボタンのみ表示 #}
+							<div id="detail_cart_box__button_area" class="btn_area d-none d-md-block">
+								<div  id="detail_cart_box__insert_button" class="btn-group btn-group-justified" role="group" aria-label="...">
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default btn-block" disabled="disabled">{{'aki.front.detail.btn.out.stock'|trans}}</button>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+
+					<div class="aki-row pb00">
+                        {% if isJapan %}
+                            <div class="col-12">
+                                <p class="p-bg-gray-detail"></p>
+                                <h3 class="aki-title-zen mb15">{{'aki.front.detail.size'|trans}}</h3>
+                                {% if Product.belongsToCategory(187) %}
+                                    <p>{{'aki.front.detail.size.s'|trans}}</p>
+                                {% endif %}
+                                {% if Product.belongsToCategory(188) %}
+                                    <p>{{'aki.front.detail.size.m'|trans}}</p>
+                                {% endif %}
+                                {% if Product.belongsToCategory(189) %}
+                                    <p>{{'aki.front.detail.size.l'|trans}}</p>
+                                {% endif %}
+                                {% if Product.belongsToCategory(190) %}
+                                    <p>{{'aki.front.detail.size.large'|trans}}</p>
+                                {% endif %}
+                                <p>{{'aki.front.detail.size.reference'|trans}}<a href="/contact" {% if isSalon %}class="pe-none"{% endif %}>{{'aki.front.detail.size.contact'|trans}}</a>{{'aki.front.detail.size.please'|trans}}</p>
+                            </div>
+                        {% else %}
+                            <div class="col-12">
+								<p class="p-bg-gray-detail"></p>
+								<h3 class="aki-title-zen mb15">
+									{{ productDescription ? productDescription.term_title : 'aki.remtal.term.condition.title'|trans }}
+								</h3>
+								{% if productDescription %}
+									{{ productDescription.term_description | raw }}
+								{% else %}
+									<p>{{ 'aki.remtal.term.condition.text1'|trans }}</p>
+									<p>{{ 'aki.remtal.term.condition.text2'|trans }}</p>
+									<p>{{ 'aki.remtal.term.condition.text3'|trans }}</p>
+								{% endif %}
+							</div>
+                        {% endif %}
+						{% if isJapan %}
+                            {% if __EX_PRODUCT_DETAIL[4].value is not null and __EX_PRODUCT_DETAIL[4].value.value|length > 0 %}
+                                <div class="col-12">
+                                    <p class="p-bg-gray-detail"></p>
+                                    <h3 class="aki-title-zen mb15">{{'aki.front.detail.material'|trans}}</h3>
+                                    <p>{{ __EX_PRODUCT_DETAIL[4].value.value }}</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="col-12">
+                                {# <p class="p-bg-gray-detail"></p> #}
+								<br>
+								<h3 class="aki-title-zen mb15">
+									{{ productDescription ? productDescription.cancelation_title : 'aki.remtal.term.cancelation.title'|trans }}
+								</h3>
+								{% if productDescription %}
+									{{ productDescription.cancelation_description | raw }}
+								{% else %}
+									<p>{{ 'aki.remtal.term.cancelation.text1'|trans }}</p>
+									<p>{{ 'aki.remtal.term.cancelation.text2'|trans }}</p>
+								{% endif %}
+                            </div>
+                        {% endif %}
+						<div class="col-12 d-block d-md-none">
+							{% if isJapan or isSalon %}
+								<p class="p-bg-gray-detail"></p>
+								<h2 class="aki-title-zen mb30">{{'aki.front.detail.policy.title'|trans}}</h2>
+							{% endif %}
+							{% if isSalon %}
+								<p>ご利用日の<b>翌日</b>迄にご返却をお願い致します（計 1 泊）</p>
+							{% else %}
+                            {% if isJapan %}
+								<h3 class="mb20">{{'aki.front.detail.policy.store.title'|trans}}</h3>
+								{{'aki.front.detail.policy.store.content'|trans|raw}}
+								<h3 class="mb20">{{'aki.front.detail.policy.delivery.title'|trans}}</h3>
+								{{'aki.front.detail.policy.delivery.content'|trans|raw}}
+                            {% endif %}
+							{% endif %}
+						</div>
+						{% if not isSalon %}
+                            {% if isJapan %}
+                                <div class="col-12">
+                                    <p class="p-bg-gray-detail"></p>
+                                    <h3 class="aki-title-zen mb15">{{'aki.front.detail.note'|trans}}</h3>
+                                    <ul>
+                                        <li>{{'aki.front.detail.note_1'|trans}}</li><br>
+                                        <li>{{'aki.front.detail.note_2'|trans}}</li><br>
+                                        <li>{{'aki.front.detail.note_3'|trans}}</li><br>
+                                        <li>{{'aki.front.detail.note_4'|trans}}</li><br>
+                                        <li>{{'aki.front.detail.note_5'|trans}}</li>
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <div class="col-12">
+                                    {# <p class="p-bg-gray-detail"></p> #}
+									<br>
+									<h3 class="aki-title-zen mb15">
+										{{ productDescription ? productDescription.location_title : 'aki.remtal.term.location.photo.plan'|trans }}
+									</h3>
+									<ul>
+										{% if productDescription %}
+											{{ productDescription.location_description | raw }}
+										{% else %}
+											<li>{{'aki.remtal.term.location.photo.plan.text1'|trans}}</li>
+											<li>{{'aki.remtal.term.location.photo.plan.text2'|trans}}</li>
+											<li>{{'aki.remtal.term.location.photo.plan.text3'|trans}}</li>
+										{% endif %}
+									</ul>
+                                </div>
+                            {% endif %}
+						{% endif %}
+                        {% if isJapan %}
+                            <div class="col-12">
+                                <p class="p-bg-gray-detail"></p>
+                                <h3 class="aki-title-zen mb15">{{'aki.front.detail.accessory'|trans}}</h3>
+                                <!--★商品説明拡張エリア★-->
+                                <div class="aki-row pb00">
+                                    <div class="col-12">
+                                        {% if Product.belongsToCategory(53) %}
+                                            <!--振袖-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/furisode_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.ida_jin'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.triple_cord'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(52) %}
+                                            <!--黒留袖-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/kurotomesode_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.suehiro'|trans}}:1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(51) %}
+                                            <!--色留袖-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/irotomesode_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_2'|trans}}:各1
+                                                {{'aki.front.detail.suehiro'|trans}}:1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(50) %}
+                                            <!--訪問着-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/houmonngi_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(38) %}
+                                            <!--産着-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/ubugi_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                        {% elseif Product.belongsToCategory(37) %}
+                                            <!--七五三(三歳祝着)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/hitigosansan_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:2
+                                                {{'aki.front.detail.undershirt'|trans}}:1
+                                                {{'aki.front.detail.purse'|trans}}:1
+                                                {{'aki.front.detail.hair_ornaments'|trans}}:1
+                                                {{'aki.front.detail.zori'|trans}}:1
+                                                {{'aki.front.detail.u.v'|trans}}
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(36) %}
+                                            <!--七五三(五歳祝着)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/hitigosanngo_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:2
+                                                {{'aki.front.detail.undershirt'|trans}}:1
+                                                {{'aki.front.detail.band'|trans}}:1
+                                                {{'aki.front.detail.pocket_sword'|trans}}:1
+                                                {{'aki.front.detail.amulet'|trans}}:1
+                                                {{'aki.front.detail.haori_string'|trans}}:1
+                                                {{'aki.front.detail.suehiro'|trans}}:1
+                                                {{'aki.front.detail.sandals'|trans}}:1
+                                                {{'aki.front.detail.u.v'|trans}}
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(35) %}
+                                            <!--七五三(七歳祝着)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/hitigosannhichi_fu.png" class="img-responsive mb10 w-100" alt="七五三(七歳祝着)">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.shigoki'|trans}}:1
+                                                {{'aki.front.detail.hakoseko'|trans}}:1
+                                                {{'aki.front.detail.suehiro'|trans}}:1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.u.v'|trans}}
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(34) %}
+                                            <!--婚礼衣装-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/konrei.png" class="img-responsive mb10 w-100" alt="婚礼衣装">
+                                            <p>{{'aki.front.detail.accessories.has'|trans}}<br>
+                                            ※{{'aki.front.detail.img.title_konrei'|trans}}</p><br>
+                                        {% elseif Product.belongsToCategory(158) %}
+                                            <!--十三詣り-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/hitigosannhichi_fu.png" class="img-responsive mb10 w-100" alt="十三詣り">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.long_undergarment'|trans}}
+                                                {{'aki.front.detail.band'|trans}}
+                                                {{'aki.front.detail.obiage'|trans}}
+                                                {{'aki.front.detail.obijime'|trans}}
+                                                {{'aki.front.detail.shigoki'|trans}}
+                                                {{'aki.front.detail.accessory.all.tabi'|trans}}
+                                                {{'aki.front.detail.accessory.one'|trans}}
+                                                {{'aki.front.detail.hand'|trans}}
+                                                {{'aki.front.detail.zori'|trans}}
+                                                {{'aki.front.detail.hair.for.fee'|trans}}
+                                                {{'aki.front.detail.u.v'|trans}}。
+                                            </p>
+                                        {% elseif Product.belongsToCategory(49) %}
+                                            <!--色無地-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/iromuzi_fu.png" class="img-responsive mb10 w-100" alt="色無地">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(40) %}
+                                            <!--卒業袴-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/shakama_fu.png" class="img-responsive mb10 w-100" alt="卒業袴">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.undershirt'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.half.band'|trans}}:1
+                                                {{'aki.front.detail.sandals_purse'}}:各1
+                                                {{'aki.front.detail.u.v'|trans}}
+                                                {% if isSalon %}
+                                                    ※ブーツをご希望の場合は別途￥3,240頂きます。
+                                                {% else %}
+                                                    {{'aki.front.detail.boot'|trans}}
+                                                {% endif %}
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(41) %}
+                                            <!--男物-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/otokomono_fu.png" class="img-responsive mb10 w-100" alt="男物">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.purse'|trans}}:1
+                                                {{'aki.front.detail.sandals'|trans}}:1
+                                                {{'aki.front.detail.u.v'|trans}}
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(39) %}
+                                            <!--袴(男性用)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/mhakama_fu.png" class="img-responsive mb10 w-100" alt="袴(男性用)">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1枚
+                                                {{'aki.front.detail.square_belt'|trans}}:1本
+                                                {{'aki.front.detail.footwear'|trans}}:1足
+                                                {{'aki.front.detail.Accessories.one'|trans}}:1式
+                                                {{'aki.front.detail.dressing_kit_notice'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(48) %}
+                                            <!--小紋-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/komon_fu.png" class="img-responsive mb10 w-100">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(47) %}
+                                            <!--つむぎ-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/tumugi_fu.png" class="img-responsive mb10 w-100" alt="つむぎ">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(43) %}
+                                            <!--ゆかた(女性用)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/wyukata_fu.png" class="img-responsive mb10 w-100" alt="つむぎ">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:2
+                                                {{'aki.front.detail.idadi'|trans}}:1
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.half.band'|trans}}:1
+                                                {{'aki.front.detail.accessories.has'|trans}}:各1
+                                                {{'aki.front.detail.undergarment_notice'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(42) %}
+                                            <!--ゆかた(男性用)-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/myukata_fu.png" class="img-responsive mb10 w-100" alt="浴衣(男性用)">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.towel'|trans}}:1
+                                                {{'aki.front.detail.waist'|trans}}:2
+                                                {{'aki.front.detail.square_belt'|trans}}:1
+                                                {{'aki.front.detail.accessories.has'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% elseif Product.belongsToCategory(157) %}
+                                            <!--喪服-->
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/mofuku_fu.png" class="img-responsive mb10 w-100" alt="喪服">
+                                            <p>{{'aki.front.detail.img.title'|trans}}</p><br>
+                                            <p>
+                                                {{'aki.front.detail.tabi'|trans}}:1
+                                                {{'aki.front.detail.underwear'|trans}}:1
+                                                {{'aki.front.detail.towel'|trans}}:2
+                                                {{'aki.front.detail.waist'|trans}}:4
+                                                {{'aki.front.detail.jin_xin'|trans}}:1
+                                                {{'aki.front.detail.long_undergarment'|trans}}:1
+                                                {{'aki.front.detail.idadi'|trans}}:2
+                                                {{'aki.front.detail.kolin_belt'|trans}}:1
+                                                {{'aki.front.detail.strip'|trans}}:1
+                                                {{'aki.front.detail.belt'|trans}}:1
+                                                {{'aki.front.detail.obi'|trans}}:1
+                                                {{'aki.front.detail.obiage_obijime'|trans}}:各1
+                                                {{'aki.front.detail.sandals_bags'|trans}}:各1
+                                                {{'aki.front.detail.accessory.all'|trans}}
+                                            </p>
+                                        {% else %}
+                                            <img loading="lazy" src="{{ front_urlpath }}/img/included/houmonngi_fu.png" class="img-responsive mb15">
+                                            <p>{{'aki.front.detail.accessories.other'|trans}}</p>
+                                            <!--婚礼衣装-->
+                                            <!--ひとえ-->
+                                            <!--夏物-->
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+					</div>
+				</div>
+				<!-- /.item_detail -->
+			</section>
+			<!--詳細ここまで-->
+		</div>
+	</div>
+
+	{# フリーエリア #}
+	{% if Product.freearea %}
+	<div id="sub_area" class="aki-row">
+		<div class="col-md-10 offset-md-1">
+			<div id="detail_free_box__freearea" class="freearea">{{ include(template_from_string(Product.freearea)) }}</div>
+		</div>
+	</div>
+	{% endif %}
+
+
+{% if isSalon %}
+	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+		<div class="modal" id="ModalCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title text-center" id="myModalLabel">ご予約内容確認</h4>
+					</div>
+					<div class="modal-body">
+						<div class="aki-row">
+							<div class="col-12">
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label for="plg_order_type" class="col-md-5 col-12 control-label">ご予約方法<span class="label label-danger ml10">必須</span></label>
+										<div class="col-md-7 col-12">
+											<select name="plg_order_type" id="plg_order_type" class="form-control">
+												{# order_type of old item in cart #}
+												{% if order_type is not empty %}
+													{% if order_type == 'visit' %}
+														<option value="visit">来店着付けレンタル</option>
+													{% elseif order_type == 'deliv_sal' %}
+														<option value="deliv_sal">着物レンタル</option>
+													{% elseif order_type == 'fitting' %}
+														<option value="fitting">試着サービス</option>
+													{% endif %}
+												{% else %}
+													{# deliver to home #}
+													<option value="deliv_sal">着物レンタル</option>
+													<option value="fitting">試着サービス</option>
+												{% endif %}
+											</select>
+											<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputEmail3" class="col-md-5 col-12 control-label">ご利用日選択<span class="label label-danger ml10">必須</span></label>
+										<div class="col-md-7 col-12">
+											<input name="plg_wear_date" type="text" class="form-control date hasDatepicker" value="選択してください。" placeholder="ご利用日" readonly="readonly" id="plg_wear_date">
+											<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+										</div>
+									</div>
+									<div class="form-group only_visit">
+										<label for="inputEmail3" class="col-md-5 col-12 control-label">着付けご来店希望店舗<span class="label label-danger ml10">必須</span></label>
+										<div class="col-md-7 col-12">
+											{% if Product.getPrice02IncTaxMax >= 20000 %}
+												<select name="plg_visit_store" id="plg_visit_store" class="form-control  only_visit">
+													{% for key, visit_store in form_settings.visit_store %}
+														<option value="{{visit_store}}" {% if maker_name == visit_store %}selected{% endif %}>{{visit_store}}</option>
+													{% endfor %}
+												</select>
+											{% else %}
+												{% if Product.belongsToCategory(36) or Product.belongsToCategory(37) or Product.belongsToCategory(38) %}
+													<select name="plg_visit_store" id="plg_visit_store" class="form-control  only_visit">
+														{% for key, visit_store in form_settings.visit_store %}
+															<option value="{{visit_store}}" {% if maker_name == visit_store %}selected{% endif %}>{{visit_store}}</option>
+														{% endfor %}
+													</select>
+												{% else %}
+													<input type="text" value="{{maker_name}}" readonly name="plg_visit_store" id="plg_visit_store" class="form-control  only_visit">
+												{% endif %}
+											{% endif %}
+											<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+											<small>※2万円以下の商品は他店舗での着付け・下見、宅配レンタルを行っておりません。</small>
+										</div>
+									</div>
+								<div class="form-group only_visit">
+									<label for="plg_time_departure" class="col-md-5 col-12 control-label">ご出発予定時間<span class="label label-danger ml10">必須</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_time_departure" id="plg_time_departure" class="form-control only_visit">
+											<option value="">{{'aki.front.detail.form.list.departure'|trans}}</option>
+											{% for key, time_departure in form_settings.time_departure %}
+												<option value="{{key}}">{{time_departure}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+                                        <small>※10：00以前のご利用は早朝料金が別途発生いたします。<br><a href="{{ url('homepage') }}user_data/service#off-hours" target="_blank" class="color-primary underline">詳細はこちら</a></small>
+									</div>
+								</div>
+
+								<div class="form-group ">
+									<label for="inputEmail3" class="col-md-5 col-12 control-label">用途<span class="label label-danger ml10">必須</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_purpose" id="plg_purpose" class="form-control">
+												<option value="">{{'aki.front.detail.form.list.purpose'|trans}}</option>
+											{% for key, purpose in form_settings.purpose %}
+												<option value="{{key}}">{{purpose}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+										<small>※「その他」をご選択の場合、この先のページ「ご注文内容のご確認」の「お問い合わせ欄」に詳細を明記下さい。</small>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-md-5 col-12 control-label">身長<span class="label label-danger ml10">必須</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_body_height" id="plg_body_height" class="form-control">
+											<option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+											{% for key, body_height in form_settings.body_height %}
+												<option value="{{key}}">{{body_height}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="plg_foot_size" class="col-md-5 col-12 control-label">足のサイズ<span class="label label-danger ml10">必須</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_foot_size" id="plg_foot_size" class="form-control">
+											<option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+											{% for key, foot_size in form_settings.foot_size %}
+												<option value="{{key}}">{{foot_size}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="plg_decade" class="col-md-5 col-12 control-label">年代<span class="label label-danger ml10">必須</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_decade" id="plg_decade" class="form-control">
+											<option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+											{% for key, decade in form_settings.decade %}
+												<option value="{{key}}">{{decade}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>選択して下さい。</strong></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="plg_body_type_0" class="col-md-5 col-12 control-label">体型</label>
+									<div class="col-md-7 col-12">
+										{% for key, body_type in form_settings.body_type %}
+											<div class="checkbox">
+												<label class=""><input type="checkbox" id="plg_body_type_{{loop.index}}" name="plg_body_type[]" value="{{key}}" /> {{body_type}}</label>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+
+								<div class="form-group only_visit">
+									<label for="inputEmail3" class="col-md-5 col-12 control-label">フォト</label>
+									<div class="col-md-7 col-12">
+										<select name="plg_need_photo" id="plg_need_photo" class="form-control only_visit">
+										{% for key, photo_plan in form_settings.photo_plan %}
+											<option value="{{key}}">{{photo_plan}}</option>
+										{% endfor %}
+										</select>
+                                        <small><a href="{{ url('homepage') }}user_data/service#s02" target="_blank" class="color-primary underline">詳細はこちら</a></small>
+									</div>
+								</div>
+
+								<div class="form-group only_visit">
+									<label for="inputEmail3" class="col-md-5 col-12 control-label">ヘア・メイクの有無</label>
+									<div class="col-md-7 col-12">
+										<select name="plg_need_hair_make" id="plg_need_hair_make" class="form-control only_visit">
+										{% for key, hair_make in form_settings.hair_make %}
+											<option value="{{key}}">{{hair_make}}</option>
+										{% endfor %}
+										</select>
+                                        <small><a href="{{ url('homepage') }}user_data/service#s01" target="_blank" class="color-primary underline">詳細はこちら</a></small>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="checkbox" id="check" checked style="display:none" />　<label for="check" class="user-guide" style="display:none">利用ガイドに同意します。詳細は <a href="/user_data/cancel" target="_blank" style="text-decoration: underline;">こちら</a></label>
+						<p style="text-align: center;"><small style="font-size: 12px;">店舗での受付時に現住所の確認できる身分証<br>（免許証や保険証など）をご提示ください。</small></p>
+						<button type="button" id="add-cart" class="aki-btn aki-btn-primary btn-block btn-lg mt10">カートに入れる</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{# End Modal #}
+	{% else %}
+	{% endif %}
+{% else %}
+	<div class="modal" id="ModalCart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-center" id="myModalLabel">{{'aki.front.detail.form.title'|trans}}</h4>
+				</div>
+				<div class="modal-body">
+					<div class="aki-row">
+						<div class="col-12">
+							<div class="form-horizontal">
+								<div class="form-group">
+                                    {% if isJapan %}
+									    <label for="plg_order_type" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.type'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+                                    {% endif %}
+									<div class="col-md-7 col-12">
+										<select name="plg_order_type" id="plg_order_type" class="form-control {{isJapan ? '' : 'd-none'}}">
+                                            {% if not isJapan %}
+                                                <option value="visit">{{'aki.front.detail.form.visit'|trans}}</option>
+                                            {% else %}
+                                                {% if order_type is not empty %}
+                                                    {% if order_type == 'visit' %}
+                                                        <option value="visit">{{'aki.front.detail.form.visit'|trans}}</option>
+                                                    {% elseif order_type == 'deliv' %}
+                                                        {% if Product.getPrice02IncTaxMax >= 20000 %}
+                                                            <option value="deliv">宅配着物レンタル</option>
+                                                        {% else %}
+                                                            <option value="">予約できません</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% else %}
+                                                    <option value="visit">{{'aki.front.detail.form.visit'|trans}}</option>
+                                                    {% if Product.getPrice02IncTaxMax >= 20000 %}
+                                                        <option value="deliv">宅配着物レンタル</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="plg_wear_date" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.use_day'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+									<div class="col-md-7 col-12">
+										<input name="plg_wear_date" type="text" class="form-control date hasDatepicker" value="{{'aki.front.detail.form.use_day.place_holder'|trans}}" placeholder="{{'aki.front.detail.form.use_day.place_holder'|trans}}" readonly="readonly" id="plg_wear_date">
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+										<small>{{'aki.front.detail.form.info.close'|trans}}</small><br>
+										<small>{{'aki.front.detail.service'|trans|raw}}</small>
+									</div>
+								</div>
+								<div class="form-group only_visit visit-store-div">
+									<label for="plg_visit_store" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.list.store'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+									<div class="col-md-7 col-12">
+										{% if Product.getPrice02IncTaxMax >= 20000 %}
+										<select name="plg_visit_store" id="plg_visit_store" class="form-control  only_visit">
+											{% for key, visit_store in form_settings.visit_store %}
+												<option value="{{visit_store}}" {% if maker_name_locale == visit_store %}selected{% endif %}>{{visit_store}}</option>
+											{% endfor %}
+										</select>
+										{% else %}
+											{% if Product.belongsToCategory(36) or Product.belongsToCategory(37) or Product.belongsToCategory(38) or not isJapan %}
+												<select name="plg_visit_store" id="plg_visit_store" class="form-control  only_visit">
+													{% for key, visit_store in form_settings.visit_store %}
+														<option value="{{visit_store}}" {% if maker_name_locale == visit_store %}selected{% endif %}>{{visit_store}}</option>
+													{% endfor %}
+												</select>
+											{% else %}
+												<input type="text"
+													value="{{maker_name_locale}}"
+													readonly
+													name="plg_visit_store"
+													id="plg_visit_store"
+													class="form-control
+													only_visit"
+												>
+											{% endif %}
+										{% endif %}
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+										{% if isJapan %}
+                                            <small>{{'aki.front.detail.form.warning.store.under'|trans}}</small>
+										{% endif %}
+									</div>
+								</div>
+								<div class="form-group only_visit time-departure-div">
+									<label for="plg_time_departure" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.departure'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_time_departure" id="plg_time_departure" class="form-control only_visit">
+											<option value="">{{'aki.front.detail.form.list.departure'|trans}}</option>
+											{% for key, time_departure in form_settings.time_departure %}
+												<option value="{{key}}">{{time_departure}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+										{% if isJapan %}
+                                            <small>{{'aki.front.detail.form.warning.departure.1'|trans}}<br>{{'aki.front.detail.form.warning.departure.2'|trans}}</small>
+										    <small>{{'aki.front.detail.form.warning.departure.3'|trans}}<br><a href="{{ url('homepage') }}user_data/service#off-hours" target="_blank" class="color-primary underline">{{'aki.front.detail.form.warning.departure.4'|trans}}</a></small><br>
+                                        {% else %}
+                                            <small>{{'aki.front.detail.form.warning.time'|trans}}</small>
+                                        {% endif %}
+									</div>
+								</div>
+                                {% if isJapan %}
+                                    <div class="form-group">
+                                        <label for="plg_purpose" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.purpose'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+                                        <div class="col-md-7 col-12">
+                                            <select name="plg_purpose" id="plg_purpose" class="form-control">
+                                                    <option value="">{{'aki.front.detail.form.list.purpose'|trans}}</option>
+                                                {% for key, purpose in form_settings.purpose %}
+                                                    <option value="{{key}}">{{purpose}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+                                            <small>{{'aki.front.detail.form.warning.purpose'|trans}}</small>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+								{% if not isJapan %}
+                                    <div class="form-group">
+                                        <label for="plg_number_of_guests" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.num_of_guests'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+                                        <div class="col-md-7 col-12">
+                                            <select name="plg_number_of_guests" id="plg_number_of_guests" class="form-control">
+                                                {% for key, number_of_guests in form_settings.number_of_guests %}
+                                                    <option value="{{key}}">{{number_of_guests}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+                                        </div>
+                                    </div>
+
+									<div class="form-group gender-div">
+                                        <label for="plg_gender" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.gender'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+                                        <div class="col-md-7 col-12">
+                                            {% for key, gender in form_settings.gender %}
+												<div class="radio_plg_gender">
+													<label class=""><input type="radio" id="plg_gender_{{loop.index}}" name="plg_gender" value="{{key}}" /> {{gender}}</label>
+												</div>
+											{% endfor %}
+                                            <div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+								<div class="form-group body-height-div">
+									<label for="plg_body_height" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.height'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_body_height" id="plg_body_height" class="form-control">
+											<option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+											{% for key, body_height in form_settings.body_height %}
+												<option value="{{key}}">{{body_height}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+									</div>
+								</div>
+								<div class="form-group foot-size-div">
+									<label for="plg_foot_size" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.foot'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+									<div class="col-md-7 col-12">
+										<select name="plg_foot_size" id="plg_foot_size" class="form-control">
+											<option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+											{% for key, foot_size in form_settings.foot_size %}
+												<option value="{{key}}">{{foot_size}}</option>
+											{% endfor %}
+										</select>
+										<div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+									</div>
+								</div>
+								{% if not isJapan %}
+								<div class="form-group shoe_size">
+									<div class="col-md-5 col-12"></div>
+									<div class="col-md-7 col-12">
+										<small>{{'aki.front.detail.form.warning.shoe_size'|trans}}</small>
+									</div>
+								</div>
+								{% endif %}
+                                {% if isJapan %}
+                                    <div class="form-group">
+                                        <label for="plg_decade" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.era'|trans}}<span class="label label-danger ml10">{{'aki.front.detail.form.required'|trans}}</span></label>
+                                        <div class="col-md-7 col-12">
+                                            <select name="plg_decade" id="plg_decade" class="form-control">
+                                                <option value="">{{'aki.front.detail.form.info.plese.select'|trans}}</option>
+                                                {% for key, decade in form_settings.decade %}
+                                                    <option value="{{key}}">{{decade}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.required'|trans}}</strong></div>
+                                        </div>
+                                    </div>
+                                {%  endif %}
+								<div class="form-group">
+									<label class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.body'|trans}}</label>
+									<div class="col-md-7 col-12 mt-3">
+										{% for key, body_type in form_settings.body_type %}
+											<div class="checkbox">
+												<label class=""><input type="checkbox" id="plg_body_type_{{loop.index}}" name="plg_body_type[]" value="{{key}}" />{% if isJapan %}  {{body_type}} {% endif %}</label>
+											</div>
+										{% endfor %}
+                                        {% if not isJapan %}
+                                            <small>{{'aki.front.detail.form.warning.body.text.1'|trans|raw}}</small><br/>
+                                            <small>{{'aki.front.detail.form.warning.body.text.2'|trans}}</small><br/>
+                                            <small>{{'aki.front.detail.form.warning.body.text.3'|trans}}</small><br/>
+                                            <small>{{'aki.front.detail.form.warning.body.text.4'|trans}}</small><br/>
+                                        {% endif %}
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.secure.pack'|trans}}</label>
+									<div class="col-md-7 col-12">
+										{% for key, secure_pack in form_settings.secure_pack %}
+											<div class="checkbox">
+												<label class=""><input type="checkbox" id="plg_secure_pack_{{loop.index}}" name="plg_secure_pack[]" value="{{key}}" /> {{secure_pack}} </label>
+											</div>
+										{% endfor %}
+                                        {# {% if isJapan %}
+										    <small><a href="/user_data/cancel#cancel_t006" target="_blank" class="color-primary underline">{{'aki.front.detail.form.info.secure.pack.link'|trans}}</a></small>
+                                        {% else %}
+                                            <small>{{'aki.front.detail.form.info.secure.pack.warning'|trans}}</small>
+                                        {% endif %} #}
+										{% if not isJapan %}
+										<div class="tooltip-container">
+											<span class="tooltip-trigger color-primary underline">{{'aki.front.detail.form.info.click.here'|trans}}</span>
+											<div class="tooltip-content">
+												<small>{{'aki.front.detail.form.info.secure.pack.warning'|trans}}</small>
+											</div>
+										</div>
+										{% else %}
+										<small><a href="/user_data/cancel#cancel_t006" target="_blank" class="color-primary underline">{{'aki.front.detail.form.info.secure.pack.link'|trans}}</a></small>
+										{% endif %}
+									</div>
+								</div>
+
+								<div class="form-group only_visit">
+									<label for="plg_need_photo" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.photo'|trans}}</label>
+									<div class="col-md-7 col-12">
+										<select name="plg_need_photo" id="plg_need_photo" class="form-control only_visit">
+										{% for key, photo_plan in form_settings.photo_plan %}
+											<option value="{{key}}">{{photo_plan}}</option>
+										{% endfor %}
+										</select>
+                                        {% if isJapan %}
+										    <small><a href="{{ url('homepage') }}user_data/service#s02" target="_blank" class="color-primary underline">{{'aki.front.detail.form.info.click.here'|trans}}</a></small>
+                                        {% endif %}
+									</div>
+								</div>
+
+								<div class="form-group only_visit">
+									<label for="plg_need_hair_make" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.hair'|trans}}</label>
+									<div class="col-md-7 col-12">
+										<select name="plg_need_hair_make" id="plg_need_hair_make" class="form-control only_visit">
+										{% for key, hair_make in form_settings.hair_make %}
+											<option value="{{key}}">{{hair_make}}</option>
+										{% endfor %}
+										</select>
+										{# <small><a href="{{ url('homepage') }}user_data/service#s01" target="_blank" class="color-primary underline">{{'aki.front.detail.form.info.click.here'|trans}}</a></small><br/>
+                                        {% if not isJapan %}
+                                            <small>{{'aki.front.detail.form.info.hair.decription.text1'|trans|raw}}</small><br/>
+                                            <small>{{'aki.front.detail.form.info.hair.decription.text2'|trans}}</small><br/>
+                                        {% endif %} #}
+										{% if not isJapan %}
+											<small>{{'aki.front.detail.form.option_hair.notice1'|trans|raw}}</small><br/>
+											<small>{{'aki.front.detail.form.option_hair.notice2'|trans|raw}}</small>
+										{% else %}
+										<small><a href="{{ url('homepage') }}user_data/service#s01" target="_blank" class="color-primary underline">{{'aki.front.detail.form.info.click.here'|trans}}</a></small><br/>
+										{% endif %}
+									</div>
+								</div>
+                                {% if not isJapan %}
+                                    <div class="form-group only_visit">
+                                        <label for="plg_remark" class="col-md-5 col-12 control-label">{{'aki.front.detail.form.info.remark'|trans}}</label>
+                                        <div class="col-md-7 col-12">
+                                            <textarea name="plg_remark" class="form-control form-remark" placeholder="{{'aki.front.detail.form.info.remark.placeholder'|trans}}" cols="37" rows="4" id="plg_remark"></textarea>
+											<small>{{'aki.front.detail.form.warning.shoe_size_above'|trans}}</small>
+                                            <div class="alert alert-danger errormsg"><strong>{{'aki.front.detail.form.error.max.3000'|trans}}</strong></div>
+                                        </div>
+								    </div>
+                                {% endif %}
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<div class="text-center">
+						<input type="checkbox" id="check" class="mr05" />{{'aki.front.detail.form.info.policy'|trans|raw}}</div>
+						{% if not isJapan %}
+						<div class="text-center">
+						<div class="tooltip-container">
+							{{'aki.front.detail.form.info.policy.sup'|trans|raw}}<span class="aki-text-red"> {{'aki.front.detail.form.info.policy.check'|trans}}</span>
+							<div class="tooltip-content tooltip-content-sp">
+								<p class="underline">{{'aki.front.detail.form.info.term.service.title1'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title1.child1'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title1.child2'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title1.child3'|trans}}</p>
+								<p class="underline">{{'aki.front.detail.form.info.term.service.title2'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title2.child1'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title2.child2'|trans}}</p>
+								<p class="underline">{{'aki.front.detail.form.info.term.service.title3'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title3.child1'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title3.child2'|trans}}</p>
+								<p>{{'aki.front.detail.form.info.term.service.title3.child3'|trans}}</p>
+							</div>
+						</div>
+						</div>
+						{% else %}
+						<p class="text-center">{{'aki.front.detail.form.info.policy.sup.jp'|trans|raw}}<span class="aki-text-red"> {{'aki.front.detail.form.info.policy.check'|trans}}</span></p>
+						{% endif %}
+						<p style="text-align: center;">
+                            <small style="font-size: 12px;">
+                                {% if isJapan %}
+                                {{'aki.front.detail.form.info.instruct.1'|trans}}<br>
+                                {% endif %}
+                                {{'aki.front.detail.form.info.instruct.2'|trans}}
+                            </small>
+                        </p>
+						<button type="button" id="add-cart" class="aki-btn aki-btn-primary btn-block btn-lg mt10 pa10">{{'aki.front.detail.form.button.submit'|trans}}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
+<!--▲買い物かご-->
+{# Using form_rest will generate all field of form #}
+	<div id="reset_form">
+		{{ form_rest(form) }}
+	</div>
+</form>
+{# Create a form to submit your favorite products #}
+<form action="{{ url('product_add_favorite', {id:Product.id}) }}" method="post" id="form_favorite" class="d-none">
+</form>
+{% if not isSalon %}
+	<!-- ▲item_detail▲ -->
+	{% if Product.belongsToCategory(37) %}
+	<p class="aki-border-primary"></p>
+	<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(36) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(35) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(50) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(41) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(38) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_2880×1100px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/753_780×640px.webp" alt="七五三レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(53) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/seijin"><img loading="lazy" src="/html/template/default/assets/aki/img/seijin/seijin_main.webp" alt="成人式レンタル、振袖、袴、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/seijin"><img loading="lazy" src="/html/template/default/assets/aki/img/seijin/seijin_780×640px.webp" alt="成人式レンタル、振袖、袴、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(39) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/seijin"><img loading="lazy" src="/html/template/default/assets/aki/img/seijin/seijin_main.webp" alt="成人式レンタル、振袖、袴、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/seijin"><img loading="lazy" src="/html/template/default/assets/aki/img/seijin/seijin_780×640px.webp" alt="成人式レンタル、振袖、袴、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/hakama"><img loading="lazy" src="/html/template/default/assets/aki/img/hakama/slide_003_v1.webp" alt="卒業袴レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/hakama"><img loading="lazy" src="/html/template/default/assets/aki/img/hakama/slide_003_s_v1.webp" alt="卒業袴レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% endif %}
+		{% if Product.belongsToCategory(40) %}
+		<p class="aki-border-primary"></p>
+		<section class="mb30" id="sec02">
+			<div class="aki-row">
+				<div class="main_visual">
+					<div class="item active">
+						<a href="/user_data/hakama"><img loading="lazy" src="/html/template/default/assets/aki/img/hakama/slide_003_v1.webp" alt="卒業袴レンタル、着物レンタルあき" class="img-responsive d-none d-md-block"></a>
+						<a href="/user_data/hakama"><img loading="lazy" src="/html/template/default/assets/aki/img/hakama/slide_003_s_v1.webp" alt="卒業袴レンタル、着物レンタルあき" class="img-responsive d-block d-md-none"></a>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+{% endif %}
+{% endblock %}

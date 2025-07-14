@@ -1,0 +1,60 @@
+<div class="custom_arrow_select input-group input-group-lg position-relative">
+    <span class="input-group-addon" id="basic-addon1"><img loading="lazy" src="{{ asset('assets/img/aki/kimono.svg') }}" alt="kimono" class="img-responsive"></span>
+    <select name="category_id" class="category_id_side form-control" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': '利用シーンを選択'});">
+        <option value="">ご利用シーン・着物の種類</option>
+        {% if not isSalon %}
+            <optgroup label="花火大会・お祭りなど">
+                <option value="43">ゆかた（女性用）</option>
+                <option value="42">ゆかた（男性用）</option>
+            </optgroup>
+        {% endif %}
+        <optgroup label="成人式">
+            <option value="53">振袖</option>
+            <option value="39">袴（男性用）</option>
+        </optgroup>
+        <optgroup label="卒業式・入学式">
+            <option value="40">卒業袴</option>
+            <option value="53">振袖</option>
+            <option value="50">訪問着</option>
+            <option value="39">紋付袴（男性用）</option>
+        </optgroup>
+        <optgroup label="結婚式">
+            <option value="34">婚礼衣装</option>
+            <option value="53">振袖</option>
+            <option value="52">黒留袖</option>
+            <option value="51">色留袖</option>
+            <option value="50">訪問着</option>
+            <option value="41">男物</option>
+            <option value="39">袴（男性用）</option>
+        </optgroup>
+        <optgroup label="パーティー・お茶会">
+            <option value="53">振袖</option>
+            <option value="50">訪問着</option>
+            <option value="51">色留袖</option>
+            <option value="49">色無地</option>
+            <option value="48">小紋</option>
+            <option value="41">男物</option>
+        </optgroup>
+        <optgroup label="観劇・お食事会">
+            <option value="48">小紋</option>
+            <option value="50">訪問着</option>
+            <option value="41">男物</option>
+            <option value="47">つむぎ</option>
+        <optgroup label="七五三・お宮参り・十三参り">
+            <option value="38">産着</option>
+            <option value="37">七五三（三歳祝着）</option>
+            <option value="36">七五三（五歳祝着）</option>
+            <option value="35">七五三（七歳祝着）</option>
+            <option value="158">十三参り</option>
+            <option value="50">訪問着</option>
+            <option value="41">男物</option>
+        </optgroup>
+        <optgroup label="夏季">
+            <option value="hitoenatu">ひとえ・夏着物</option>
+        </optgroup>
+        <optgroup label="その他">
+            <option value="157">喪服</option>
+            <option value="big">大きいサイズ</option>
+        </optgroup>
+    </select>
+</div>

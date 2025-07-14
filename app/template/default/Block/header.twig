@@ -1,7 +1,5 @@
-{% set isSalon = false %}
-{% set isJapan = true %}
-    {% if not isSalon %}
-
+	{% if not isSalon %}
+    {# {% set Stores = repository('Customize\\Entity\\ReservationSetting').getList() %} #}
 		{% if isJapan %}
 			<!-- ↓↓↓↓お知らせ青帯 お知らせがないときはコメントアウトすること -->
 			<style type="text/css">
@@ -87,7 +85,7 @@
 	<div class="aki-header-studio">
 	{% else %}
 	<div class="aki-header">
-		{# {% include 'Block/header_banner_event.twig' %} #}
+		{% include 'Block/header_banner_event.twig' %}
 	{% endif %}
 	<div class="aki-container pb10">
 	<div class="aki-row pb00 align-items-center">
@@ -350,6 +348,23 @@
 					<div class="input-group-lg">
 					<button id="filter_button_mb" class="aki-btn aki-btn-primary mb15 w-100 form-control" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': '商品を探す'});"><img loading="lazy" src="{{  asset('assets/icon/search-white.svg') }}" class="aki-icon-default" alt="icon" width="20" height="20"/> 着物を探す</button>
 					</div>
+					{% if not isSalon and APP_ENV != APP_PROD %}
+						<div class="aki-form-group">
+							<div class="input-group input-group-lg position-relative">
+								<select class="form-control aki-search-input aki-btn-primary text-center reservation_store_list">
+									<option value="">お下見来店予約</option>
+									{# {% for key, index in Stores %}
+										<option value="{{key}}"
+										{% if store_name_en is defined and (key ==  store_name_en) %}
+											selected
+										{% endif %}
+										>{{Stores[key]}}</option>
+									{% endfor %} #}
+								</select>
+								<span class="icon-select-down"><img loading="lazy" src="{{ asset('assets/icon/aki-icon-down-white.svg') }}" alt="kimono"></span>
+							</div>
+						</div>
+					{% endif %}
 					</form>
 				</section>
 				{% if not isSalon %}

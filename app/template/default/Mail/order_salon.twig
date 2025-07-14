@@ -1,0 +1,126 @@
+{% set isSalon = SALON_URL == app.request.server.get('SERVER_NAME') %}
+    {{ Order.name01 }} {{ Order.name02 }} 様
+
+	下記ご注文内容にお間違えがないかご確認下さい。
+
+    後に店舗担当者より「ご注文確定メール」を送らせていただきます。
+    ★本メールでは注文は確定しておりませんのでご注意ください★
+
+	************************************************
+		お支払情報
+	************************************************
+	ご注文番号：{{ Order.id }}
+	ご予約方法： {% if Order.orderType == "deliv_sal" %}
+					着物レンタル
+				{% else %}
+					試着サービス
+				{% endif %}
+	メッセージ：{{ Order.message }}
+    -----------------------------------------------
+	{% set index = 0 %}
+	{% set actual_total_price = 0 %}
+	{% for OrderDetail in Order.MergedProductOrderItems %}
+		{% if OrderDetail.product_code != 'secure_pack' %}
+			{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02 %}
+			{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+			{% set addinfo = Order.orderDetailInfo[index] %}
+			{% if addinfo.secure_pack|length  > 0 %}
+				{% set actual_total_price = actual_total_price + secure_pack_price %}
+			{% endif %}
+			{% set index = index + 1 %}
+		{% endif %}
+	{% endfor %}
+	合　計(税込) {{ Order.payment_total|price }}
+	{% set index = 0 %}
+	{% set actual_total_price = 0 %}
+	{% set secure_pack_price = 0 %}
+	{% for OrderDetail in Order.MergedProductOrderItems %}
+		{% if OrderDetail.product_code == 'secure_pack' %}
+			{% set secure_pack_price = OrderDetail.productClass.price02 + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+		{% endif %}
+	{% endfor %}
+	{% for OrderDetail in Order.MergedProductOrderItems %}
+		{% if OrderDetail.product_code != 'secure_pack' %}
+			{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02 %}
+			{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+			{% set addinfo = Order.orderDetailInfo[index] %}
+
+			************************************************
+				ご利用内容
+			************************************************
+			商品コード：{{ OrderDetail.product_code }}
+			商品名:	{{ OrderDetail.product_name }}  {{ OrderDetail.classcategory_name1 }}  {{ OrderDetail.classcategory_name2 }}
+			{% if OrderDetail.price_inctax != 0 %}
+				単価(税込)：{{ OrderDetail.price_inctax|price }}
+				{% else %}
+				単価(税込)： {{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+			{% endif %}
+			ご利用日：{{ addinfo.wear_date|date('Y-m-d') }}
+            お届け日：{{ addinfo.wear_date|date_modify("-2 day")|date("Y-m-d") }}
+
+			用途：{{ addinfo.purpose }}
+			身長：{{ addinfo.body_height }}
+			足のサイズ：{{ addinfo.foot_size }}
+			年代：{{ addinfo.decade }}
+
+			{% set index = index + 1 %}
+		{% endif %}
+	{% endfor %}
+
+	************************************************
+    　ご注文者情報
+    ************************************************
+
+	お名前　：{{ Order.name01 }} {{ Order.name02 }} 様
+	フリガナ：{{ Order.kana01 }}{{ Order.kana02 }}
+    郵便番号：〒{{ Order.postal_code }}
+    住所　　：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}
+	電話番号：{{ Order.phone_number }}
+	FAX番号：{{ Order.fax }}
+
+	メールアドレス：{{ Order.email }}
+
+    ************************************************
+    　配送情報
+    ************************************************
+
+	{%  for Shipping in Order.Shippings %}
+		◎お届け先
+		{% if Order.multiple %}
+			{{ loop.index }}
+		{% endif %}
+		お名前　：{{ Shipping.name01 }}{{ Shipping.name02 }} 様
+		フリガナ：{{ Order.kana01 }}{{ Order.kana02 }}
+		郵便番号：〒{{ Shipping.postal_code }}
+		住所　　：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}
+		電話番号：{{ Shipping.phone_number }}
+		FAX番号：{{ Order.fax }}
+
+		お届け日はご利用日の2日前となります。
+		お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}
+
+	{% endfor %}
+	************************************************
+	このメッセージはお客様へのお知らせ専用ですので、
+    このメッセージへの返信としてご質問をお送りいただいても回答できません。
+    ご了承ください。
+
+    ご質問やご不明な点がございましたら、以下よりお願いいたします。
+
+    {% if Order.orderType == "deliv_sal" %}
+    ■お問い合わせの内容
+    {% endif %}
+
+    ★☆★☆★☆★☆★☆★☆★☆★☆★☆
+    着物レンタルあき
+
+    TEL：03-3476-3341～2 （渋谷店）
+    TEL：03-5568-0529（銀座店）
+    TEL：03-6416-0529（池袋店）
+    TEL：045-441-0529 （横浜店）
+    {% if not isSalon %}
+    TEL：0557-52-4351 （熱海店）
+    {% endif %}
+    http://kr-aki.co.jp/
+    e-mail:contact@kr-aki.jp
+    ★☆★☆★☆★☆★☆★☆★☆★☆★☆

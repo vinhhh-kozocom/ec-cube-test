@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTDHTML4.01Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+		{% set isJapan = app.request.locale == 'ja' %}
+        <br>
+		<br>
+		<div align="center">
+			<a href="{{ url('homepage') }}" style="font-family:Helvetica, Arial, sans-serif;font-size:30px;color:#333333;text-decoration:none;">{% if isJapan %} {{ BaseInfo.shop_name }} {% else %} Kimono Rental Aki {% endif %}</a>
+		</div>
+		<!-- 100% background wrapper (grey background) -->
+		<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+			<tr>
+				<td align="center" valign="top" bgcolor="#F0F0F0" style="background-color:#F0F0F0;border-collapse:collapse;">
+					<br>
+					<!-- 600px container (white background) -->
+					<table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content" align="left" style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								<br>
+								<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
+                                    {{customer_name}} 様 <br/><br/>
+                                    下記ご予約内容にお間違えがないかご確認下さい。<br/><br/>
+                                    後に店舗担当者より「お下見予約確定メール」を送らせていただきます。<br/>
+                                    ★本メールでは予約は確定しておりませんのでご注意ください★<br/><br/><br/>
+                                    ************************************************<br/>
+                                    ご予約内容<br/>
+                                    ************************************************<br/><br/>
+                                    ご来店店舗：{{shop}}<br/>
+                                    ご来店日時: {{visit_day | date('Y-m-d')}}  {{time_start | date('H:i')}} - {{time_end | date('H:i')}}<br/>
+                                    お名前：{{customer_name}}<br/>
+                                    お名前（フリガナ）：{{customer_kana}}<br/>
+                                    電話番号：{{tel}}<br/>
+                                    メールアドレス：{{email}}<br/>
+                                    ご利用日: {{use_day|date('Y-m-d')}}<br/>
+                                    {% if use_people is not null %}
+                                    ご利用人数：{{use_people}}<br/>
+                                    {% endif %}
+                                    {% if purpose is not null %}
+                                    用途：{{purpose}}<br/>
+                                    {% endif %}
+                                    {% if height is not null %}
+                                        身長：{{height}}<br/>
+                                    {% endif %}
+                                    {% if item is not null %}
+                                    ご希望の商品コード（3点まで）：{{item}}<br/>
+                                    {% endif %}
+                                    {% if budget is not null %}
+                                    ご希望の予算：{{budget}}<br/>
+                                    {% endif %}
+                                    {% if body_type is not null %}
+                                    {% for bodyTypeItem in body_type %}
+                                    {{bodyTypeItem}}&nbsp;&nbsp;
+                                    {% endfor %}
+                                    <br/>
+                                    {% endif %}
+                                    {% if note is not null %}
+                                    備考: {{note}}<br/>
+                                    {% endif %}
+                                    <br/><br/><br/>
+                                    このメッセージはお客様へのお知らせ専用ですので、<br/>
+                                    このメッセージへの返信としてご質問をお送りいただいても回答できません。<br/>
+                                    ご了承ください。<br/><br/>
+                                    ご質問やご不明な点がございましたら、以下よりお願いいたします。<br/><br/>
+                                    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+                                    着物レンタルあき<br/>
+                                    TEL：03-3476-3341～2 （渋谷店）<br/>
+                                    TEL：03-5568-0529（銀座店）<br/>
+                                    TEL：03-6416-0529（池袋店）<br/>
+                                    TEL：045-441-0529 （横浜店）<br/>
+                                    http://kr-aki.co.jp/<br/>
+                                    e-meil:contact@kr-aki.jp<br/>
+                                    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+
+								</div>
+							</td>
+						</tr>
+					</table>
+					<!--/600px container -->
+					<br>
+					<br>
+					<table id="html-mail-table2" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content footer-text" align="left" style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+								もしお心当たりが無い場合は、その旨
+								<a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a>
+								までご連絡いただければ幸いです。<br/>
+								<br/>
+								<div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;">
+									<a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a>
+								</div>
+								<div>copyright &copy;
+									{{ BaseInfo.shop_name }}
+									all rights reserved.</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<!--/100% background wrapper-->
+		<br>
+		<br>
+	</body>
+
+</html>

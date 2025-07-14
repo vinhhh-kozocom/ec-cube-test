@@ -1,0 +1,167 @@
+{% block javascript %}
+	<script>
+	$(window).on('load', function() {
+		$('.burger-icon').click(function() {
+			$('body').css('overflow', 'hidden');
+			$(this).toggleClass('is-show');
+			$('.mobile-header-active').toggleClass('is-show-content');
+			if(!$('.sp-profile .burger-icon').hasClass('is-show')){
+				$('body').css('overflow', '');
+			}
+			if($('.sp-profile .menu-search').hasClass('d-none')){
+				$('.sp-profile .menu-close-search').addClass('d-none');
+				$('.sp-profile .menu-search').removeClass('d-none');
+				$('.sp-profile .input-search__popup').removeClass('isShowPopup');
+			}
+		});
+		$('.aki-header-menu .menu-search').click(function() {
+			$(this).addClass('d-none');	
+			$('.aki-header-menu .menu-close-search').removeClass('d-none');
+			$('.aki-header-menu .input-search__popup').addClass('isShowPopup');
+		});
+		$('.aki-header-menu .menu-close-search').click(function() {
+			$(this).addClass('d-none');	
+			$('.aki-header-menu .menu-search').removeClass('d-none');
+			$('.aki-header-menu .input-search__popup').removeClass('isShowPopup');
+		});
+		$('.sp-profile .menu-search').click(function() {
+			$(this).addClass('d-none');	
+			$('.sp-profile .menu-close-search').removeClass('d-none');
+			$('.sp-profile .input-search__popup').addClass('isShowPopup');
+			$('.burger-icon.is-show').removeClass('is-show');
+			$('body').css('overflow', '');
+			$('.mobile-header-active.is-show-content').removeClass('is-show-content');
+		});
+		$('.sp-profile .menu-close-search').click(function() {
+			$(this).addClass('d-none');	
+			$('.sp-profile .menu-search').removeClass('d-none');
+			$('.sp-profile .input-search__popup').removeClass('isShowPopup');
+		});
+	})
+
+	</script>
+	{% endblock %}
+
+<div class="aki-container pb10">
+	<div class="aki-row pb00 align-items-center">
+		<div class="col-6">
+			{% if isSalon %}
+				<h1 class="mb10 font-size-12 d-none d-md-block">{% if app.request.get('_route') == "homepage" %}KIMONO Rental AKI . Located in central &amp; convenient Tokyo Japan
+				{% else %}{% if subtitle is defined and subtitle is not empty %}{{ subtitle }} | {% elseif title is defined and title is not empty %}{{ title }} | {% endif %}KIMONO Rental AKI . Located in central &amp; convenient Tokyo Japan{% endif %}</h1>
+			{% else %}
+				<h1 class="mb10 font-size-12 d-none d-md-block">{% if app.request.get('_route') == "homepage" %}KIMONO Rental AKI . Shibuya Ginza Ikebukuro Tokyo and Yokohama Japan
+				{% else %}{% if subtitle is defined and subtitle is not empty %}{{ subtitle }} | {% elseif title is defined and title is not empty %}{{ title }} | {% endif %}KIMONO Rental AKI . Shibuya Ginza Ikebukuro Tokyo and Yokohama Japan{% endif %}</h1>
+			{% endif %}
+				<a class="navbar-brand d-none d-md-block" href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});"><img loading="lazy" src="{{ image_address }}/english/en_logo.svg" alt="着物レンタル{% if not isSalon %}あき{% endif %}"></a>
+				<a class="d-block d-md-none" href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});"><img loading="lazy" src="{{ image_address }}/english/en_logo_sp.svg" alt="着物レンタル{% if not isSalon %}あき{% endif %}" class="height-logo-sp"></a>
+		</div>
+		<div class="col-6 text-end">
+			<div class="d-none d-md-block">
+				<p class="aki-text-orange mb10 aki-font-semibold"></p>
+				<div>
+					<a class="aki-text-orange mr15 aki-font-semibold text-decoration-underline" href="/user_data/china" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_中文'});">對於中國網站</a>
+					<a class="aki-btn aki-btn-default color-primary" href="/wpaki/contact-form-en"><img loading="lazy" src="{{ asset('assets/icon/sms.svg') }}" class="aki-icon-default" alt="icon"/> Inquiries</a>
+				</div>
+			</div>
+			<div class="header-top d-block d-md-none">
+				<div class="sp-profile ">
+					<div><a href="/cart"><img loading="lazy" src="{{ asset('assets/icon/aki-cart.svg') }}" class="aki-icon-default" alt="icon"/>
+						</a>
+					</div>
+					<div class="input-search">
+						<span class="menu-search"> <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.0556 9.02778C16.0556 12.9091 12.9091 16.0556 9.02778 16.0556C5.14644 16.0556 2 12.9091 2 9.02778C2 5.14644 5.14644 2 9.02778 2C12.9091 2 16.0556 5.14644 16.0556 9.02778Z" stroke="#31352E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M18.7497 18.7499L14.5205 14.5208" stroke="#31352E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						</span>
+						<span class="menu-close-search d-none"> <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.286 2.57144L2.57146 16.286C2.25907 16.5984 2.259 17.1164 2.5713 17.4287C2.8836 17.741 3.40163 17.7409 3.71402 17.4286L17.4286 3.714C17.741 3.40162 17.741 2.88358 17.4287 2.57128C17.1164 2.25898 16.5984 2.25905 16.286 2.57144Z" fill="#666666"/>
+						<path d="M3.71301 2.57144L17.4276 16.286C17.74 16.5984 17.74 17.1164 17.4277 17.4287C17.1154 17.741 16.5974 17.7409 16.285 17.4286L2.57045 3.714C2.25806 3.40162 2.25799 2.88358 2.57029 2.57128C2.88259 2.25898 3.40062 2.25905 3.71301 2.57144Z" fill="#666666"/>
+						</svg>
+						</span>
+						<div class="input-search__popup">
+							<form method="get" action="{{ path('product_list') }}">
+								<div class="input-search__popup-form">
+									<input type="text" class="input-search__popup-input" name="name" placeholder="{{'front.product.search_footer_placeholder' | trans}}">
+									<button class="btn btn-primary" type="submit"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="path-1-inside-1_1154_20913" fill="white">
+									<path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z"></path>
+									</mask>
+									<path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" mask="url(#path-1-inside-1_1154_20913)"></path>
+									<path d="M18.7497 18.7499L14.5205 14.5208" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"></path>
+									</svg></button>
+								</div>
+							</form>
+						</div>
+
+					</div>
+					<div class="burger-icon color-primary" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー','event_label': 'SPメニュー'});">
+						<span class="burger-icon-top"></span>
+						<span class="burger-icon-mid"></span>
+						<span class="burger-icon-bottom"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="mobile-header-active aki-mobile en_header_mobile">
+				<a href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});">HOME</a>
+				<a href="/user_data/english/rental_plan">One-Day Plan</a>
+				<a href="/user_data/english/rental_plan">Over Night Plan</a>
+				<a href="/user_data/english/rental_flow">RENTAL FLOW</a>
+				<a href="/user_data/english/woman">WOMAN</a>
+				<a href="/user_data/english/man">MAN</a>
+				<a href="/user_data/english/kids">KIDS</a>
+				<a href="/user_data/english/wedding">WEDDING</a>
+				<a href="/user_data/english/faq">FAQ</a>
+				<a href="/user_data/english/contact_info">ACCESS</a>
+				<a href="/user_data/china" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_中文'});" class="aki-text-orange">對於中國網站</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="en_header d-none d-md-block">
+	<div class="category-top">
+		<div class="aki-container aki-header-menu">
+			<div class="en_header_menu">
+				<p><a href="/user_data/english" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_english'});">HOME</a></p>
+				<div class="dropdown">
+					<a href="/user_data/english/rental_plan" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						RENTAL PLAN
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<li><a class="dropdown-item" href="/user_data/english/rental_plan">One-Day Plan</a></li>
+						<li><a class="dropdown-item" href="/user_data/english/rental_plan">Over Night Plan</a></li>
+					</ul>
+				</div>
+				<p><a href="/user_data/english/rental_flow">RENTAL FLOW</a></p>
+				<div class="dropdown">
+					<a href="/user_data/shop" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+						ABOUT KIMONO
+					</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<li><a class="dropdown-item" href="/user_data/english/woman">WOMAN</a></li><br>
+						<li><a class="dropdown-item" href="/user_data/english/man">MAN</a></li><br>
+						<li><a class="dropdown-item" href="/user_data/english/kids">KIDS</a></li><br>
+						<li><a class="dropdown-item" href="/user_data/english/wedding">WEDDING</a></li>
+					</ul>
+				</div>
+				<p><a href="/user_data/english/faq">FAQ</a></p>
+				<p><a href="/user_data/english/contact_info">ACCESS</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+</header>
+	
+<div class="d-block d-md-none">
+	<div class="aki-container">
+		<div class="text-center mb10">
+			<div class="col-12">
+				<p class="mt15">Welcome to AKI kimono Rental, Tokyo, Japan.</p>
+				<p class="mb15 mt15"></p>
+				<a class="aki-btn aki-btn-default color-primary" href="/wpaki/contact-form-en"><img loading="lazy" src="{{ asset('assets/icon/sms.svg') }}" class="aki-icon-default" alt="icon"/> Inquiries</a>
+				<p class="mt15 mb15"><a class="aki-text-orange text-decoration-underline aki-font-semibold" href="/user_data/china" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_中文'});">對於中國網站</a></p>
+			</div>
+		</div>
+	</div>
+</div>

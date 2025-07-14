@@ -1,0 +1,25 @@
+{% extends 'default_frame.twig' %}
+{% set mypageno = 'change' %}
+{% set body_class = 'aki-mypage' %}
+{% block main %}
+<div id="">
+		<div class="ec-pageHeader aki-mypage_title text-center mb30">
+			<h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'aki.front.mypage.nav__history'|trans }}</h2>
+			<p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+		</div>
+
+	<div id="complete_wrap">
+		{% include 'Mypage/navi.twig' %}
+		<div id="deliveradd_input" class="row">
+			<p class="mb20 text-center">{{ 'front.mypage.customer_complete_message__body'|trans }}</p>
+			<div id="complete_box__body">
+				<div id="complete_box__top_button">
+					<div class="btn_group text-center">
+						<a href="{{ url('homepage') }}" class="aki-btn aki-btn-primary">{{ 'common.go_to_top'|trans }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

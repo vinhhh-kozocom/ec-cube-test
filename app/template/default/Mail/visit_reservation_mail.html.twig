@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+<br>
+<br>
+<div align="center"><a href="{{ url('homepage') }}" style="font-family:Helvetica, Arial, sans-serif;font-size:30px;color:#333333;text-decoration:none;">{{ BaseInfo.shop_name }}</a></div>
+<!-- 100% background wrapper (grey background) -->
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color:#F0F0F0;border-collapse:collapse;">
+            <br>
+            <!-- 600px container (white background) -->
+            <table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+                <tr>
+                    <td class="container-padding content" align="left" style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+                        <br>
+                        <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550;">【着物レンタルあき】下見のお申込みありがとうございます</div>
+                        <br>
+                        <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
+                            {{ data.last_name }} {{ data.first_name }}様<br><br>
+                            この度は着物レンタルあきの下見にお申込みいただき、誠にありがとうございます。<br>
+                            ※お申込み頂いた時点では確定ではございません。後日、担当者からご連絡を差し上げて確定いたします。<br>
+                            <br>
+                            ──────────────────────<br>
+                            【お申込み内容】<br>
+                            {% if data.store %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お下見ご希望店舗：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.store }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.first_visit_date and data.first_visit_time %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お下見の日付（第一希望）：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.first_visit_date|date('Y/m/d') }} {{ data.first_visit_time|date('H:i') }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.second_visit_date and data.second_visit_time %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お下見の日付（第二希望）：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.second_visit_date|date('Y/m/d') }} {{ data.second_visit_time|date('H:i') }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.product_code %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お下見ご希望の商品番号（複数商品可：３つまで）：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.product_code }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.last_name and data.first_name %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お名前：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.last_name }} {{ data.first_name }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.last_name_kana and data.first_name_kana %}
+                            <dl style="display: flex;border-bottom: 1px dotted #ccc;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■お名前（フリガナ）：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.last_name_kana }} {{ data.first_name_kana }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.phone %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■電話番号：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.phone }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.email %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■メールアドレス：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.email }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.usage_date %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■ご利用予定日：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.usage_date|date('Y/m/d') }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.try_on_people %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■ご試着される方の人数：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.try_on_people }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.purpose %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■用途：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.purpose }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.kimono_type %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■着物の種類：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.kimono_type }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.height %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■身長：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.height }}</dd>
+                            </dl>
+                            {% endif %}
+                            {% if data.note_info_1 %}
+                            <dl style="display: flex;margin: 0;">
+                                <dt style="padding-top: 14px;width: 40%;"><label class="ec-label">■備考欄：</label></dt>
+                                <dd style="width: 60%;line-height: 3;">{{ data.note_info_1 }}</dd>
+                            </dl>
+                            {% endif %}
+                            ──────────────────────<br><br>
+                            当店より改めてご連絡を差し上げますので、今しばらくお待ちください。<br>
+                            何かご不明な点がございましたら、お気軽にお問い合わせください。<br><br>
+                            今後とも着物レンタルあきをどうぞよろしくお願いいたします。<br>
+                        </div>
+                        <br/>
+                        ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+                        着物レンタルあき
+                        <br/>
+                        TEL：03-3476-3341～2（渋谷店）<br/>
+                        TEL：03-5568-0529（銀座店）<br/>
+                        TEL：03-6416-0529（池袋店）<br/>
+                        TEL：045-441-0529（横浜店）<br/>
+                        TEL：0557-52-4351（熱海店）<br>
+                        http://kr-aki.co.jp/<br/>
+                        e-mail:contact1@kr-aki.jp<br/>
+                        ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+                    </td>
+                </tr>
+            </table>
+            <!--/600px container -->
+            <br>
+            <br>
+            <table id="html-mail-table2" border="0" width="600" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+                <tr>
+                    <td class="container-padding content footer-text" align="left" style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+                        本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+                        もしお心当たりが無い場合は、その旨 <a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a> までご連絡いただければ幸いです。<br/>
+                        <br/>
+                        <div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;"><a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a></div>
+                        <div>copyright &copy; {{ BaseInfo.shop_name }} all rights reserved.</div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!--/100% background wrapper-->
+<br>
+<br>
+</body>
+
+</html>

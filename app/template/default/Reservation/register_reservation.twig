@@ -1,0 +1,333 @@
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+<style>
+    .detail__header{
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .detail__header-group{
+        display: flex;
+    }
+    .detail__header-item{
+        border:1px solid #ccc;
+        padding:4px 10px;
+    }
+    .detail__header-item-back,
+    .detail__header-item-day{
+        margin: 0 8px;
+    }
+    .detail__header-item-back{
+        color: blue;
+    }
+    .detail__header-item:first-child{
+        margin-right: 10px;
+    }
+    .detail__header-group > button{
+        border:none;
+        margin:0 4px;
+    }
+    .detail__main{
+        margin:10px 0;
+        border:1px solid #ccc;
+        border-radius:4px;
+        padding:10px;
+    }
+    .detail__main-header{
+        display:flex;
+        justify-content:space-between;
+    }
+    .detail__main-day{
+        display:block;
+    }
+    .detail__main-header > button{
+        border:none;
+        padding: 2px 4px;
+    }
+    .detail__main-action{
+        display:flex;
+        margin:20px auto;
+        width:70%;
+    }
+    .detail__main-action-group{
+        width: 100%;
+    }
+    .detail__main-action-item{
+        padding:4px;
+        border:1px solid #ccc;
+        border-radius:4px;
+        min-width:200px;
+        margin:4px 0;
+        display:block;
+    }
+    .detail__main-action-group-item {
+        display:block;
+        position: relative;
+    }
+    .detail__main-action-icon{
+        position: absolute;
+        top: 4px;
+        right: 50%;
+        color: blue;
+    }
+    .disabled{
+        cursor: not-allowed;
+        background-color: #8c9397;
+        text-decoration: none;
+    }
+    .input-group > input {
+        width: 100%;
+    }
+    .date-input{
+        width: 100%;
+    }
+    .time-group, .date-group{
+        display:block;
+    }
+    .date-selected{
+        padding:0 !important;
+    }
+    .form-select.is-invalid:not([multiple]):not([size]){
+      background-position: right 1.75rem center, center right 2.25rem;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    }
+    .form-check-input:checked {
+        background-color: #fff;
+        border-color: #dcdcdc;
+        background-image: none;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+    <script>
+        function date_format (date) {
+            var mm = date.getMonth() + 1;
+            var dd = date.getDate();
+            return [date.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+            ].join('-');
+        }
+        $(function(){
+		    var dateFormat = "yyyy-mm-dd";
+            var options = {
+                format: dateFormat,
+                language: 'ja',
+                autoclose : true,
+                keyboardNavigation : false,
+                showMonthAfterYear: true,
+                monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+                todayHighlight : true,
+                startDate: '+' + {{grayoutAfterToDay}} + 'd',
+                beforeShowDay: function(date) {
+                        return {
+                            classes: 'empty-date',
+                            enabled: true
+                        }
+                },
+		    };
+            $('#reservation_use_day').datepicker(options)
+        });
+    </script>
+{% endblock %}
+{% block main %}
+    <h2 class="text-center">来店予約</h2>
+    <div class="detail__main">
+        <div class="main_middle">
+            <div class="top_box__body">
+                <form action="{{url('reservation_form')}}" method ="POST">
+                    {{ form_widget(form._token) }}
+                    <div id="top_box__shop-name" class="group-block">
+                        <label class="control-label">
+                            {{'common.reservation.shop_name'|trans}}
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                <input type="text" value="{{shop_name}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="top_box__date-time" class="group-block">
+                        <div class="pb-0 row">
+                            <div class="col-md-6 input-group time-group">
+                                <label class="control-label"
+                                    >{{'common.reservation.date_time'|trans}}
+                                </label>
+                                <div>
+                                    {{ form_widget(form.time_slot_id) }}
+                                    <input type="text" value="{{ time['time_start'] | date('H:i') }}" disabled>
+                                    ~
+                                    <input type="text" value="{{ time['time_end'] | date('H:i') }}" disabled>
+                                </div>
+                                <div class="pb-0 row mt-2">
+                                    <div class="col-md-6 date-selected">
+                                        <input type="text" value="{{reservation_date}}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="top_box__name" class="group-block">
+                        <label class="control-label"
+                            >{{'common.name'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-6 input-group">
+                                {{form_widget(form.customer_name_01)}}
+                                {{ form_errors(form.customer_name_01) }}
+                            </div>
+                            <div class="col-md-6 input-group">
+                                {{form_widget(form.customer_name_02)}}
+                                {{ form_errors(form.customer_name_02) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="top_box__kana" class="group-block">
+                        <label class="control-label"
+                            >{{'aki.common.kana'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-6 input-group">
+                                {{ form_widget(form.customer_kana_01) }}
+                                {{ form_errors(form.customer_kana_01) }}
+                            </div>
+                            <div class="col-md-6 input-group">
+                                {{ form_widget(form.customer_kana_02) }}
+                                {{ form_errors(form.customer_kana_02) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div id="top_box__tel" class="group-block">
+                        <label class="control-label"
+                            >{{'common.phone_number'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.tel)}}
+                            </div>
+                            {{ form_errors(form.tel) }}
+                        </div>
+                    </div>
+                    <div id="top_box__email" class="group-block">
+                        <label class="control-label"
+                            >{{'common.mail_address'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.email)}}
+                            </div>
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                    <div id="top_box__useday" class="group-block">
+                        <label class="control-label">{{'common.reservation.use_day'|trans}}<span class="required">*</span></label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.use_day)}}
+                            </div>
+                            {{ form_errors(form.use_day) }}
+                        </div>
+                    </div>
+                    <div id="top_box__people" class="group-block">
+                        <label class="control-label"
+                            >{{'common.reservation.people'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.use_people)}}
+                            </div>
+                            <div class="col-md-12 input-group">
+                                <span>{{'front.reservation.notice.customer.num1'|trans}}</span>
+                            </div>
+                            <div class="col-md-12 input-group">
+                                <span>{{'front.reservation.notice.customer.num2'|trans}}</span>
+                            </div>
+                            {{ form_errors(form.use_people) }}
+                        </div>
+                    </div>
+                    <div id="top_box__purpose" class="group-block">
+                        <label class="control-label">
+                            {{'common.reservation.purpose'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.purpose)}}
+                            </div>
+                            {{ form_errors(form.purpose) }}
+                        </div>
+                    </div>
+                    <div id="top_box__height" class="group-block">
+                        <label class="control-label">
+                            {{'common.reservation.height'|trans}}<span class="required">*</span>
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.height)}}
+                            </div>
+                            {{ form_errors(form.height) }}
+                        </div>
+                    </div>
+                    <div id="top_box__item" class="group-block">
+                        <label class="control-label">
+                            {{'aki.front.reservation.product_code'|trans}}
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                            {{form_widget(form.item,{'attr': {'value': product_code}})}}
+                            </div>
+                            {{ form_errors(form.item) }}
+                        </div>
+                    </div>
+                    <div id="top_box__budget" class="group-block">
+                        <label class="control-label">
+                            {{'common.reservation.budget'|trans}}
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.budget)}}
+                            </div>
+                            {{ form_errors(form.budget) }}
+                        </div>
+                    </div>
+                    <div id="top_box__body-type" class="group-block">
+                        <div class="pb-0 row">
+                            <div class="col-md-6 input-group">
+                                {{form_widget(form.body_type)}}
+                            </div>
+                            {{ form_errors(form.body_type) }}
+                        </div>
+                    </div>
+                    <div id="top_box__note" class="group-block">
+                        <label class="control-label">
+                            {{'common.reservation.note'|trans}}
+                        </label>
+                        <div class="pb-0 row">
+                            <div class="col-md-12 input-group">
+                                {{form_widget(form.note)}}
+                            </div>
+                            {{ form_errors(form.note) }}
+                        </div>
+                    </div>
+                    <div class="row no-padding">
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-0">
+                                <a
+                                    class="aki-btn aki-btn-default btn-block"
+                                    href="{{url('list_time', {'shop': app.session.get('shop_url'), 'date': app.session.get('reservation_date')})}}"
+                                    >{{ "reservation.entry.back" | trans }}</a>
+                            </div>
+                            <button
+                                class="aki-btn aki-btn-primary ml30"
+                                type="submit"
+                                name="mode"
+                                value="confirm"
+                            >
+                                {{ "reservation.entry.agree" | trans }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

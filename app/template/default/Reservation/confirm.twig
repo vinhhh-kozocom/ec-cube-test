@@ -1,0 +1,241 @@
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+<style>
+    .detail__header{
+        display: flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .detail__header-group{
+        display: flex;
+    }
+    .detail__header-item{
+        border:1px solid #ccc;
+        padding:4px 10px;
+    }
+    .detail__header-item-back,
+    .detail__header-item-day{
+        margin: 0 8px;
+    }
+    .detail__header-item-back{
+        color: blue;
+    }
+    .detail__header-item:first-child{
+        margin-right: 10px;
+    }
+    .detail__header-group > button{
+        border:none;
+        margin:0 4px;
+    }
+    .detail__main{
+        margin:10px 0;
+        border:1px solid #ccc;
+        border-radius:4px;
+        padding:10px;
+    }
+    .detail__main-header{
+        display:flex;
+        justify-content:space-between;
+    }
+    .detail__main-day{
+        display:block;
+    }
+    .detail__main-header > button{
+        border:none;
+        padding: 2px 4px;
+    }
+    .detail__main-action{
+        display:flex;
+        margin:20px auto;
+        width:70%;
+    }
+    .detail__main-action-group{
+        width: 100%;
+    }
+    .detail__main-action-item{
+        padding:4px;
+        border:1px solid #ccc;
+        border-radius:4px;
+        min-width:200px;
+        margin:4px 0;
+        display:block;
+    }
+    .detail__main-action-group-item {
+        display:block;
+        position: relative;
+    }
+    .detail__main-action-icon{
+        position: absolute;
+        top: 4px;
+        right: 50%;
+        color: blue;
+    }
+    .disabled{
+        cursor: not-allowed;
+        background-color: #8c9397;
+        text-decoration: none;
+    }
+    .input-group > input {
+        width: 100%;
+    }
+    .date-input{
+        width: 100%;
+    }
+    .time-group, .date-group{
+        display:block;
+    }
+    .date-selected{
+        padding:0 !important;
+    }
+    #confirm_box__footer{
+        margin-top:20px;
+    }
+    dd.form-group{
+        word-break: break-word;
+    }
+</style>
+{% endblock %}
+{% block javascript %}
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+{% endblock %}
+{% block main %}
+    <h1 class="text-center">確認画面</h1>
+    <div class="detail__main">
+        <div class="main_middle">
+            <div class="top_box__body col-md-10 offset-md-1">
+                <form action="{{url('reservation_form')}}" method ="POST">
+                    {{ form_widget(form._token) }}
+                    <div id="confirm_box__body_inner" class="dl_table">
+                        <dl id="top_box__shop">
+							<dt>{{'common.reservation.shop_name'|trans}}</dt>
+							<dd class="form-group">
+                                {{shop_name}}
+							</dd>
+						</dl>
+                        <dl id="top_box__time">
+							<dt>{{'common.reservation.date_time'|trans}}</dt>
+							<dd class="form-group">
+                                {{ time['time_start'] | date('H:i') }}
+                                ~
+                                {{ time['time_end'] | date('H:i') }}
+                                {{ form_widget(form.time_slot_id) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__date">
+							<dt></dt>
+							<dd class="form-group">
+                                {{reservation_date}}
+							</dd>
+						</dl>
+                        <dl id="confirm_box__name">
+							<dt>{{'common.name'|trans}}</dt>
+							<dd class="form-group input_name">
+                                {{ form.customer_name_01.vars.data }}
+                                {{ form.customer_name_02.vars.data }}
+                                {{ form_widget(form.customer_name_01, { type : 'hidden' }) }}
+                                {{ form_widget(form.customer_name_02, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__kana">
+							<dt>{{'aki.common.kana'|trans}}</dt>
+							<dd class="form-group input_kana">
+                                {{ form.customer_kana_01.vars.data }}
+                                {{ form.customer_kana_02.vars.data }}
+                                {{ form_widget(form.customer_kana_01, { type : 'hidden' }) }}
+                                {{ form_widget(form.customer_kana_02, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__phone_number">
+							<dt>{{'common.phone_number'|trans}}</dt>
+							<dd class="form-group input_tel">
+                                {{ form.tel.vars.data }}
+                                {{ form_widget(form.tel, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__email">
+							<dt>{{'common.mail_address'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.email.vars.data }}
+                                {{ form_widget(form.email, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__useday">
+							<dt>{{'common.reservation.use_day'|trans}}</dt>
+							<dd class="form-group">
+                                {% if form.use_day.vars.data is not null %}
+                                    {{ form.use_day.vars.data | date('Y-m-d') }}
+                                    {{ form_widget(form.use_day, { type : 'hidden' }) }}
+                                {% endif %}
+							</dd>
+						</dl>
+                        <dl id="top_box__people">
+							<dt>{{'common.reservation.people'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.use_people.vars.data }}
+                                {{ form_widget(form.use_people, { 'attr': {'class': 'd-none'} }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__purpose">
+							<dt>{{'common.reservation.purpose'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.purpose.vars.data }}
+                                {{ form_widget(form.purpose, { 'attr' : {'class': 'd-none'} }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__height">
+							<dt>{{'common.reservation.height'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.height.vars.data }}
+                                {{ form_widget(form.height, { 'attr' : {'class': 'd-none'} }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__item">
+							<dt>{{'aki.front.reservation.product_code'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.item.vars.data }}
+                                {{ form_widget(form.item, { type : 'hidden' }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__budget">
+							<dt>{{'common.reservation.budget'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.budget.vars.data }}
+                                {{ form_widget(form.budget, { 'attr': {'class': 'd-none'} }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__body-type">
+							<dt>{{'common.reservation.body_type'|trans}}</dt>
+							<dd class="form-group">
+                            {% for body_type in form.body_type.vars.data %}
+								{{body_type}}<br/>
+							{% endfor %}
+                                {{ form_widget(form.body_type, { 'attr': {'class': 'd-none'} }) }}
+							</dd>
+						</dl>
+                        <dl id="top_box__note">
+							<dt>{{'common.reservation.note'|trans}}</dt>
+							<dd class="form-group">
+                                {{ form.note.vars.data }}
+                                {{ form_widget(form.note, { 'attr': {'hidden': 'true'} }) }}
+							</dd>
+						</dl>
+                    </div>
+                    <div id="confirm_box__footer" class="row no-padding">
+						<div id="confirm_box__button_menu" class="btn_group mx-auto col-sm-offset-3 col-sm-6">
+							<p id="confirm_box__insert_button">
+								<button type="submit" class="aki-btn aki-btn-primary btn-block mb20" name="mode" value="complete">{{'reservation.entry.register' | trans}}</button>
+							</p>
+							<p id="confirm_box__back_button">
+								<button type="submit" class="aki-btn aki-btn-default btn-block" name="mode" value="back">{{'reservation.entry.back' | trans}}</button>
+							</p>
+						</div>
+					</div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

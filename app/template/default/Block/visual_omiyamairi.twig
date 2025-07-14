@@ -1,0 +1,364 @@
+<style type="text/css">
+.omiyamairi-title-area h2 {
+ position: relative;
+  margin: 30px;
+  text-align: center;
+}
+
+
+.omiyamairi-title-area h2:before,
+.omiyamairi-title-area h2:after {
+  position: absolute;
+  z-index: 0;
+  bottom: -10px;
+  display: block;
+  content: '';
+  border: 1em solid #1F8048;
+}
+
+.omiyamairi-title-area h2:before {
+  left: -30px;
+  border-left-width: 15px;
+  border-left-color: transparent;
+}
+
+.omiyamairi-title-area h2:after {
+  right: -30px;
+  border-right-width: 15px;
+  border-right-color: transparent;
+}
+
+.omiyamairi-title-area h2 span {
+/* font-family: 'Hiragino Kaku Gothic ProN', "ヒラギノ角ゴ ProN W3", Meiryo, メイリオ, YuGothic, "游ゴシック sans-serif"; */
+  font-size:100%;
+  
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 2rem 2rem;
+  color: #fff;
+  background: #1F8048;
+font-weight: bold;
+}
+
+.omiyamairi-title-area h2 span:before,
+.omiyamairi-title-area h2 span:after {
+  position: absolute;
+  bottom: -10px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  content: '';
+  border-style: solid;
+  border-color: #16713D transparent transparent transparent;
+}
+
+.omiyamairi-title-area h2 span:before {
+  left: 0;
+  border-width: 10px 0 0 10px;
+}
+
+.omiyamairi-title-area h2 span:after {
+  right: 0;
+  border-width: 10px 10px 0 0;
+}
+.h3-title{
+    background-color: #1f8048;
+    color: white;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+.border-orange{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #E86829;
+    padding: 20px;
+    background-color: white;
+}
+.border-orange-step{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 160px;
+    width: 100%;
+    gap: 14px;
+}
+@media only screen and (max-width: 768px){
+	.omiyamairi-title-area h2 span {
+        font-size:90%;
+	}
+    .omiyamairi-title-area h2:before {
+        left: -27px;
+    }
+    .omiyamairi-title-area h2:after {
+        right: -27px;
+    }
+    .border-orange{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .border-orange-step{
+        align-items: start;
+    }
+}
+</style>
+
+<div class="aki-container sp-nav753 text-center d-block d-md-none">
+<div class="aki-row mb10">
+    <div class="col-6 mb15">
+        <p class="mb00"><a class="btn-primary-nonbg" href="/user_data/753#merit">選ばれる理由</a></p>
+    </div>
+    <div class="col-6 mb15">
+        <p class="mb00"><a class="btn-primary-nonbg" href="/user_data/753#plan">お得な七五三プラン</a></p>
+    </div>
+    <div class="col-6 mb15">
+        <p class="mb00"><a class="btn-primary-nonbg" href="/user_data/753#osusume">おすすめの七五三商品</a></p>
+    </div>
+    <div class="col-6 mb15">
+        <p class="mb00"><a class="btn-primary-nonbg" href="/user_data/753#flow">ご利用の流れ</a></p>
+    </div>
+</div>
+</div>
+
+<div class="mt30 mb30">
+    <div class="aki-container">
+        <div class="aki-aki-row">
+            <div class="col-12">
+                <div class="main_visual">
+                    <div class="item active d-none d-md-block">
+                        <a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/735_banner.webp" alt="七五三レンタル" class="img-responsive d-none d-md-block"></a>
+                    </div>
+                    <div class="item active d-block d-md-none">
+                        <a href="/user_data/753"><img loading="lazy" src="{{ image_address }}/735/top_banner_sp.webp" alt="七五三レンタル" class="img-responsive d-block d-md-none"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="aki-container d-none d-md-block mb30">
+    <div class="text-center aki-alert-primary pa30">
+        <h2 class="mb30"><span>七五三 レンタル</span><br>選ばれる理由</h2>
+        <div class="aki-row">
+            <div class="col-md-3">
+                <img loading="lazy" src="{{ image_address }}/735/merit01.webp" alt="親子で七五三レンタル 着付け無料" class="img-responsive">
+                <h5 class="mt10 mb00">
+                    親子揃ってレンタルできて、<b class="aki-text-red">着付けも無料♪</b><br><br>
+                </h5>
+            </div>
+            <div class="col-md-3 ">
+                <img loading="lazy" src="{{ asset('assets/img/aki/side/good_point03.webp') }}" alt="着物レンタル ご来店のお客様着付けを無料でご提供" class="img-responsive">
+                <h5 class="mt10 mb00">
+                    コーディネート・着物の<b class="aki-text-red">サイズ合わせ無料！(肩上げ・腰上げ)</b>
+                </h5>
+            </div>
+            <div class="col-md-3 ">
+                <img loading="lazy" src="{{ asset('assets/img/aki/side/good_point04.webp') }}" alt="着物レンタル ヘアメイク・写真撮影も承ります" class="img-responsive">
+                <h5 class="mt10 mb00">
+                    ヘアメイク、スタジオでの<b class="aki-text-red">記念撮影</b>も承ります<br><br>
+                </h5>
+            </div>
+            <div class="col-md-3 ">
+                <img loading="lazy" src="{{ asset('assets/img/aki/side/good_point01.webp') }}" alt="着物レンタル 首都圏４箇所に直営店を展開" class="img-responsive">
+                <h5 class="mt10 mb00">
+                    首都圏4か所に店舗があるので、周辺の<b class="aki-text-red">神社へアクセス</b>良好。<a href="/user_data/753#sec05" class="underline">詳しくはこちら</a>
+                </h5>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div>
+
+    <section class="sec-sbsc" id="omoyamairi-tokushu">
+	<div class="aki-container">
+        <div class="sbscwrap">
+            <div class="omiyamairi-title-area">
+                <h2><span class="sbscttl">お宮参り特集ページ開設記念!!<br></span></h2>
+            </div>
+        </div>
+        <div class="aki-row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 col-12 mb40 mainarea aki-alert-primary pa30">
+                <div>
+                    <div class="mb20">
+                        <img loading="lazy" src="{{ image_address }}/hakama/tag_ins.svg" alt="卒業袴レンタル 2020" class="img-responsive">
+                    </div>
+                    <h3 class="h3-title">対象者</h3>
+                    <p class="mb30">2022年10月〇日～2023年3月〇日の期間に着物レンタル{% if not isSalon %}あき{% endif %}で産着をレンタルする方。</p>
+                </div>
+                <div>
+                    <h3 class="h3-title">プレゼント内容</h3>
+                    <ul>
+                        <li class="mb20">
+                            <h5 class="aki-text-orange mb20">①安心パック(※)またはお母さまの髪飾りが無料</h5>
+                            <p class="mb20">（※）予測不能な事態により生じた２万円までの修繕費(汚れや破損)に対する着物の保証です。産着のレンタルに併せてご利用ください。</p>
+                        </li>
+                        <h5 class="aki-text-orange mb20">②《抽選で5名様に!!》1歳記念撮影かシークレット特典をプレゼント</h5>
+                        <li class="mb20 aki-font-semibold">
+                            <div>・1歳記念撮影</div>
+                            <p>1歳のお誕生日撮影(6,600円)と1歳用の祝着レンタル代が無料！
+                            ＆名刺サイズのラミネート写真もプレゼント</p>
+                            <p class="mb20">1歳のお写真を記念に載せよう！載せたい方にはなんとデータも1枚プレゼント！</p>
+                            <div>・シークレット特典</div>
+                            <p>何が当たるかは店舗スタッフまで</p>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                <div>
+                    <h3 class="h3-title">応募条件</h3>
+                    <ul>
+                        <li class="mb30">
+                            <span class="aki-text-orange aki-font-semibold">@kimono_rental_aki</span> のフォロワー様<br>
+                            ご新規様もOK、当選発表後もすぐにフォローを外さない方<br>
+                            ①～②の特典併用可
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="h3-title">応募方法</h3>
+                    <ul class="flow">
+                        <li>
+                            <dl class="border-orange mb20">
+                                <dt class="border-orange-step"><span class="icon aki-btn-orange aki-btn">STEP.01</span>Instagramでシェア</dt>
+                                <dd>お下見時またはご利用日の24時間以内に飛行機マークよりInstagram弊社アカウント指定のpostをストーリーにシェア</dd>
+                            </dl>
+                        </li>
+
+                        <li>
+                            <dl class="border-orange mb20">
+                            <dt class="border-orange-step"><span class="icon aki-btn-orange aki-btn">STEP.02</span>来店時に提示</dt>
+                            <dd>投稿ストーリーとフォロワーであることを来店時にスタッフに提示</dd>
+                            </dl>
+                        </li>
+
+                        <li>
+                            <dl class="border-orange mb20">
+                            <dt class="border-orange-step"><span class="icon aki-btn-orange aki-btn">STEP.03</span>Instagramで投稿</dt>
+                            <dd>{% if not isSalon %}あきの{% endif %}産着（＆お母さまの訪問着）をご着用いただいているお写真を
+                            「#着物レンタル{% if not isSalon %}あき{% endif %}」「#{% if not isSalon %}あきの{% endif %}お宮キャンペーン」の２つを付けて投稿する<br>
+                            　投稿期間：2022年10月〇日～2023年3月〇日<br>
+                            ・親子でレンタルいただいたお客様は当選確率が3倍になります
+                            </dd>
+                            </dl>
+                        </li>
+
+                        <li>
+                            <dl class="border-orange">
+                            <dt class="border-orange-step"><span class="icon aki-btn-orange aki-btn">STEP.04</span>当選発表</dt>
+                            <dd>当選者はキャンペーン終了後1週間以内に
+                            ＤＭで個別にご連絡させていただきます</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+	</div>
+</section>
+
+</div>
+<script>
+$(function () {
+$(".syousai").on("click", function() {
+    if ($(this).parent().prev('.hide-text').is(':hidden')) {
+        $(this).parent().prev('.hide-text').slideDown();
+        $(this).text('閉じる').addClass('close-btn');
+    } else {
+        $(this).parent().prev('.hide-text').slideUp();
+        $(this).text('詳細を見る').removeClass('close-btn');
+    }
+});
+});
+
+</script>
+<div class="container d-block d-md-none">
+<div class="aki-row mb20" id="faq01">
+    <section id="merit">
+        <div class="col-12 aki-alert-primary">
+            <h2 class="mt00 text-center"><small>七五三 レンタル</small><br><b>選ばれる理由</b></h2>
+            <div class="panel-group">
+                <div class="panel panel-default mb20">
+                    <div class="panel-body">
+                        <h3 class="panel-title">
+                            <span>親子揃ってレンタルできて、<b class="aki-text-orange">着付けも無料♪</b></span>
+                        </h3>
+                        <div class="hide-text">
+                            <h4>親子で無料着付け</h4>
+                            <p>ご来店されたお客様には当店のベテランスタッフによる美しく、着崩れしずらい着付けもレンタルに含まれます。</p>
+                            <p>着替えなどの<strong>荷物もお預かり</strong>いたします</p>
+                            <h4>出張着付け</h4>
+                            <p>
+                                {% if isSalon %}
+                                    毎日忙しいお母さんのために！出張着付けを承っております。（訪問着 5,400円）
+                                    ※お子様のみの出張着付けはご相談ください
+                                {% else %}
+                                    毎日忙しいお母さんのために！出張着付けを承っております。（訪問着 5,000円税別）
+                                    ※お子様のみの出張着付けはご相談ください
+                                {% endif %}
+                            <p>
+                            <div class="aki-row">
+                                <div class="col-6">
+                                    <img loading="lazy" src="/template/aki/img/753/index/feature_753_002_002.svg" alt="七五三レンタル特典着付け無料" class="img-responsive">
+                                </div>
+                                <div class="col-6">
+                                    <img loading="lazy" src="/template/aki/img/753/index/feature_753_002_003.svg" alt="七五三レンタル特典荷物お預かり" class="img-responsive">
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mt20"><span class="aki-btn aki-btn-primary">詳細を見る</span></p>
+                    </div>
+                </div>
+                <div class="panel panel-default mb20">
+                    <div class="panel-body">
+                        <h3 class="panel-title">
+                            コーディネート・着物のサイズ合わせ無料！<b class="aki-text-orange">(肩上げ・腰上げ)</b>
+                        </h3>
+                        <div class="hide-text">
+                            <p class="mt20">事前に下見いただければ、お子様の体型に合わせて肩上げや腰上げを無料で行います。ベストサイズで凛々しく美しく！</p>
+                        </div>
+                        <p class="text-center mt20"><span class="aki-btn aki-btn-primary">詳細を見る</span></p>
+                    </div>
+                </div>
+                <div class="panel panel-default mb20">
+                    <div class="panel-body">
+                        <h3 class="panel-title">
+                            ヘアメイク、スタジオでの<b class="aki-text-orange">記念撮影</b>も承ります。
+                        </h3>
+                        <div class="hide-text">
+                            <p>スタジオでの記念撮影やヘアメイクも随時承ります。詳細は下記をご参照ください。</p>
+                            <div class="aki-row">
+                                <div class="col-6">
+                                    <a href="/user_data/service#s01"><img loading="lazy" src="/template/aki/img/753/index/feature_753_002_001.svg" alt="七五三レンタル特典ヘアセット対応" class="img-responsive"></a>
+                                </div>
+                                <div class="col-6">
+                                    <a href=""><img loading="lazy" src="/template/aki/img/753/index/feature_753_002_004.svg" alt="七五三レンタル特典スタジオ写真" class="img-responsive"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center mt20"><span class="aki-btn aki-btn-primary">詳細を見る</span></p>
+                    </div>
+                </div>
+                <div class="panel panel-default mb20">
+                    <div class="panel-body">
+                        <h3 class="panel-title">
+                            首都圏4か所に店舗があるので、周辺の<b class="aki-text-orange">神社へアクセス</b>良好
+                        </h3>
+                        <div class="hide-text">
+                            <p class="mt20">周辺には七五三で人気の神社が多数ございます。<br><a href="/user_data/753#rentalflow_step_04">詳しくはこちら</a></p>
+                        </div>
+                        <p class="text-center mt20"><span class="aki-btn aki-btn-primary">詳細を見る</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</div>

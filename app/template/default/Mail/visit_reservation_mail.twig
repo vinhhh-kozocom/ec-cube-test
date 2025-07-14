@@ -1,0 +1,59 @@
+〇〇{{ data.last_name }} {{ data.first_name }}様
+この度は着物レンタルあきの下見にお申込みいただき、誠にありがとうございます。
+※お申込み頂いた時点では確定ではございません。後日、担当者からご連絡を差し上げて確定いたします。
+
+{% if data.store %}
+■お下見ご希望店舗：{{ data.store }}
+{% endif %}
+{% if data.first_visit_date and data.first_visit_time %}
+■お下見の日付（第一希望）：{{ data.first_visit_date|date('Y/m/d') }} {{ data.first_visit_time|date('H:i') }}
+{% endif %}
+{% if data.second_visit_date and data.second_visit_time %}
+■お下見の日付（第二希望）：{{ data.second_visit_date|date('Y/m/d') }} {{ data.second_visit_time|date('H:i') }}
+{% endif %}
+{% if data.product_code %}
+■お下見ご希望の商品番号（複数商品可：３つまで）：{{ data.product_code }}
+{% endif %}
+{% if data.last_name and data.first_name %}
+■お名前：{{ data.last_name }} {{ data.first_name }}
+{% endif %}
+{% if data.last_name_kana and data.first_name_kana %}
+■お名前（フリガナ）：{{ data.last_name_kana }} {{ data.first_name_kana }}
+{% endif %}
+{% if data.phone %}
+■電話番号：{{ data.phone }}
+{% endif %}
+{% if data.email %}
+■メールアドレス：{{ data.email }}
+{% endif %}
+{% if data.usage_date %}
+■ご利用予定日：{{ data.usage_date|date('Y/m/d') }}
+{% endif %}
+{% if data.try_on_people %}
+■ご試着される方の人数：{{ data.try_on_people }}
+{% endif %}
+{% if data.purpose %}
+■用途：{{ data.purpose }}
+{% endif %}
+{% if data.kimono_type %}
+■着物の種類：{{ data.kimono_type }}
+{% endif %}
+{% if data.height %}
+■身長：{{ data.height }}
+{% endif %}
+{% if data.note_info_1 %}
+■備考欄：{{ data.note_info_1 }}
+{% endif %}
+当店より改めてご連絡を差し上げますので、今しばらくお待ちください。
+何かご不明な点がございましたら、お気軽にお問い合わせください。
+今後とも着物レンタルあきをどうぞよろしくお願いいたします。
+★☆★☆★☆★☆★☆★☆★☆★☆★☆
+着物レンタルあき
+TEL：03-3476-3341～2（渋谷店）
+TEL：03-5568-0529（銀座店）
+TEL：03-6416-0529（池袋店）
+TEL：045-441-0529（横浜店）
+TEL：0557-52-4351（熱海店）
+http://kr-aki.co.jp/
+e-mail:contact1@kr-aki.jp
+★☆★☆★☆★☆★☆★☆★☆★☆★☆

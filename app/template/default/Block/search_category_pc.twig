@@ -1,0 +1,251 @@
+{% block stylesheet %}
+    <style>
+        @media only screen and (max-width: 768px){
+            .aki-btn{
+                font-size:13px;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+{% endblock %}
+{% if isSalon %}
+<div class="aki-tabs-block salon-category">
+{% else %}
+<div class="aki-tabs-block">
+    <p class="p-bg-gray"></p>
+{% endif %}
+    <div class="aki-row justify-content-center">
+        <ul class="nav aki-navs">
+            <li><a class="active aki-btn" href="#all-party" data-bs-toggle="tab">ご利用シーン・立場から選ぶ</a></li>
+            <li><a class="aki-btn " href="#female-single-party" data-bs-toggle="tab">着物の種類から選ぶ</a></li>
+        </ul>
+    </div>
+
+    <div class="tab-content aki-usage">
+        <div class="aki-row mb20 choose tab-pane active" id="all-party">
+            <section class="aki-tabs-title">
+                <div class="aki-row">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <h2 class="aki-title-zen mb20">ご利用のシーンから選ぶ</h2>
+                            <p class="mb15">ご利用のシーンをお選びください。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="search_scene search_block aki-tabs-content">
+                <div class="aki-row">
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/adult" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_成人式sp'});">
+                            <div class="top_recommend_title aki-title_usage-scene aki-border" style="background-image: url(/html/template/default/assets/img/aki/choose/new1.webp)">
+                                <span class="title_usage-scene">成人式</span>
+                            </div>
+                            </a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/graduation_entrance" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_卒業式・入学式sp'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene"  style="background-image: url(/html/template/default/assets/img/aki/choose/new2.webp)">
+                                <span class="title_usage-scene">卒業式・入学式</span>
+                            </div></a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/wedding" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_結婚式sp'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new3.webp)">
+                            <span class="title_usage-scene">結婚式</span>    
+                        </div></a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/party" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_パーティー・お茶会sp'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new4.webp)">
+                            <span class="title_usage-scene">パーティー<br>お茶会</span>
+                            </div></a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/theater_dinner" onclick="gtag('event', 'クリック', {'event_category': 'ご利用シーンから選ぶ','event_label': 'ご利用シーンから選ぶ_観劇・お食事会sp'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new5.webp)">
+                            <span class="title_usage-scene">観劇・お食事会</span>
+                            </div></a>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/shrine_visit" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_七五三着物・十三詣り画像pc'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene" style="background-image: url(/html/template/default/assets/img/aki/choose/new6.webp)">
+                            <span class="title_usage-scene">七五三<br>お宮参り<br>十三参り</span>
+                            </div></a>
+                    </div>
+                    {% if not isSalon %}
+                    <div class="col-md-6 col-12">
+                        <a href="/user_data/choose/fireworks_festival" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_浴衣画像pc'});">
+                            <div class="top_recommend_title aki-border aki-title_usage-scene mb00" style="background-image: url(/html/template/default/assets/img/aki/choose/new7.webp)">
+                            <span class="title_usage-scene">花火・お祭り</span>
+                            </div></a>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+
+        <div class="mb20 choose tab-pane" id="female-single-party">
+            <section class="aki-tabs-title">
+                <div class="aki-row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <h2 class="aki-title-zen">着物の種類から選ぶ</h2>
+                            <p>着物の種類がお決まりのお客様は、以下の種類をお選びください。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="search_block search_scene aki-tabs-content">
+                <div class="aki-row">
+                    <div class="col-6">
+                        <a href="/products/list?category_id=53" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_振袖画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/choose/ch01.webp)">
+                            <div class="top_recommend_title_inner">
+                                <h3 class="aki-title-zen">振袖</h3>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a href="/products/list?category_id=50" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_訪問着画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/choose/ch02.webp)">
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">訪問着</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/user_data/choose/shrine_visit" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_七五三着物・十三詣り画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_1.webp)">
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">七五三着物・十三詣り</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=40" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_七五三着物・十三詣り画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_2.webp)">
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">卒業袴</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=52" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_黒留袖画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_3.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">黒留袖</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=51" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_色留袖画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_4.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">色留袖</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/user_data/mens" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_男物pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_5.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">男物</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=34" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_婚礼衣装画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_6.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">婚礼衣装</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=49" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_色無地画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_7.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">色無地</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=47" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_紬（つむぎ）画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_8.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">つむぎ</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=48" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_小紋'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_9.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">小紋</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=38" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_産着画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_10.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">産着</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/user_data/hitoenatu" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_ひとえ・夏着物画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_11.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">ひとえ・夏着物</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% if not isSalon %}
+                        <div class="col-6">
+                            <a  href="/user_data/choose/fireworks_festival" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_浴衣画像pc'});">
+                                <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_12.webp)"> 
+                                    <div class="top_recommend_title_inner">
+                                        <h3 class="aki-title-zen">浴衣</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="col-6">
+                    <a  href="/products/list?category_id=157" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_喪服画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_13.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">喪服</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                    <a  href="/user_data/big" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_大きいサイズ画像pc'});">
+                        <div class="top_recommend_title aki-border" style="background-image: url(/html/template/default/assets/img/aki/new-choose/category_14.webp)"> 
+                                <div class="top_recommend_title_inner">
+                                    <h3 class="aki-title-zen">大きいサイズ</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>

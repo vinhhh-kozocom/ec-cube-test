@@ -1,0 +1,58 @@
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'delivery' %}
+
+{% set body_class = 'aki-mypage' %}
+
+{% block stylesheet %}
+	<style>
+		.mypage-action{
+            display: flex;
+            gap: 20px;
+            }
+        @media (max-width:768px){
+        .mypage-action{
+            align-items: flex-end;
+            flex-direction: column;
+        }
+        }
+	</style>
+{% endblock %}
+{% block main %}
+    <div class="delivery-content mb30">
+            <div class="aki-mypage_title text-center mb30">
+                <h2 class="aki-title-zen">{{ 'front.mypage.title'|trans }}/{{ 'aki.front.mypage.title__history'|trans }}</h2>
+                <p>ようこそ ／ {{ app.user.name01 }} {{ app.user.name02 }} 様</p>
+            </div>
+        {{ include('Mypage/navi.twig') }}
+        {% if Customer.CustomerAddresses|length > 0 %}
+            <p class="delivery-content_normal">{{ 'front.mypage.customer_address_count'|trans({'%count%':Customer.CustomerAddresses|length})|raw }}。</p>
+        {% else %}
+            <p class="delivery-content_normal">{{ 'front.mypage.customer_address_not_found'|trans }}</p>
+        {% endif %}
+        <div class="delivery-content___actions">
+            {% if Customer.CustomerAddresses|length < eccube_config.eccube_deliv_addr_max %}
+                <a class="mt20 aki-btn btn-no-background" href="{{ url('mypage_delivery_new') }}">{{ 'front.mypage.add_customer_address'|trans }}</a>
+            {% else %}
+                <span class="ec-errorMessage">{{ 'common.customer_address_count_is_over'|trans({ '%count%': eccube_config.eccube_deliv_addr_max }) }}</span>
+            {% endif %}
+        </div>
+        {% if Customer.CustomerAddresses|length > 0 %}
+            <div class="delivery-content__list">
+                {% for CustomerAddress in Customer.CustomerAddresses %}
+                    <div class="delivery-content__item aki-border">
+                        <div class="delivery-content__address">
+                            <div class="mb15"><b class="gray-sub-text">{{ CustomerAddress.name01 }}&nbsp;{{ CustomerAddress.name02 }}</b></div>
+                            <div>{{ 'common.postal_symbol'|trans }}{{ CustomerAddress.postal_code }} {{ CustomerAddress.Pref }}{{ CustomerAddress.addr01 }}{{ CustomerAddress.addr02 }}</div>
+                            <div>{{ CustomerAddress.phone_number }}</div>
+                        </div>
+                        <div class="mypage-action">
+                            <a class="delivery-content__action" href="{{ url('mypage_delivery_edit', { id : CustomerAddress.id }) }}"> <img loading="lazy" src="{{ asset('assets/icon/edit.svg') }}" alt="icon-edit"> {{ 'common.change'|trans }}</a>
+                            <a class="delivery-content__action" href="{{ url('mypage_delivery_delete', { id : CustomerAddress.id }) }}" {{ csrf_token_for_anchor() }} data-method="delete"> <i class="aki-icon-delete"></i> {{ 'aki-mypage-delete'|trans }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

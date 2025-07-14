@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTDHTML4.01Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+		{% set isJapan = app.request.locale == 'ja' %}
+        <br>
+		<br>
+		<div align="center">
+			<a href="{{ url('homepage') }}" style="font-family:Helvetica, Arial, sans-serif;font-size:30px;color:#333333;text-decoration:none;">{% if isJapan %} {{ BaseInfo.shop_name }} {% else %} Kimono Rental Aki {% endif %}</a>
+		</div>
+		<!-- 100% background wrapper (grey background) -->
+		<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+			<tr>
+				<td align="center" valign="top" bgcolor="#F0F0F0" style="background-color:#F0F0F0;border-collapse:collapse;">
+					<br>
+					<!-- 600px container (white background) -->
+					<table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content" align="left" style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								<br>
+								<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
+									{% set isSalon = SALON_URL == app.request.server.get('SERVER_NAME') %}
+									{% if Order.orderType == "visit" %}
+										{{ Order.name01 }}
+										{{ Order.name02 }}
+                                        {% if isJapan %}
+										様
+                                        {% endif %}
+                                        <br/>
+										<br/>
+										{{'aki.mail.plese.check.text1'|trans}}<br/>
+										<br/>
+                                        {{'aki.mail.plese.check.text2'|trans}}
+										<br/>
+										{{'aki.mail.plese.check.text3'|trans}}
+										<br/>
+										<br/>
+										{% if not isSalon %}
+											{{'aki.mail.plese.check.text4'|trans}}
+										{% endif %}
+										<br/><br/>
+										************************************************
+										<br/>
+										{{'aki.mail.payment.info'|trans}}
+										<br/>
+										************************************************
+										<br/>
+										{{'aki.mail.order.number'|trans}}：{{ Order.id }}<br/>
+										{% if isSalon %}
+											ご予約方法：{% if Order.orderType == 'fitting' %}試着サービス{% else %}着物レンタル {% endif %}  <br/>
+										{% else %}
+											{{'aki.front.cart.title.how'|trans}}：{{'aki.front.cart.title.visit'|trans}}<br/>
+											{{'aki.mail.order.payment.method'|trans}}：{{ Order.payment_method }}
+                                            {% if Order.Payment.id|default('') == CREDIT_CARD_ID %}
+                                                {% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %}
+                                                    ({{'aki.front.shopping.payment.method.installment'|trans}})
+                                                    <div>{{'aki.front.shopping.payment.method.paytime.select'|trans}} : {{Order.creditcard_paytime}}</div>
+                                                {% else %}
+                                                    ({{'aki.front.shopping.payment.method.bulk'|trans}})
+                                                {% endif %}
+                                            {% endif %} <br/>
+										{% endif %}
+										{{'aki.mail.order.message'|trans}}：{{ Order.message }}<br/>
+										{% set index = 0 %}
+										{% set actual_total_price = 0 %}
+										{% set secure_pack_price = 0 %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code == 'secure_pack' %}
+												{% set secure_pack_price = OrderDetail.productClass.price02 + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+											{% endif %}
+										{% endfor %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code != 'secure_pack' %}
+												{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02 %}
+												{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+												{% set addinfo = Order.orderDetailInfo[index] %}
+												{% if addinfo.secure_pack|length  > 0 %}
+													{% set actual_total_price = actual_total_price + secure_pack_price %}
+												{% endif %}
+												{% set index = index + 1 %}
+											{% endif %}
+										{% endfor %}
+										-------------------------------------------<br/>
+										{{'aki.mail.order.total'|trans}}:
+										{{ Order.payment_total|price }}<br/>
+										{{'aki.mail.order.price.info'|trans}}<br/>
+										{{'aki.mail.order.notify.info'|trans}}<br/>
+										{% if BaseInfo.isOptionPoint %}
+											============================================<br/>
+											ご使用ポイント
+											{{ Order.usePoint }}
+											pt
+											<br/>
+											現在の所持ポイント
+											{{ Customer.Point }}
+											pt
+											<br/>
+											============================================
+										{% endif %}
+										<br/>
+
+										{% set index = 0 %}
+										{% set actual_total_price = 0 %}
+										{% set secure_pack_price = 0 %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code == 'secure_pack' %}
+												{% set secure_pack_price = OrderDetail.productClass.price02 + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+											{% endif %}
+										{% endfor %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code != 'secure_pack' %}
+												{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02 %}
+												{% set actual_total_price = actual_total_price + OrderDetail.productClass.price02*OrderDetail.tax_rate/100 %}
+												{% set addinfo = Order.orderDetailInfo[index] %}
+
+												************************************************<br/>
+												{{'aki.mail.order.usege'|trans}}<br/>
+												************************************************<br/>
+                                                <br/>
+												{{'common.reservation.product_code'|trans}}：{{ OrderDetail.product_code }}<br/>
+												{{'aki.mail.order.product.name'|trans}}:
+												{{ OrderDetail.product_name }}
+												{{ OrderDetail.classcategory_name1 }}
+												{{ OrderDetail.classcategory_name2 }}
+												<br/>
+												{% if OrderDetail.price_inctax != 0 %}
+													{{'aki.mail.order.product.price.tax'|trans}}：{{ OrderDetail.price_inctax|price }}
+												{% else %}
+													{{'aki.mail.order.product.price.tax'|trans}}：
+													{{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+												{% endif %}
+												<br/>
+												{% if addinfo.secure_pack|length  > 0 %}
+													{% set actual_total_price = actual_total_price + secure_pack_price %}
+													{% if not isSalon %}
+														{{'aki.mail.order.product.secure'|trans}}：
+														{% if addinfo.secure_pack is iterable %}
+															{% for secure_pack in addinfo.secure_pack %}
+																{{secure_pack}}
+															{% endfor %}
+														{% else %}
+															{{addinfo.secure_pack}}
+														{% endif %}
+													{% endif %}
+												{% else %}
+													{% if not isSalon %}
+														{{'aki.mail.order.product.secure'|trans}}：{{'aki.mail.order.product.secure.no'|trans}}
+													{% endif %}
+												{% endif %}
+												<br/>
+												{{'aki.front.detail.form.list.store'|trans}}：{{ addinfo.visit_store }}
+												<br/>
+												<br/>
+												{{'aki.front.detail.product.info.present.id'|trans}}
+												<br/>
+												<br/>
+                                                {{'aki.front.cart.title.useday'|trans}}：{{ addinfo.wear_date|date('Y-m-d') }}<br/>
+												{{'aki.front.cart.title.schedule'|trans}}：{{ addinfo.time_departure }}<br/>
+
+												{{'common.reservation.purpose'|trans}}：{{ addinfo.purpose }}<br/>
+												{{'common.reservation.height'|trans}}：{{ addinfo.body_height }}<br/>
+												{{'aki.front.cart.title.foot'|trans}}：{{ addinfo.foot_size }}<br/>
+												{{'aki.front.cart.title.era'|trans}}：{{ addinfo.decade }}<br/>
+												{% if addinfo.body_type|length  > 0 %}
+													{{'common.reservation.body_type'|trans}}：
+													{% for body_type in addinfo.getBodyTypeJsonDecode() %}
+														{{body_type}}
+													{% endfor %}
+												{% endif %}
+												<br/>
+												{{'aki.front.cart.title.photo'|trans}}：{{ addinfo.need_photo }}<br/>
+												{{'aki.front.cart.title.hair'|trans}}：{{ addinfo.need_hair_make }}<br/>
+
+												{% set index = index + 1 %}
+											{% endif %}
+										{% endfor %}
+                                        <br/>
+										************************************************<br/>
+										{{'aki.mail.order.info'|trans}}<br/>
+										************************************************<br/><br/>
+										{{'aki.mail.order.name'|trans}}　：{{ Order.name01 }}{{ Order.name02 }}
+                                        {% if isJapan %}
+										様
+                                        {% endif %}
+                                        <br/>
+                                        {% if isJapan %}
+                                        フリガナ：{{ Order.kana01 }}{{ Order.kana02 }}<br/>
+                                        {% endif %}
+										{% if Order.company_name %}
+											{{'aki.mail.order.company.name'|trans}}　：{{ Order.company_name }}
+										{% endif %}
+										<br/>
+                                        {% if isJapan %}
+										郵便番号：〒{{ Order.postal_code }}<br/>
+										住所　　：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}<br/>
+                                        {% endif %}
+										{{'aki.mail.order.phone.number'|trans}}：{{ Order.phone_number }}<br/>
+                                        {% if isJapan %}
+                                        FAX番号：{{ Order.fax }}<br/>
+                                        {% endif %}
+
+										{{'aki.mail.order.mail.address'|trans}}：{{ Order.email }}<br/>
+
+										************************************************<br/><br/>
+
+										{{'aki.mail.order.mail.notify.only1'|trans}}<br/>
+										{{'aki.mail.order.mail.notify.only2'|trans}}<br/>
+										{{'aki.mail.order.mail.notify.only3'|trans}}<br/><br/>
+										{{'aki.mail.order.mail.notify.only4'|trans}}<br/>
+                                        <br/>
+
+										★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+										{{'aki.mail.shop.name'|trans}}<br/>
+										TEL：03-3476-3341～2 （{{'aki.mail.shop.name.shibuya'|trans}}）<br/>
+										TEL：03-5568-0529（{{'aki.mail.shop.name.ginza'|trans}}）<br/>
+										TEL：03-6416-0529（{{'aki.mail.shop.name.inkebukuro'|trans}}）<br/>
+										TEL：045-441-0529 （{{'aki.mail.shop.name.yokohama'|trans}}）<br/>
+                                        {% if not isSalon %}
+										TEL：0557-52-4351 （{{'aki.mail.shop.name.atami'|trans}}）<br/>
+                                        {% endif %}
+										http://kr-aki.co.jp/<br/>
+										e-mail:contact@kr-aki.jp<br/>
+										★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+									{% else %}
+										{{ Order.name01 }}
+										{{ Order.name02 }}
+										様
+										<br/><br/>
+                                        下記ご注文内容にお間違えがないかご確認下さい。<br/><br/>
+
+                                        後に店舗担当者より「ご注文確定メール」を送らせていただきます。<br/>
+                                        ★本メールでは注文は確定しておりませんのでご注意ください★<br/><br/>
+
+										{% if not isSalon %}
+											※銀行振込をご選択の場合は、お支払口座を確定メールにてお伝えいたします。<br/>
+										{% endif %}
+
+                                        ************************************************<br/>
+                                        　お支払情報<br/>
+                                        ************************************************<br/>
+                                        ご注文番号：{{ Order.id }}<br/>
+										{% if isSalon %}
+											ご予約方法：{% if Order.orderType == 'fitting' %}試着サービス{% else %}着物レンタル {% endif %} <br/>
+										{% else %}
+											ご予約方法：宅配着物レンタル <br/>
+											お支払い方法：{{ Order.payment_method }}
+                                            {% if Order.Payment.id|default('') == CREDIT_CARD_ID %}
+                                                {% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %}
+                                                    ({{'aki.front.shopping.payment.method.installment'|trans}})
+                                                {% else %}
+                                                    ({{'aki.front.shopping.payment.method.bulk'|trans}})
+                                                {% endif %}
+                                                {% if Order.creditcard_method == PAYMENT_INSTALLENT_METHOD %}
+                                                    <div>{{'aki.front.shopping.payment.method.paytime.select'|trans}} : {{Order.creditcard_paytime}}</div>
+                                                {% endif %}
+                                            {% endif %} <br/>
+										{% endif %}
+										メッセージ：{{ Order.message }}<br/>
+
+										-------------------------------------------------
+										<br/>
+										合　計(税込)
+										{{ Order.payment_total|price }}
+                                        <br/>
+										{% if BaseInfo.isOptionPoint %}
+											============================================
+                                            <br/>
+                                                ご使用ポイント {{ Order.usePoint }} pt
+                                            <br/>
+                                                現在の所持ポイント {{ Customer.Point }} pt
+                                            <br/>
+                                            ============================================
+                                            <br/>
+										{% endif %}
+                                        <br/>
+										{% set index = 0 %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code != 'secure_pack' %}
+												{% set addinfo = Order.orderDetailInfo[index] %}
+
+												************************************************<br/>
+                                                    ご利用内容<br/>
+                                                ************************************************<br/>
+
+                                                商品コード：{{ OrderDetail.product_code }}<br/>
+												商品名:
+												{{ OrderDetail.product_name }}
+												{{ OrderDetail.classcategory_name1 }}
+												{{ OrderDetail.classcategory_name2 }}
+                                                <br/>
+												単価(税込)：
+												{{ OrderDetail.price_inctax|price }}
+												{% if not isSalon %}
+                                                    <br/>
+													{% if addinfo.secure_pack|length  > 0 %}
+														安心パック(税込)：
+														{% for secure_pack in addinfo.secure_pack %}
+															{{secure_pack}}
+														{% endfor %}
+													{% else %}
+														安心パック(税込)：加入なし
+													{% endif %}
+												{% endif %}
+                                                <br/>
+												ご利用日：{{ addinfo.wear_date|date('Y-m-d') }}<br/>
+												お届け日：{{ addinfo.wear_date|date_modify("-2 day")|date("Y-m-d") }}<br/>
+
+												用途：{{ addinfo.purpose }}<br/>
+												身長：{{ addinfo.body_height }}<br/>
+												足のサイズ：{{ addinfo.foot_size }}<br/>
+												年代：{{ addinfo.decade }}<br/>
+												{% if addinfo.body_type|length  > 0 %}
+													体型：
+													{% for body_type in addinfo.getBodyTypeJsonDecode() %}
+														{{body_type}}
+													{% endfor %}
+													<br/>
+												{% endif %}
+												{% set index = index + 1 %}
+											{% endif %}
+										{% endfor %}
+                                        <br/>
+										************************************************<br/>
+                                        　ご注文者情報<br/>
+                                        ************************************************<br/>
+                                        お名前　：{{ Order.name01 }}{{ Order.name02 }}
+										様
+                                        <br/>
+                                        {% if isJapan %}
+                                        フリガナ：{{ Order.kana01 }}{{ Order.kana02 }}<br/>
+                                        {% endif %}
+										{% if Order.company_name %}
+											会社名　：{{ Order.company_name }}
+										{% endif %}
+                                        <br/>
+                                        {% if isJapan %}
+										郵便番号：〒{{ Order.postal_code }}<br/>
+										住所　　：{{ Order.Pref.name }}{{ Order.addr01 }}{{ Order.addr02 }}<br/>
+                                        {% endif %}
+										電話番号：{{ Order.phone_number }}<br/>
+                                        {% if isJapan %}
+										FAX番号：{{ Order.fax }}<br/>
+                                        {% endif %}
+
+										メールアドレス：{{ Order.email }}<br/>
+                                        <br/>
+										************************************************<br/>
+                                        　配送情報<br/>
+                                        ************************************************<br/>
+
+										{%  for Shipping in Order.Shippings %}
+											◎お届け先
+											{% if Order.multiple %}
+												{{ loop.index }}
+											{% endif %}
+                                            <br/>
+											お名前　：{{ Shipping.name01 }}{{ Shipping.name02 }}
+											様
+                                            <br/>
+                                            {% if isJapan %}
+                                            フリガナ：{{ Shipping.kana01 }}{{ Shipping.kana02 }}<br/>
+                                            {% endif %}
+											{% if Shipping.company_name %}
+												会社名　：{{ Shipping.company_name }}
+											{% endif %}
+                                            <br/>
+                                            {% if isJapan %}
+											郵便番号：〒{{ Shipping.postal_code }}<br/>
+											住所　　：{{ Shipping.Pref.name }}{{ Shipping.addr01 }}{{ Shipping.addr02 }}<br/>
+                                            {% endif %}
+											電話番号：{{ Shipping.phone_number }}<br/>
+                                            {% if isJapan %}
+											FAX番号：{{ Shipping.fax }}<br/>
+                                            {% endif %}
+
+											お届け日はご利用日の2日前となります。<br/>
+                                            お届け時間：{{ Shipping.shipping_delivery_time|default('指定なし') }}<br/>
+
+										{% endfor %}
+
+										************************************************
+                                        <br/>
+										<br/>
+											このメッセージはお客様へのお知らせ専用ですので、<br/>
+										    このメッセージへの返信としてご質問をお送りいただいても回答できません。<br/>
+										    ご了承ください。<br/>
+										<br/>
+										    ご質問やご不明な点がございましたら、以下よりお願いいたします。
+										<br/>
+										<br/>
+										    ■お問い合わせの内容
+                                            <br/>
+                                            <br/>
+										    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+										    着物レンタルあき<br/>
+										    TEL：03-3476-3341～2 （渋谷店）<br/>
+										    TEL：03-5568-0529（銀座店）<br/>
+										    TEL：03-6416-0529（池袋店）<br/>
+										    TEL：045-441-0529 （横浜店）<br/>
+                                            {% if not isSalon %}
+                                            TEL：0557-52-4351 （熱海店）<br/>
+                                            {% endif %}
+										    http://kr-aki.co.jp/<br/>
+										    e-mail:contact@kr-aki.jp<br/>
+										    ★☆★☆★☆★☆★☆★☆★☆★☆★☆<br/>
+									{% endif %}
+									-------------------------------------------------------------------------------------
+
+
+								</div>
+							</td>
+						</tr>
+					</table>
+					<!--/600px container -->
+					<br>
+					<br>
+					<table id="html-mail-table2" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content footer-text" align="left" style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+								もしお心当たりが無い場合は、その旨
+								<a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a>
+								までご連絡いただければ幸いです。<br/>
+								<br/>
+								<div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;">
+									<a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a>
+								</div>
+								<div>copyright &copy;
+									{{ BaseInfo.shop_name }}
+									all rights reserved.</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<!--/100% background wrapper-->
+		<br>
+		<br>
+	</body>
+
+</html>

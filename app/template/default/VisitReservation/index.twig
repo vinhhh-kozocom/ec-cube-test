@@ -1,0 +1,183 @@
+{% extends 'default_frame.twig' %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %}
+
+{% block main %}
+<div class="mt-4">
+    <h2 class="text-center mb-4">お下見申込フォーム</h2>
+
+    <div class="mt30 form-block">
+        <div class="cart_page">
+            <form method="post" action="{{ url('visit_reservation', {
+                'product_code': app.request.query.get('product_code'),
+                'shop_name': app.request.query.get('shop_name')
+            }) }}" class="h-adr" novalidate>
+                {{ form_widget(form._token) }}
+
+                <div class="mb-4">
+                    {{ form_label(form.store, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    <div class="custom_arrow_select position-relative {{ has_errors(form.store) ? 'is-invalid' }}">
+                        {{ form_widget(form.store, { attr: { class: 'form-select' } }) }}
+                        {{ form_errors(form.store) }}
+                    </div>
+                </div>
+
+                <div class="row p-0">
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_label(form.first_visit_date, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                        {{ form_widget(form.first_visit_date, { attr: { class: 'form-control w-100 align-left-ip'} }) }}
+                        {{ form_errors(form.first_visit_date) }}
+                    </div>
+                    <div class="col-md-6 mb-4 py-0 custom_arrow_select">
+                        {{ form_label(form.first_visit_time, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                        {{ form_widget(form.first_visit_time, { attr: { class: 'form-select' } }) }}
+                        {{ form_errors(form.first_visit_time) }}
+                    </div>
+                </div>
+
+                <div class="row p-0">
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_label(form.second_visit_date, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                        {{ form_widget(form.second_visit_date, { attr: { class: 'form-control w-100 align-left-ip'} }) }}
+                        {{ form_errors(form.second_visit_date) }}
+                    </div>
+                    <div class="col-md-6 mb-4 py-0 custom_arrow_select">
+                        {{ form_label(form.second_visit_time, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                        {{ form_widget(form.second_visit_time, { attr: { class: 'form-select' } }) }}
+                        {{ form_errors(form.second_visit_time) }}
+                    </div>
+                </div>
+                <p class="mb-4">
+                    ※お下見のご予約は、2日後以降の日時からお選びください。（火曜定休日を除く）<br>
+                    ※最終時間は、平日19：30まで、土日祝17：30まで。<br>
+                    ※お急ぎの方は店舗までご連絡ください。<br>
+                    ※お申し込み頂いた時点では確定ではございません。後日、担当者からご連絡を差し上げて確定いたします。<br>
+                </p>
+
+                <div class="mb-4">
+                    {{ form_label(form.product_code, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.product_code, {
+                        attr: {
+                            class: 'form-control w-100',
+                            value: app.request.query.get('product_code') ?? form.product_code.vars.value
+                        }
+                    }) }}
+                    {{ form_errors(form.product_code) }}
+                </div>
+                <p class="mb-4">
+                    ※お下見は、着物の取り扱い店舗での対応となります。<br>
+                    ※特にご希望商品がない場合は空欄で構いません。<br>
+                    ※お下見ご希望商品の状況（レンタル中、メンテナンス中など）によってはご要望に添えない場合がございます。<br>
+                    ※浴衣は糊付け済みのため、基本的にご試着は行っておりません。ハンガーにかけた状態でお顔映りをご確認いただく形となります。
+                </p>
+
+                <div class="row pb-0">
+                    <p class="mb-2 pb-0">
+                        お名前<span class="ec-required">*</span>
+                    </p>
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_widget(form.last_name, { attr: { class: 'form-control w-100', placeholder: '姓' } }) }}
+                        {{ form_errors(form.last_name) }}
+                    </div>
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_widget(form.first_name, { attr: { class: 'form-control w-100', placeholder: '名' } }) }}
+                        {{ form_errors(form.first_name) }}
+                    </div>
+                </div>
+
+                <div class="row p-0">
+                    <p class="mb-2 pb-0">
+                        お名前（フリガナ）<span class="ec-required">*</span>
+                    </p>
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_widget(form.last_name_kana, { attr: { class: 'form-control w-100', placeholder: 'セイ' }
+                        }) }}
+                        {{ form_errors(form.last_name_kana) }}
+                    </div>
+                    <div class="col-md-6 mb-4 py-0">
+                        {{ form_widget(form.first_name_kana, { attr: { class: 'form-control w-100', placeholder: 'メイ' }
+                        }) }}
+                        {{ form_errors(form.first_name_kana) }}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.phone, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.phone, { attr: { class: 'form-control w-100', placeholder: '例：11122223333' } })
+                    }}
+                    {{ form_errors(form.phone) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.email, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.email, { attr: { class: 'form-control w-100', placeholder:
+                    '例：ec-cube@example.com' } }) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="mb-4">
+                    {{ form_label(form.usage_date, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.usage_date, { attr: { class: 'form-control w-100 align-left-ip' } }) }}
+                    {{ form_errors(form.usage_date) }}
+                </div>
+
+                <div class="mb-4 custom_arrow_select">
+                    {{ form_label(form.try_on_people, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.try_on_people, { attr: { class: 'form-select w-100' } }) }}
+                    {{ form_errors(form.try_on_people) }}
+                </div>
+
+                <div class="mb-4 custom_arrow_select">
+                    {{ form_label(form.purpose, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.purpose, { attr: { class: 'form-select w-100' } }) }}
+                    {{ form_errors(form.purpose) }}
+                </div>
+
+                <div class="mb-4 custom_arrow_select">
+                    {{ form_label(form.kimono_type, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.kimono_type, { attr: { class: 'form-select w-100 ' } }) }}
+                    {{ form_errors(form.kimono_type) }}
+                </div>
+
+                <p class="mb-4">
+                    ※上記以外の着物をご希望の場合は備考欄にご記入ください。
+                </p>
+
+                <div class="mb-4 custom_arrow_select">
+                    {{ form_label(form.height, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.height, { attr: { class: 'form-select w-100' } }) }}
+                    {{ form_errors(form.height) }}
+                </div>
+
+                <p class="mb20">
+                    ※複数の場合は備考欄へご記入ください。<br>
+                    ※スリーサイズで100cmを超える箇所がある場合は備考欄へご記入ください。
+                </p>
+
+                <div class="mb-3">
+                    {{ form_label(form.note_info_1, null, { 'label_attr': {'class': 'mb-2'} }) }}
+                    {{ form_widget(form.note_info_1, { attr: { class: 'form-control w-100' } }) }}
+                    {{ form_errors(form.note_info_1) }}
+                </div>
+
+                <p class="mb20">
+                    ※その他、ご希望がある場合は備考欄へご記入ください。
+                </p>
+
+                <div>
+                    <div id="top_box__footer" class="row no-padding">
+                        <div id="top_box__confirm_button" class="text-center">
+                            <button type="submit" class="aki-btn aki-btn-primary" name="mode" value="confirm">
+                                {{ "common.go_to_confirm" | trans }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

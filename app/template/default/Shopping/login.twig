@@ -1,0 +1,124 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'cart_page' %}
+
+{% block main %}
+<div>
+	<div class="row">
+		<div class="col-md-12 text-center mb20">
+			<h2 class="mb20">ログイン</h2>
+			<p>
+				{% if isSalon %}
+					会員登録に登録してからご購入することで、{% if BaseInfo.isOptionPoint %}ポイントのご利用、{% endif %}以前レンタルしていただいた<br>
+				{% else %}
+					会員登録してからご購入することで、{% if BaseInfo.isOptionPoint %}ポイントのご利用、{% endif %}以前レンタルしていただいた<br>
+				{% endif %}
+				着物の履歴などがご確認いただけますので、ぜひご利用ください。
+			</p>
+		</div>
+	</div>
+
+	<div id="login_wrap" class="aki-mypage">
+		<form method="post" action="{{ url('mypage_login') }}">
+			<input type="hidden" name="_target_path" value="{{ url('shopping') }}" />
+            <input type="hidden" name="_failure_path" value="{{ url('shopping_login') }}" />
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<div id="login_box" class="login_cart row">
+				{% if isSalon %}
+					<div id="customer_box" class="col-sm-12" style="height: 330px;">
+				{% else %}
+					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+						<div id="customer_box" class="col-md-8 offset-md-2 height-content">
+					{% else %}
+						<div id="customer_box" class="col-md-8 height-content">
+					{% endif %}
+				{% endif %}
+				<div id="customer_box__body" class="history-block pa30">
+					<div id="customer_box__body_inner" class="column_inner clearfix">
+							<div id="customer_box__login_email">
+								<label class="mb10 aki-font-semibold"
+									>メールアドレス<span class="required"
+										>*</span
+									></label
+								>
+								{{ form_widget(form.login_email, {attr: {'style' : 'ime-mode: disabled;', 'autofocus': true}}) }} <br class="sp">
+							</div>
+							<div id="customer_box__login_pass" class="position-relative">
+								<label class="mb10 mt20 aki-font-semibold"
+										>パスワード<span class="required"
+											>*</span
+										></label
+									>
+							{{ form_widget(form.login_pass) }}
+								{% if BaseInfo.option_remember_me %}
+									{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+										<input type="hidden" name="login_memory" value="1">
+									{% else %}
+										{{ form_widget(form.login_memory) }}
+									{% endif %}
+								{% endif %}
+							
+								<span
+									toggle="#login_pass"
+									class="toggle-password"
+								>
+									<img loading="lazy" src="{{ asset('assets/icon/eye-slash.svg') }}" class="aki-icon-default" alt="icon"/>
+									<img loading="lazy" src="{{ asset('assets/icon/eye.svg') }}" class="aki-icon-default aki-navs" alt="icon"/>
+								</span>
+
+							</div>
+							<div class="extra-form form-group">
+								{% for f in form.getIterator %}
+									{% if f.vars.name matches '[^plg*]' %}
+										{{ form_row(f) }}
+										{{ form_widget(f) }}
+										{{ form_errors(f) }}
+									{% endif %}
+								{% endfor %}
+							</div>
+							{% if error %}
+							<div id="customer_box__error_message" class="form-group">
+								<span class="text-danger">{{ error.messageKey|trans(error.messageData, 'validators')|nl2br }}</span>
+							</div>
+							{% endif %}
+							<div class="mt30">
+								<p class="text-center"><button type="submit" class="aki-btn aki-btn-primary">ログイン</button></p><br>
+								<p class="text-center"><a href="{{ url('forgot') }}" class="text-green text-decoration-underline">パスワードをお忘れの方</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{% if not isSalon %}
+					{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+					{% else %}
+					<div id="guest_box" class="col-md-4 height-content text-center">
+						<div id="guest_box__body" class="history-block">
+							<div id="guest_box__body_inner" class="column_inner">
+								<p id="guest_box__message" class="message">会員登録をせずに購入手続きをされたい方は、下記よりお進みください。
+								<p id="guest_box__confirm_button" class="btn_area mt20">
+								<a href="{{ url('shopping_nonmember') }}" class="aki-btn aki-btn-primary">ゲスト購入</a></p>
+							</div>
+						</div>
+						<div class="history-block">
+							<p>新規会員登録をされたい方は、下記よりお進みください。</p>
+							<p class="mt20"><a href="{{ url('entry') }}" class="aki-btn aki-btn-primary"><i class="aki-icon-pencil"></i> 新規会員登録</a></p>
+						</div>
+					</div>
+					{% endif %}
+				{% endif %}
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+    $(".toggle-password").click(function () {
+        $(this).children().toggle();
+        let input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>
+{% endblock %}

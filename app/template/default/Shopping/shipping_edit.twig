@@ -1,0 +1,229 @@
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% set body_class = 'cart_page' %}
+{# ログイン状態によって、表示内容を切替 #}
+{% if is_granted('ROLE_USER') is empty %}
+    {% set title = 'front.shopping.shipping_edit_title_nomember'|trans %}
+{% endif %}
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+{% endblock javascript %}
+
+{% block main %}
+    <div class="mb30 text-center">
+        {% if is_granted('ROLE_USER') %}
+            <h2>{{ 'front.shopping.shipping_edit_header_customer'|trans }}</h2>
+        {% else %}
+            <h2>{{ 'front.shopping.shipping_edit_header_nonmember'|trans }}</h2>
+        {% endif %}
+        <p class="mt20">{{ 'front.shopping.shipping_address_to_add'|trans }}</p>
+    </div>
+
+    <div class="form-block">
+        <form method="post" action="{{ url('shopping_shipping_edit', {'id': shippingId}) }}" class="h-adr">
+            <span class="p-country-name" style="display:none;">Japan</span>
+            {{ form_widget(form._token) }}
+            <div class="aki-mypage">
+                <div id="top_box__name" class="group-block">
+                    <label class="control-label"
+                        >お名前<span class="required">*</span></label
+                    >
+                    <div class="pb-0 row">
+                        <div class="col-md-6">
+                            {{
+                                form_widget(form.name.name01, {
+                                    attr: {
+                                        placeholder: "姓",
+                                        class: "form-control"
+                                    }
+                                })
+                            }}
+                        </div>
+                        <div class="col-md-6">
+                            {{
+                                form_widget(form.name.name02, {
+                                    attr: {
+                                        placeholder: "名",
+                                        class: "form-control"
+                                    }
+                                })
+                            }}
+                        </div>
+                        {{ form_errors(form.name.name01) }}
+                        {{ form_errors(form.name.name02) }}
+                    </div>
+                </div>
+                <div id="top_box__kana" class="group-block">
+                    <label class="control-label"
+                        >お名前(フリガナ)<span class="required"
+                            >*</span
+                        ></label
+                    >
+                    <div class="pb-0 row">
+                        <div class="col-md-6">
+                            {{
+                                form_widget(form.kana.kana01, {
+                                    attr: {
+                                        placeholder: "セイ",
+                                        class: "form-control"
+                                    }
+                                })
+                            }}
+                        </div>
+                        <div class="col-md-6">
+                            {{
+                                form_widget(form.kana.kana02, {
+                                    attr: {
+                                        placeholder: "メイ",
+                                        class: "form-control"
+                                    }
+                                })
+                            }}
+                        </div>
+                        {{ form_errors(form.kana.kana01) }}
+                        {{ form_errors(form.kana.kana02) }}
+                    </div>
+                </div>
+                <div id="top_box__company_name" class="group-block">
+                    <label class="control-label" for="entry_company_name"
+                        >会社名</label
+                    >
+                    <div class="pb-0">
+                        {{
+                            form_widget(form.company_name, {
+                                attr: { class: "form-control" }
+                            })
+                        }}
+                        {{ form_errors(form.company_name) }}
+                    </div>
+                </div>
+                {# auto fill zip code #}
+                <div class="group-block group-block-custom">
+                    <label class="control-label"
+                        >住所 <span class="required">*</span></label
+                    >
+                    <div
+                        class="{{ has_errors(form.postal_code) ? ' error' }} group-block"
+                    >
+                        <div class="row pb-0">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <span class="mr10">{{
+                                    "common.postal_symbol" | trans
+                                }}</span>
+                                {{
+                                    form_widget(form.postal_code)
+                                }}
+                            </div>
+                            <div class="col-md-6 d-flex align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img loading="lazy"
+                                        src="{{
+                                            asset('assets/icon/Help.svg')
+                                        }}"
+                                        alt="icon-help"
+                                    />
+                                    <a
+                                        href="https://www.post.japanpost.jp/zipcode/"
+                                        target="_blank"
+                                        class="ml10 text-green text-decoration-underline"
+                                        ><span>{{
+                                            "common.search_postal_code"
+                                                | trans
+                                        }}</span></a
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_errors(form.postal_code) }}
+                    </div>
+
+                    <div class="row group-block pb-0">
+                        <div
+                            class="col-md-6{{ has_errors(form.address.pref) ? ' error' }}"
+                        >
+                            <div class="position-relative custom_arrow_select">
+                                {{ form_widget(form.address.pref) }}
+                                {{ form_errors(form.address.pref) }}
+                            </div>
+                        </div>
+
+                        <div
+                            class="col-md-6{{ has_errors(form.address.addr01) ? ' error' }}"
+                        >
+                            {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': 'aki-common.address_sample_01'}}) }}
+                            {{ form_errors(form.address.addr01) }}
+                        </div>
+                    </div>
+                    <div
+                        class="{{ has_errors(form.address.addr02) ? ' error' }}"
+                    >
+                        {{
+                            form_widget(form.address.addr02, {
+                                attr: {
+                                    placeholder: "aki-common.address_sample_02",
+                                    class: "form-control"
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.address.addr02) }}
+                    </div>
+                </div>
+                <div id="top_box__tel" class="group-block">
+                    <label class="control-label"
+                        >電話番号<span class="required">*</span></label
+                    >
+                    <div
+                        class="{{ has_errors(form.phone_number) ? ' error' }} input_name"
+                    >
+                        {{
+                            form_widget(form.phone_number, {
+                                attr: {
+                                    placeholder:
+                                        "common.phone_number_sample",
+                                    class: "form-control"
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.phone_number) }}
+                    </div>
+                </div>
+                <div id="top_box__fax" class="group-block">
+                    <label class="control-label" for="entry_fax">{{
+                        "common.fax" | trans
+                    }}</label>
+                    <div class="pb-0">
+                        {{
+                            form_widget(form.fax, {
+                                attr: {
+                                    placeholder:
+                                        "common.phone_number_sample",
+                                    class: "form-control"
+                                }
+                            })
+                        }}
+                        {{ form_errors(form.fax) }}
+                    </div>
+                </div>
+            </div>
+            <p class="p-bg-gray"></p>
+            
+            <div class="col-md-12">
+                <div class="aki-row">
+                    <div class="col-md-6 col-12 text-center text-md-end mb20">
+                        {% if is_granted('ROLE_USER') %}
+                            <a href="{{ url('shopping_shipping', { 'id': shippingId }) }}" class="aki-btn aki-btn-default">{{ 'common.back'|trans }}</a>
+                        {% else %}
+                            <a href="{{ url('shopping') }}" class="aki-btn aki-btn-default">{{ 'common.back'|trans }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 col-12 text-center text-md-start">
+                        <button type="submit" class="aki-btn aki-btn-primary">{{ 'common.registration'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

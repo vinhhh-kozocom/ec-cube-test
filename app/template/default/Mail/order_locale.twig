@@ -1,0 +1,106 @@
+{% if locale == 'en' %}
+    {% if Order.orderDetailInfo[0].gender == 'Male' %}
+        {% set object = 'Mr' %}
+    {% elseif Order.orderDetailInfo[0].gender == 'Female' %}
+        {% set object = 'Ms' %}
+    {% else %}
+        {% set object = 'Mr/Ms'%}
+    {% endif %}
+    Dear {{object}}. {{ Order.name01 }} {{ Order.name02 }},
+
+    Thank you for your reservation.
+    This e-mail is automatically generated in response to your order.
+    Please don't reply to this e-mail.
+
+    You will receive a confirmation email from our staff within 48 hours of placing your reservation.
+    Your reservation is confirmed upon receipt of this confirmation email.
+    {% set index = 0 %}
+    {% for OrderDetail in Order.MergedProductOrderItems %}
+        {% if OrderDetail.product_code != 'secure_pack' %}
+        {% set addinfo = Order.orderDetailInfo[index] %}
+            ・Item name: {{OrderDetail.product_name}}
+            {% if OrderDetail.price_inctax != 0 %}
+                ・Price: {{ OrderDetail.price_inctax|price }}
+            {% else %}
+                ・Price: {{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+            {% endif %}
+            ・Date: {{ addinfo.wear_date|date('Y-m-d') }}
+            ・Time: {{ addinfo.time_departure }}
+            ・Store: {{ addinfo.visit_store }}
+            ・Number of guests: {{ addinfo.number_of_guests }}
+            {% if addinfo.number_of_guests == 1 %}
+                ・Gender: {{ addinfo.gender }}
+            {% endif %}
+            ・Height: {{ addinfo.body_height }}
+            ・Shoe size: {{ addinfo.foot_size }}
+            ・Body shape: {% for body_type in addinfo.getBodyTypeJsonDecode() %}{{body_type}}{% endfor %}
+            ・Kimono Insurance: {% if addinfo.secure_pack is iterable %}
+                                    {% for secure_pack in addinfo.secure_pack %}
+                                        {{secure_pack}}
+                                    {% endfor %}
+                                    {% else %}
+                                        {{addinfo.secure_pack}}
+                                {% endif %}
+            ・Optional Photo Shoot: {{ addinfo.need_photo }}
+            ・Optional Hair Set: {{ addinfo.need_hair_make }}
+            ・Remark: {{ addinfo.remark }}
+            ------------------------------------
+            {% set index = index + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    Thank you!
+
+    Kimono Rental AKI
+    Email to : eng@kr-aki
+    Address: 15-14-310 Maruyama Shibuya Tokyo Japan150-0044
+{% elseif locale == 'zh' %}
+    親愛的 {{ Order.name01 }} {{ Order.name02 }} 様
+
+    感謝您的預訂。
+    該電子郵件是根據您的訂單自動產生的。
+    請不要回覆此電子郵件。
+
+    您將在預訂後 48 小時內收到我們工作人員發送的確認電子郵件。
+    收到此確認電子郵件後，您的預訂即被確認。
+    {% set index = 0 %}
+    {% for OrderDetail in Order.MergedProductOrderItems %}
+        {% if OrderDetail.product_code != 'secure_pack' %}
+            {% set addinfo = Order.orderDetailInfo[index] %}
+            ・專案名：{{OrderDetail.product_name}}
+            {% if OrderDetail.price_inctax != 0 %}
+                ・價格：{{ OrderDetail.price_inctax|price }}
+            {% else %}
+                ・價格：{{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+            {% endif %}
+            ・日期：{{ addinfo.wear_date|date('Y-m-d') }}
+            ・時間：{{ addinfo.time_departure }}
+            ・店：{{ addinfo.visit_store }}
+            ・入住人數：{{ addinfo.number_of_guests }}
+            {% if addinfo.number_of_guests == 1 %}
+                ・Gender: {{ addinfo.gender }}
+            {% endif %}
+            ・高度：{{ addinfo.body_height }}
+            ・鞋號：{{ addinfo.foot_size }}
+            ・身材：{% for body_type in addinfo.getBodyTypeJsonDecode() %}{{body_type}}{% endfor %}
+            ・和服保險：{% if addinfo.secure_pack is iterable %}
+                            {% for secure_pack in addinfo.secure_pack %}
+                                {{secure_pack}}
+                            {% endfor %}
+                            {% else %}
+                                {{addinfo.secure_pack}}
+                        {% endif %}
+            ・自選拍照項目：{{ addinfo.need_photo }}
+            ・自選髮飾：{{ addinfo.need_hair_make }}
+            ・評論：{{ addinfo.remark }}
+            ------------------------------------
+        {% set index = index + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    謝謝你！
+
+    和服租賃 AKI
+    電子郵件至：eng@kr-aki
+    地址：日本東京澀谷丸山15-14-310150-0044
+{% endif %}

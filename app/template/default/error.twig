@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>404エラー | お探しのページが見つかりません。</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=yes">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="{{ asset('assets/img/common/favicon.ico') }}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/aki.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/aki-new.css') }}">
+{% set isSalon = SALON_URL == app.request.server.get('SERVER_NAME') %}
+{% set isJapan = app.request.locale == LOCALE_JAPAN %}
+{% set isEnglish = app.request.locale == LOCALE_ENGLISH %}
+{% set isChina = app.request.locale == LOCALE_CHINA %}
+<script src="{{ asset('front.bundle.js', 'bundle') }}"></script>
+<script>
+
+	$(document).ready(function(){
+		var data = localStorage.getItem('isLogin');
+		if(data ==  'true'){
+			$(".isLogin").css("display", "block");
+		} else {
+			$(".noLogin").css("display", "block");
+	}})
+
+	$(window).on('load', function() {
+		$('.burger-icon').click(function() {
+			$('body').css('overflow', 'hidden');
+			$(this).toggleClass('is-show');
+			$('.mobile-header-active').toggleClass('is-show-content');
+			if(!$('.sp-profile .burger-icon').hasClass('is-show')){
+				$('body').css('overflow', '');
+			}
+			if($('.sp-profile .menu-search').hasClass('d-none')){
+				$('.sp-profile .menu-close-search').addClass('d-none');
+				$('.sp-profile .menu-search').removeClass('d-none');
+				$('.sp-profile .input-search__popup').removeClass('isShowPopup');
+			}
+		});
+		$('.aki-header-menu .menu-search').click(function() {
+			$(this).addClass('d-none');
+			$('.aki-header-menu .menu-close-search').removeClass('d-none');
+			$('.aki-header-menu .input-search__popup').addClass('isShowPopup');
+		});
+		$('.aki-header-menu .menu-close-search').click(function() {
+			$(this).addClass('d-none');
+			$('.aki-header-menu .menu-search').removeClass('d-none');
+			$('.aki-header-menu .input-search__popup').removeClass('isShowPopup');
+		});
+		$('.sp-profile .menu-search').click(function() {
+			$(this).addClass('d-none');
+			$('.sp-profile .menu-close-search').removeClass('d-none');
+			$('.sp-profile .input-search__popup').addClass('isShowPopup');
+			$('.burger-icon.is-show').removeClass('is-show');
+			$('body').css('overflow', '');
+			$('.mobile-header-active.is-show-content').removeClass('is-show-content');
+		});
+		$('.sp-profile .menu-close-search').click(function() {
+			$(this).addClass('d-none');
+			$('.sp-profile .menu-search').removeClass('d-none');
+			$('.sp-profile .input-search__popup').removeClass('isShowPopup');
+		});
+
+		var offset = 4;
+		var dateToday = new Date();
+		var dateMin = new Date(dateToday.getFullYear(), dateToday.getMonth(), dateToday.getDate() + offset);
+		$('#AkiuseDateErrrorMobile').datepicker({
+			format: 'yyyy-mm-dd',
+			language: 'ja',
+			autoclose : true,
+			keyboardNavigation : false,
+			showMonthAfterYear: true,
+			monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+			todayHighlight : true,
+			startDate: dateMin,
+		})
+	})
+
+	</script>
+</head>
+
+<body>
+
+<style type="text/css">
+	h2.error {
+	font-size:2.5rem;
+	position: relative;
+	color:white;
+	padding: .75em 1em;
+	background-color: #4c996d;
+	}
+	h2.error::before,
+	h2.error::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	border-style: solid;
+	border-color: transparent;
+	}
+	h2.error::before {
+	left: 0;
+	border-width: 0 15px 15px 0;
+	border-right-color: #1f8048;
+	}
+	h2.error::after {
+	right: 0;
+	border-style: solid;
+	border-width: 15px 15px 0 0;
+	border-top-color: #1f8048;
+	}
+	.body-studio{
+		min-height: calc(100vh - 246.52px) !important;
+	}
+	.is-d-none{
+		display:none;
+	}
+	@media(max-width: 768px){
+        .body-studio{
+			min-height: calc(100vh - 254.55px) !important;
+		}
+    }
+</style>
+
+<div id="wrapper" class=" error_page">
+	<header id="header">
+	{% if isSalon %}
+	<div class="aki-header-studio">
+	{% else %}
+	<div class="aki-header">
+	{% endif %}
+	<div class="aki-container pb10">
+	<div class="aki-row pb00 align-items-center">
+		<div class="col-6">
+			{% if not isSalon %}
+				<h1 class="mb10 font-size-12 d-none d-md-block aki-title">
+					お探しのページが見つかりません。</h1>
+				<a href="/">
+					<img loading="lazy" src="{{ asset('assets/img/aki/logo.svg') }}" class="logo" alt="着物レンタルあき"/>
+				</a>
+			{% else %}
+				<h1 class="mb10 fw-600 aki-title">
+					<a href="/">着物レンタル</a>
+				</h1>
+			{% endif %}
+
+		</div>
+		<div class="col-6 text-end">
+			<div class="d-none d-md-block">
+                <div class="profile aki-header-menu mb10">
+                    <div class="input-search">
+                        <span class="menu-search">
+                                <svg width="19" height="19" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.3056 9.02778C16.3056 13.0472 13.0472 16.3056 9.02778 16.3056C5.00837 16.3056 1.75 13.0472 1.75 9.02778C1.75 5.00837 5.00837 1.75 9.02778 1.75C13.0472 1.75 16.3056 5.00837 16.3056 9.02778Z" stroke="#1F8048" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M18.7497 18.7499L14.5205 14.5208" stroke="#1F8048" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                                検索
+                        </span>
+
+                        <span class="menu-close-search d-none">
+								<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M16.286 2.57144L2.57146 16.286C2.25907 16.5984 2.259 17.1164 2.5713 17.4287C2.8836 17.741 3.40163 17.7409 3.71402 17.4286L17.4286 3.714C17.741 3.40162 17.741 2.88358 17.4287 2.57128C17.1164 2.25898 16.5984 2.25905 16.286 2.57144Z" fill="#1F8048"/>
+								<path d="M3.71301 2.57144L17.4276 16.286C17.74 16.5984 17.74 17.1164 17.4277 17.4287C17.1154 17.741 16.5974 17.7409 16.285 17.4286L2.57045 3.714C2.25806 3.40162 2.25799 2.88358 2.57029 2.57128C2.88259 2.25898 3.40062 2.25905 3.71301 2.57144Z" fill="#1F8048"/>
+								</svg>
+								検索
+                        </span>
+
+                        <div class="input-search__popup">
+                            <form method="get" action="{{ path('product_list') }}">
+                                <div class="input-search__popup-form">
+                                    <input type="text" class="input-search__popup-input" name="name" placeholder="商品名・品番で検索">
+                                    <button class="btn btn-primary" type="submit"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <mask id="path-1-inside-1_1154_20913" fill="white">
+                                    <path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z"></path>
+                                    </mask>
+                                    <path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" mask="url(#path-1-inside-1_1154_20913)"></path>
+                                    <path d="M18.7497 18.7499L14.5205 14.5208" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                        <p class="isLogin is-d-none"><a href="{{ url('logout') }}">
+						<img loading="lazy" src="{{ asset('assets/icon/logout.svg') }}" class="aki-icon-default" alt="icon"/>ログアウト</a>
+                        </p>
+                        <p class="isLogin is-d-none"><a href="{{url('mypage')}}">
+                            <i class="aki-icon-pencil color-primary"></i>マイページ</a>
+                        </p>
+
+                        <p class="noLogin is-d-none"><a href="{{ url('mypage_login') }}">
+                            <i class="aki-icon-user color-primary"></i>ログイン</a>
+                        </p>
+                        {% if not isSalon %}
+                            <p class="noLogin is-d-none"><a href="{{ url('entry') }}">
+                                <i class="aki-icon-pencil color-primary"></i>新規会員登録</a>
+                            </p>
+                        {% endif %}
+
+                    <p><a href="{{url(isJapan ? 'cart' : 'cart_locale', {'_locale': app.request.locale})}}">
+                    <img loading="lazy" src="{{ asset('assets/icon/aki-cart-blue.svg') }}" class="aki-icon-default" alt="icon"/>カート</a>
+                    </p>
+					{% if not isSalon %}
+					<ul>
+						<li class="dropdown open list-style-none">
+							<a href="/user_data/shop" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Language <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1 1L5 5L9 1" stroke="#8F90A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="/">日本語</a></li>
+								<li><a href="/user_data/english">English</a></li>
+								<li><a href="/user_data/china">簡体中文</a></li>
+							</ul>
+						</li>
+					</ul>
+					{% endif %}
+                </div>
+				{% if not isSalon %}
+				<img loading="lazy" src="{{ asset('assets/img/aki/hotline.webp') }}" width="340" class="logo" alt="着物レンタルあき"/>
+				{% endif %}
+			</div>
+			{% if not isSalon %}
+			<div class="header-top d-block d-md-none">
+			{% else %}
+			<div class="header-top d-block d-md-none mb10">
+			{% endif %}
+				<div class="sp-profile ">
+					<div><a href="/"><img loading="lazy" src="{{ asset('assets/icon/home-2.svg') }}" class="aki-icon-default" alt="icon"/>
+						</a>
+					</div>
+					<div><a href="{{url(isJapan ? 'cart' : 'cart_locale', {'_locale': app.request.locale})}}"><img loading="lazy" src="{{ asset('assets/icon/aki-cart.svg') }}" class="aki-icon-default" alt="icon"/>
+						</a>
+					</div>
+					<div class="input-search">
+						<span class="menu-search"> <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.0556 9.02778C16.0556 12.9091 12.9091 16.0556 9.02778 16.0556C5.14644 16.0556 2 12.9091 2 9.02778C2 5.14644 5.14644 2 9.02778 2C12.9091 2 16.0556 5.14644 16.0556 9.02778Z" stroke="#31352E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M18.7497 18.7499L14.5205 14.5208" stroke="#31352E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						</span>
+						<span class="menu-close-search d-none"> <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.286 2.57144L2.57146 16.286C2.25907 16.5984 2.259 17.1164 2.5713 17.4287C2.8836 17.741 3.40163 17.7409 3.71402 17.4286L17.4286 3.714C17.741 3.40162 17.741 2.88358 17.4287 2.57128C17.1164 2.25898 16.5984 2.25905 16.286 2.57144Z" fill="#666666"/>
+						<path d="M3.71301 2.57144L17.4276 16.286C17.74 16.5984 17.74 17.1164 17.4277 17.4287C17.1154 17.741 16.5974 17.7409 16.285 17.4286L2.57045 3.714C2.25806 3.40162 2.25799 2.88358 2.57029 2.57128C2.88259 2.25898 3.40062 2.25905 3.71301 2.57144Z" fill="#666666"/>
+						</svg>
+						</span>
+						<div class="input-search__popup">
+							<form method="get" action="{{ path('product_list') }}">
+								<div class="input-search__popup-form">
+									<input type="text" class="input-search__popup-input" name="name" placeholder="{{'front.product.search_footer_placeholder' | trans}}">
+									<button class="btn btn-primary" type="submit"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="path-1-inside-1_1154_20913" fill="white">
+									<path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z"></path>
+									</mask>
+									<path d="M9.02778 16.8056C13.3233 16.8056 16.8056 13.3233 16.8056 9.02778C16.8056 4.73223 13.3233 1.25 9.02778 1.25C4.73223 1.25 1.25 4.73223 1.25 9.02778C1.25 13.3233 4.73223 16.8056 9.02778 16.8056Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" mask="url(#path-1-inside-1_1154_20913)"></path>
+									<path d="M18.7497 18.7499L14.5205 14.5208" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"></path>
+									</svg></button>
+								</div>
+							</form>
+						</div>
+
+					</div>
+					<div class="burger-icon color-primary" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー','event_label': 'SPメニュー'});">
+						<span class="burger-icon-top"></span>
+						<span class="burger-icon-mid"></span>
+						<span class="burger-icon-bottom"></span>
+					</div>
+				</div>
+				<div class="sp-profile ">
+					<ul class="mt05">
+						<li class="dropdown open list-style-none">
+							<a href="/user_data/shop" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="">Language <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M1 1L5 5L9 1" stroke="#8F90A6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+							</svg>
+							</a>
+							<ul class="dropdown-menu" style="">
+								<li><a href="/">日本語</a></li>
+								<li><a href="/user_data/english">English</a></li>
+								<li><a href="/user_data/china">簡体中文</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="mobile-header-active aki-mobile aki-container pa15">
+				{% if not isSalon %}
+				<section class="aki-mobile-profile profile">
+						{% if is_granted('ROLE_USER') %}
+							<p class="aki-border"><a href="{{ url('logout') }}">
+								<img loading="lazy" src="{{ asset('assets/icon/logout.svg') }}" class="aki-icon-default mb05" alt="icon"/>ログアウト</a>
+							</p>
+							<p class="aki-border"><a href="{{url('mypage')}}">
+								<i class="aki-icon-pencil color-primary mb05"></i>マイページ</a>
+							</p>
+						{% else %}
+							<p class="aki-border"><a href="{{ url('mypage_login') }}">
+								<i class="aki-icon-user color-primary mb05"></i>ログイン</a>
+							</p>
+							<p class="aki-border"><a href="{{ url('entry') }}">
+								<i class="aki-icon-pencil color-primary mb05"></i>新規会員登録</a>
+							</p>
+						{% endif %}
+						<p class="aki-border"><a href="{{url(isJapan ? 'cart' : 'cart_locale', {'_locale': app.request.locale})}}">
+							<img loading="lazy" src="{{ asset('assets/icon/aki-cart-blue.svg') }}" class="aki-icon-default mb05" alt="icon"/>カート</a>
+						</p>
+				</section>
+				{% endif %}
+				<section class="aki-search mt30 mb30">
+					{% if isSalon %}
+					<div class="mb20 text-center">
+						<h4>ご利用日・ご利用シーンから着物を探す</h4>
+					</div>
+					{% endif %}
+					<form name="left_search_form" action="/products/list" id="left-search-product-form" class="left_search_form aki-search-banner aki-search-new pa20">
+					<div class="aki-form-group date mb15">
+						<div class="input-group input-group-lg aki-search-input">
+							<span class="input-group-addon"><i class="aki-icon-calenda color-primary"></i></span>
+							<input name="date" type="text" class="productListDate form-control datepicker hasDatepicker " placeholder="ご利用日" readonly="" id="AkiuseDateErrrorMobile" data-id="date-filter">
+						</div>
+					</div>
+					<div class="aki-form-group aki-search-select mb15">
+						<div class="input-group input-group-lg position-relative custom_arrow_select">
+							<span class="input-group-addon"><img loading="lazy" src="{{ asset('assets/img/aki/kimono.svg') }}" alt="kimono"></span>
+							<select name="category_id" class="form-control " onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': '利用シーンを選択'});">
+								<option value="">ご利用シーン・着物の種類</option>
+								{% if not isSalon %}
+									<optgroup label="花火大会・お祭りなど">
+										<option value="43">ゆかた（女性用）</option>
+										<option value="42">ゆかた（男性用）</option>
+									</optgroup>
+								{% endif %}
+								<optgroup label="成人式">
+									<option value="53">振袖</option>
+									<option value="39">袴（男性用）</option>
+								</optgroup>
+								<optgroup label="卒業式・入学式">
+									<option value="40">卒業袴</option>
+									<option value="53">振袖</option>
+									<option value="50">訪問着</option>
+									<option value="39">紋付袴（男性用）</option>
+								</optgroup>
+								<optgroup label="結婚式">
+									<option value="34">婚礼衣装</option>
+									<option value="53">振袖</option>
+									<option value="52">黒留袖</option>
+									<option value="51">色留袖</option>
+									<option value="50">訪問着</option>
+									<option value="41">男物</option>
+									<option value="39">袴（男性用）</option>
+								</optgroup>
+								<optgroup label="パーティー・お茶会">
+									<option value="53">振袖</option>
+									<option value="50">訪問着</option>
+									<option value="51">色留袖</option>
+									<option value="49">色無地</option>
+									<option value="48">小紋</option>
+									<option value="41">男物</option>
+								</optgroup>
+								<optgroup label="観劇・お食事会">
+									<option value="48">小紋</option>
+									<option value="50">訪問着</option>
+									<option value="41">男物</option>
+								</optgroup><optgroup label="七五三・お宮参り・十三参り">
+									<option value="38">産着</option>
+									<option value="37">七五三（三歳祝着）</option>
+									<option value="36">七五三（五歳祝着）</option>
+									<option value="35">七五三（七歳祝着）</option>
+									<option value="158">十三参り</option>
+									<option value="50">訪問着</option>
+									<option value="41">男物</option>
+								</optgroup>
+							</select>
+						</div>
+					</div>
+					<div class="input-group-lg">
+					<button class="aki-btn aki-btn-primary mb15 w-100 form-control" type="submit"><img loading="lazy" src="{{  asset('assets/icon/search-white.svg') }}" class="aki-icon-default" alt="icon"/> 着物を探す</button>
+					</div>
+					{% if not isSalon and APP_ENV != APP_PROD %}
+						<div class="aki-form-group">
+							<div class="input-group input-group-lg position-relative">
+								<select class="form-control aki-search-input aki-btn-primary text-center reservation_store_list">
+									<option value="">お下見来店予約</option>
+									{# {% for key, index in Stores %}
+										<option value="{{key}}"
+										{% if store_name_en is defined and (key ==  store_name_en) %}
+											selected
+										{% endif %}
+										>{{Stores[key]}}</option>
+									{% endfor %} #}
+								</select>
+								<span class="icon-select-down"><img loading="lazy" src="{{ asset('assets/icon/aki-icon-down-white.svg') }}" alt="kimono"></span>
+							</div>
+						</div>
+					{% endif %}
+					</form>
+				</section>
+				{% if not isSalon %}
+				<div class="aki-mobile-link mb-3">
+					<section class="aki-mobile-list">
+						<a class="active text-center aki-border" href="/">トップページ</a>
+						<a class="text-center aki-border" href="/user_data/choose">着物の選び方</a>
+						<a class="text-center aki-border" href="/user_data/good_point">こだわり</a>
+						<a class="text-center aki-border" href="/user_data/service">オプションサービス</a>
+						<a class="text-center aki-border" href="/user_data/flow">ご利用の流れ</a>
+						<a class="text-center aki-border" href="/user_data/faq">よくある質問</a>
+						<a class="text-center aki-border" href="/user_data/shop">店舗</a>
+						<a class="text-center aki-border" href="/user_data/shop#sec-store">店舗一覧</a>
+					</section>
+				</div>
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
+	</div>
+	{% if not isSalon %}
+	<div class="en_header ">
+		<div class="aki-header-menu aki-container">
+			<div>
+				<ul class="en_header_menu menu-header align-items-center">
+					<li>
+						<a href="/">トップページ</a>
+					</li>
+					<li>
+						<a href="/user_data/choose">着物の選び方</a>
+					</li>
+					<li>
+						<a href="/user_data/good_point">こだわり</a>
+					</li>
+					<li class="dropdown open">
+						<a href="/user_data/service" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">オプションサービス <img loading="lazy" src="/html/template/default/assets/icon/aki-icon-down-white.svg" alt="kimono">
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/user_data/service#s01">ヘアセット・メイクアップ</a></li>
+							<li><a href="/user_data/service#s02">スタジオ撮影</a></li>
+							<li><a href="/user_data/service#s06">ロケーションフォト</a></li>
+							<li><a href="/user_data/service#s07">営業時間外料金について</a></li>
+							<li><a href="/user_data/service#s03">出張着付け</a></li>
+							<li><a href="/user_data/service#s05">宅配着物レンタル</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="/user_data/flow">ご利用の流れ</a>
+					</li>
+					<li>
+						<a href="/user_data/faq">よくある質問</a>
+					</li>
+					<li class="dropdown open">
+						<a href="/user_data/shop" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">店舗 <img loading="lazy" src="/html/template/default/assets/icon/aki-icon-down-white.svg" alt="kimono">
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="/user_data/shop/shibuya">渋谷本店</a></li>
+							<li><a href="/user_data/shop/ginza">銀座店</a></li>
+							<li><a href="/user_data/shop/ikebukuro">池袋店</a></li>
+							<li><a href="/user_data/shop/yokohama">横浜店</a></li>
+							<li><a href="/user_data/shop/atami">熱海店</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+	</header>
+	{% if isSalon %}
+	<article id="contents" class="body-studio">
+	{% else %}
+	<article id="contents" class="mb30">
+	{% endif %}
+		<div class="aki-container">
+			<div class="aki-row no-padding text-center">
+				<div class="col-md-6 col-12 offset-md-3 mb30">
+					<img loading="lazy" src="/html/template/default/assets/icon/error.svg" class="aki-icon-default mt30" alt="icon">
+					<h2 class="error mb40 mt20">お探しのページを表示できません。</h2>
+					<p class="text-start text-md-center">お客様がアクセスしようとしたページは見つかりませんでした。<br>
+					お探しのページは移動、または、削除された可能性がございます。<br>
+					もしくは、ご指定のURLが間違っていたかもしれません。<br>
+					下記のリンクからご覧になりたいページをお探しください。
+					</p>
+				</div>
+				<div class="btn_group col-md-6 col-12 offset-md-3">
+					<h3 class="mb20">着物{% if not isSalon %}あき{% endif %}TOPページ</h3>
+					<a href="/"><p class="text-center"><button type="button" class="aki-btn aki-btn-primary mb30">▶ こちらから</button></p></a>
+					{% if not isSalon %}
+					<form class="" method="get" action="/products/list">
+						<div class="input-search__popup-form justify-content-center">
+							<input type="text" class="input-search__popup-input" name="name" placeholder="商品名・品番で検索">
+							<button class="btn btn-primary" type="submit"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M8.11111 15.2222C12.0385 15.2222 15.2222 12.0385 15.2222 8.11111C15.2222 4.18375 12.0385 1 8.11111 1C4.18375 1 1 4.18375 1 8.11111C1 12.0385 4.18375 15.2222 8.11111 15.2222Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+								<path d="M17.0005 17L13.1338 13.1333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+							</button>
+						</div>
+					</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</article>
+
+	<footer id="footer" class="footer_link">
+	<div class="aki-footer">
+	<div class="aki-container">
+		{% if not isSalon %}
+		<div class="aki-footer-content">
+			<div class="aki-row aki-footer-title gap30">
+				<div class="aki-footer-content__left text-center ">
+						<h2 class="aki-title-zen mb15 d-none d-md-block">着物レンタルあき</h2>
+						<p class="mb15 d-none d-md-block">着物のことならお気軽にお問い合わせ下さい</p>
+						<div class="aki-footer-content__left-icon mb15">
+							<div class="ft-icon-phone" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								{% if app.request.pathInfo|slice(0, 18) == "/user_data/english" %}
+								<img loading="lazy" src="{{ asset('assets/icon/ft-phone.svg') }}" class="footer d-none d-md-inline-block" alt="icon"/>
+								{% elseif app.request.pathInfo|slice(0, 16) == "/user_data/china" %}
+								<img loading="lazy" src="{{ asset('assets/icon/ft-phone.svg') }}" class="footer d-none d-md-inline-block" alt="icon"/>
+								{% elseif isJapan %}
+								<img loading="lazy" src="{{ asset('assets/icon/ft-phone.svg') }}" class="footer" alt="icon"/>
+								{% else %}
+								<img loading="lazy" src="{{ asset('assets/icon/ft-phone.svg') }}" class="footer d-none d-md-inline-block" alt="icon"/>
+								{% endif %}
+								<p class="mt10 d-none d-md-block">※火曜日定休</p>
+							</div>
+
+							<div class="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h3 class="aki-title-zen" id="exampleModalLabel">電話する店舗をお選び下さい</h3>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<div class="modal-body_content d-block d-md-none text-center">
+												<p>当店では現在下記の通常営業時間にて営業しております。<br><br>
+												平日： <s>10:00 ～ 20:00</s>　10:00 ～ 18:00（4月22日～6月30日）<br>※平日は事前予約にて19:30までお下見やレンタルを承ります。<br><br>
+												【土曜・日曜・祝日】 10：00 ～ 18：00<br>※お見立て受付は17：30迄<br><br>
+												【定休日】火曜日（3月・7月・8月の火曜は10:00～18：00で休まず営業いたします）</p>
+											</div>
+											<div class="modal-body_button">
+
+												<div class="info-phone ">
+													<p>渋谷本店</p>
+													<a href="tel:03-3476-3341">03-3476-3341</a>
+												</div>
+												<div class="info-phone ">
+													<p>池袋店</p>
+													<a href="tel:03-6416-0529">03-6416-0529</a>
+												</div>
+												<div class="info-phone ">
+													<p>銀座店</p>
+													<a href="tel:03-5568-0529">03-5568-0529</a>
+												</div>
+												<div class="info-phone ">
+													<p>横浜店</p>
+													<a href="tel:045-441-0529">045-441-0529</a>
+												</div>
+                                                <div class="info-phone m-auto">
+													<p>熱海店（PETIT）</p>
+													<a href="tel:0557-52-4351">0557-52-4351</a>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="aki-btn aki-btn-default" data-bs-dismiss="modal">閉じる</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% if app.request.pathInfo|slice(0, 18) == "/user_data/english" %}
+							<div class="ft-icon-email">
+								<a href="/wpaki/contact-form-en"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							<div class="ft-icon-email-pc d-none d-md-block">
+								<a href="/wpaki/contact-form-en"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							{% elseif app.request.pathInfo|slice(0, 16) == "/user_data/china" %}
+							<div class="ft-icon-email">
+								<a href="/wpaki/contact-form-ch"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							<div class="ft-icon-email-pc d-none d-md-block">
+								<a href="/wpaki/contact-form-ch"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							{% else	%}
+							<div class="ft-icon-email">
+								<a href="/contact" {% if isSalon %}class="pe-none"{% endif %} onclick="gtag('event', 'クリック', {'event_category': 'フローティングボタン','event_label': 'フローティングボタン（電話アイコン+メール）'});"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							<div class="ft-icon-email-pc d-none d-md-block">
+								<a href="/contact" {% if isSalon %}class="pe-none"{% endif %} onclick="gtag('event', 'クリック', {'event_category': 'フローティングボタン','event_label': 'フローティングボタン（電話アイコン+メール）'});"> <img loading="lazy" src="{{ asset('assets/icon/ft-email.svg') }}" class="footer" alt="icon"/> </a>
+							</div>
+							{% endif %}
+						</div>
+				</div>
+				<div class="aki-footer-content__right">
+					<div class="aki-row">
+						<ul class="aki-disc col-md-4 col-6 mb20">
+							<li><a href="/user_data/choose">着物の選び方</a></li>
+							<li><a href="/user_data/good_point" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_着物あきのこだわり'});">こだわり</a></li>
+							<li><a href="/user_data/service" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_オプションサービス'});">サービス</a></li>
+							<li><a href="/user_data/flow" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_ご利用の流れ'});">ご利用の流れ</a></li>
+							<li><a href="/user_data/faq" onclick="gtag('event', 'クリック', {'event_category': 'SPメニュー内','event_label': 'SPメニュー_よくある質問'});">よくある質問</a></li>
+							<li><a href="/user_data/shop">店舗情報</a></li>
+							<li><a href="/user_data/shop/shibuya">渋谷本店</a></li>
+							<li><a href="/user_data/shop/ginza">銀座店</a></li>
+							<li><a href="/user_data/shop/ikebukuro">池袋店</a></li>
+							<li><a href="/user_data/shop/yokohama">横浜店</a></li>
+							<li><a href="/help/about">会社概要</a></li>
+							<li><a href="/contact">お問い合わせ</a></li>
+							<li><a href="/help/tradelaw">特定商取引法に基づく表記</a></li>
+							<li><a href="/help/privacy">個人情報の取り扱い</a></li>
+						</ul>
+						<ul class="aki-disc col-md-4 col-6 mb20">
+							<li><a href="/products/list?category_id=53" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_振袖画像sp'});">振袖レンタル</a></li>
+							<li><a href="/products/list?category_id=52" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_黒留袖画像pc'});">黒留袖レンタル</a></li>
+							<li><a href="/products/list?category_id=51" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_色留袖画像pc'});">色留袖レンタル</a></li>
+							<li><a href="/user_data/houmongi">訪問着レンタル</a></li>
+							<li><a href="/products/list?category_id=34" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_婚礼衣装画像pc'});">婚礼衣装レンタル</a></li>
+							<li><a href="/products/list?category_id=38" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_産着画像pc'});">産着・お宮参り</a></li>
+							<li><a href="/user_data/753">七五三着物・十三詣りレンタル</a></li>
+							<li><a href="/products/list?category_id=49" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_色無地画像pc'});">色無地レンタル</a></li>
+							<li><a href="/products/list?category_id=40" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_七五三着物・十三詣り画像pc'});">卒業袴レンタル</a></li>
+							<li><a href="/user_data/mens" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_男物pc'});">男着物レンタル</a></li>
+							<li><a href="/products/list?category_id=48" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_小紋'});">小紋レンタル</a></li>
+							<li><a href="/products/list?category_id=47" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_紬（つむぎ）画像pc'});">つむぎレンタル</a></li>
+							<li><a href="/user_data/hitoenatu" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_ひとえ・夏着物画像pc'});">ひとえ・夏物レンタル</a></li>
+							<li><a href="/user_data/yukata">浴衣レンタル</a></li>
+							<li><a href="/products/list?category_id=157" onclick="gtag('event', 'クリック', {'event_category': '着物の種類から選ぶ','event_label': '着物の種類から選ぶ_喪服画像pc'});">喪服レンタル</a></li>
+							<li><a href="/user_data/753">七五三レンタル</a></li>
+							<li><a href="/user_data/seijin">成人式</a></li>
+							<li><a href="/user_data/hakama">卒業袴レンタル</a></li>
+						</ul>
+						<ul class="aki-disc col-md-4 col-12">
+							<li><a href="/user_data/for_organization">法人・団体のお客様へお得プランのご案内</a></li>
+							<li><a href="/user_data/service#s03">出張着付けサービス</a></li>
+							<li><a href="/user_data/service/hairset_makeupcare">ヘアーセット・メイクアップ</a></li>
+							<li><a href="/user_data/service#s02">写真撮影プラン</a></li>
+							<li><a href="/user_data/service/delivery_rental">宅配着物レンタル</a></li>
+							<li><a href="/wpaki/question">教えてあべ先生 Q&A</a></li>
+							<li><a href="/user_data/cancel">ご利用ガイド<br>（キャンセル・ご延滞・返品・交換・ご利用時のトラブルのお願いについて）</a></li>
+							<li><a href="/user_data/shipping_return">ご配送とご返却について</a></li>
+							<li><a href="/mypage/login">MYページ</a></li>
+							<li><a href="/cart">レンタルかご</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="mb30 pt30">
+			<form class="" method="get" action="/products/list">
+				<div class="input-search__popup-form justify-content-center">
+					<input type="text" class="input-search__popup-input" name="name" placeholder="商品名・品番で検索">
+					<button class="btn btn-primary" type="submit"><img loading="lazy" src="{{ asset('assets/icon/search-white.svg') }}" class="aki-icon-default" alt="icon"/></button>
+				</div>
+			</form>
+		</div>
+		{% endif %}
+		{% if isSalon %}
+		<div class="aki-footer-copyright justify-content-center">
+		{% else %}
+		<div class="aki-footer-copyright">
+		{% endif %}
+			<p class="text-center">Copyright &copy; 2005 - 2024 着物レンタル{% if not isSalon %}あき{% endif %}<br class="d-block d-md-none"> All rights reserved.</p>
+			{% if not isSalon %}
+			<div class="aki-footer-icon">
+				<p class="d-flex gap30 align-items-center">
+				<a target="_blank" href="https://www.facebook.com/kimono.rental.aki.tokyo"><svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M9.38105 10.0078H6.43676C6.43676 14.3802 6.43676 19.7623 6.43676 19.7623H2.0739C2.0739 19.7623 2.0739 14.4324 2.0739 10.0078H0V6.56021H2.0739V4.33028C2.0739 2.73321 2.89035 0.237671 6.47685 0.237671L9.70981 0.24919V3.59578C9.70981 3.59578 7.74525 3.59578 7.36327 3.59578C6.98129 3.59578 6.43822 3.77331 6.43822 4.53491V6.56089H9.76229L9.38105 10.0078Z" fill="white"/>
+				</svg>
+				</a>
+				<a target="_blank" href="https://twitter.com/kimono_aki"><svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M17.4858 2.0625H20.5181L13.8934 9.63417L21.6869 19.9375H15.5846L10.8051 13.6886L5.33629 19.9375H2.30212L9.38796 11.8387L1.91162 2.0625H8.16879L12.489 7.77425L17.4858 2.0625ZM16.4215 18.1225H18.1018L7.25579 3.78217H5.4527L16.4215 18.1225Z" fill="white"/>
+				</svg>
+				</a>
+				<a target="_blank" href="https://www.instagram.com/kimono_rental_aki"><svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M16.6745 0.057373H6.73515C5.91076 0.057373 5.13304 0.212752 4.40197 0.523512C3.68646 0.834276 3.05651 1.26156 2.51209 1.8054C1.96768 2.34923 1.53994 2.98628 1.22884 3.71657C0.917751 4.43132 0.762207 5.20044 0.762207 6.02396V15.976C0.762207 16.784 0.917751 17.5531 1.22884 18.2834C1.53994 19.0137 1.96768 19.6469 2.51209 20.1829C3.05651 20.719 3.68646 21.1424 4.40197 21.4532C5.13304 21.7795 5.91076 21.9426 6.73515 21.9426H16.6745C17.4989 21.9426 18.2766 21.7795 19.0077 21.4532C19.7232 21.1424 20.3532 20.719 20.8976 20.1829C21.442 19.6469 21.8697 19.0137 22.1808 18.2834C22.4919 17.5531 22.6475 16.784 22.6475 15.976V6.02396C22.6475 5.20044 22.4919 4.43132 22.1808 3.71657C21.8697 2.98628 21.442 2.34923 20.8976 1.8054C20.3532 1.26156 19.7232 0.834276 19.0077 0.523512C18.2766 0.212752 17.4989 0.057373 16.6745 0.057373ZM20.6635 15.9761C20.6635 17.0638 20.2746 17.996 19.4969 18.7729C18.7192 19.5498 17.7781 19.9383 16.6737 19.9383H6.73438C5.63 19.9383 4.68896 19.5498 3.91123 18.7729C3.1335 17.996 2.74464 17.0638 2.74464 15.9761V6.02401C2.74464 4.93635 3.1335 4.0002 3.91123 3.21552C4.68896 2.43085 5.63 2.03852 6.73438 2.03852H16.6737C17.7781 2.03852 18.7192 2.43085 19.4969 3.21552C20.2746 4.0002 20.6635 4.93635 20.6635 6.02401V15.9761ZM12.4977 6.02367C12.2488 5.97705 12 5.95375 11.7511 5.95375C11.5022 5.95375 11.2533 5.97705 11.0045 6.02367C10.3356 6.1169 9.72122 6.3422 9.16125 6.69957C8.60129 7.05695 8.13466 7.49201 7.76134 8.00476C7.38803 8.51752 7.11583 9.09242 6.94473 9.72948C6.77363 10.3665 6.73474 11.0191 6.82807 11.6873C6.9214 12.3399 7.13916 12.9497 7.48136 13.5169C7.82356 14.084 8.26686 14.5696 8.81127 14.9735C9.26236 15.2688 9.73677 15.5096 10.2345 15.6961C10.7323 15.8825 11.2533 15.9757 11.7977 15.9757C11.9066 15.9757 12.0272 15.9719 12.1594 15.9641C12.2916 15.9563 12.4044 15.9214 12.4977 15.8592C13.151 15.766 13.7615 15.5485 14.3293 15.2066C14.897 14.8648 15.3831 14.422 15.7875 13.8781C16.1919 13.3343 16.468 12.7477 16.6158 12.1184C16.7635 11.4892 16.783 10.8482 16.6741 10.1956C16.5341 9.10795 16.0791 8.17957 15.3092 7.41043C14.5392 6.6413 13.6021 6.17905 12.4977 6.02367ZM14.2015 12.6902C13.9526 12.9854 13.6571 13.2457 13.3149 13.471C12.9727 13.6963 12.5994 13.8322 12.195 13.8789C11.4017 13.9721 10.6667 13.7818 9.9901 13.3078C9.31347 12.8339 8.92073 12.193 8.81184 11.385C8.67185 10.5926 8.85462 9.85841 9.36014 9.18251C9.86567 8.5066 10.5151 8.11427 11.3083 8.00551C11.355 8.00551 11.4211 8.00551 11.5067 8.00551C11.5922 8.00551 11.6583 8.00551 11.705 8.00551C11.7517 8.00551 11.8178 8.00551 11.9033 8.00551C11.9889 8.00551 12.055 8.00551 12.1016 8.00551C12.7549 8.11427 13.3071 8.39396 13.7582 8.84456C14.2093 9.29516 14.4893 9.84675 14.5981 10.4994C14.6915 10.9033 14.6954 11.2957 14.6098 11.6764C14.5243 12.057 14.3881 12.395 14.2015 12.6902ZM16.4882 4.83432C16.3793 4.92755 16.3015 5.02855 16.2548 5.13732C16.2082 5.24608 16.1848 5.37815 16.1848 5.53353C16.1848 5.67338 16.2082 5.79768 16.2548 5.90645C16.3015 6.01521 16.3793 6.12397 16.4882 6.23274C16.5815 6.32597 16.6942 6.39589 16.8265 6.44251C16.9587 6.48912 17.0792 6.51243 17.1881 6.51243C17.3281 6.51243 17.4525 6.48912 17.5614 6.44251C17.6703 6.39589 17.7792 6.32597 17.8881 6.23274C17.9814 6.12397 18.0514 6.00356 18.098 5.87148C18.1447 5.73941 18.168 5.62676 18.168 5.53353C18.168 5.37815 18.1447 5.24608 18.098 5.13732C18.0514 5.02855 17.9814 4.92755 17.8881 4.83432C17.6859 4.63233 17.4525 4.53133 17.1881 4.53133C16.9237 4.53133 16.6904 4.63233 16.4882 4.83432Z" fill="white"/>
+				</svg>
+				</a>
+				<a target="_blank" href="https://www.youtube.com/@user-pd4wt7kj6c"><svg width="26" height="18" viewBox="0 0 26 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M24.8123 3.10384C24.5279 2.05363 23.6946 1.22576 22.6377 0.942971C20.7069 0.418091 12.9838 0.418091 12.9838 0.418091C12.9838 0.418091 5.26089 0.418091 3.33013 0.923071C2.2936 1.20556 1.43988 2.05378 1.15556 3.10384C0.647461 5.02201 0.647461 9.00006 0.647461 9.00006C0.647461 9.00006 0.647461 12.9982 1.15556 14.8963C1.44018 15.9463 2.27327 16.7742 3.33028 17.057C5.28122 17.582 12.9841 17.582 12.9841 17.582C12.9841 17.582 20.7069 17.582 22.6377 17.077C23.6947 16.7944 24.5279 15.9665 24.8126 14.9165C25.3205 12.9982 25.3205 9.02026 25.3205 9.02026C25.3205 9.02026 25.3408 5.02201 24.8123 3.10384ZM10.5249 12.6751V5.325L16.9471 9.00006L10.5249 12.6751Z" fill="white"/>
+				</svg>
+				</a>
+				</p>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	</div>
+	</footer>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.ja.min.js"></script>
+<script src="{{ asset('assets/js/eccube.js') }}"></script>
+<script src="{{ asset('assets/js/function.js') }}"></script>
+<script src="{{ asset('assets/aki/js/eccube.js') }}"></script>
+</body>
+</html>

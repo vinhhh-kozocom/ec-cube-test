@@ -1,0 +1,23 @@
+{% set isSalon = SALON_URL == app.request.server.get('SERVER_NAME') %}
+パスワードを変更いたしました。
+
+新しいパスワード：{{ password }}
+
+このパスワードは一時的なものですので、お早めにご変更下さい。
+
+★☆★☆★☆★☆★☆★☆★☆★☆★☆
+{% if isSalon %}
+    着物レンタル
+{% else %}
+    着物レンタルあき
+{% endif %}
+TEL：03-3476-3341～2 （渋谷店）
+TEL：03-5568-0529（銀座店）
+TEL：03-6416-0529（池袋店）
+TEL：045-441-0529 （横浜店）
+{% if not isSalon %}
+TEL：0557-52-4351（熱海店）
+{% endif %}
+http://kr-aki.co.jp/
+e-mail:contact@kr-aki.jp
+★☆★☆★☆★☆★☆★☆★☆★☆★☆

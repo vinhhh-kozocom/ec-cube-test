@@ -1,0 +1,117 @@
+{% extends 'default_frame.twig' %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+{% block main %}
+    <div class="registration_page">
+		<div class="aki-row mb30">
+			<div class="col-12 text-center">
+				<h2 class="mb20">{{ 'front.contact.title'|trans }}</h2>
+				<p>{{ 'front.contact.inquiry_notice'|trans|nl2br }}</p>
+			</div>
+		</div>
+        <div class="">
+            <div class="">
+                <form method="post" action="{{ url('contact') }}" class="h-adr">
+				{{ form_widget(form._token) }}
+                    <div class="dl_table">
+                        <dl id="top_box__name">
+                            <dt>
+                                {{ form_label(form.store, '') }}
+                            </dt>
+                            <dd>
+                                {{ form.store.vars.data }}
+                                {{ form_widget(form.store, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.name, 'common.name') }}
+                            </dt>
+                            <dd>
+                                {{ form.name.name01.vars.data }}
+                                {{ form.name.name02.vars.data }}
+                                {{ form_widget(form.name.name01, { type : 'hidden' }) }}
+                                {{ form_widget(form.name.name02, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.kana, 'common.kana') }}
+                            </dt>
+                            <dd>
+                                {{ form.kana.kana01.vars.data }}
+                                {{ form.kana.kana02.vars.data }}
+                                {{ form_widget(form.kana.kana01, { type : 'hidden' }) }}
+                                {{ form_widget(form.kana.kana02, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.phone_number, 'common.phone_number') }}
+                            </dt>
+                            <dd>{{ form.phone_number.vars.data }}
+                                {{ form_widget(form.phone_number, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.email, 'common.mail_address') }}
+                            </dt>
+                            <dd>
+                                {{ form.email.vars.data }}
+                                {{ form_widget(form.email, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.reply, '') }}
+                            </dt>
+                            <dd>
+                                {{ form.reply.vars.data }}
+                                {{ form_widget(form.reply, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                {{ form_label(form.contents, 'front.contact.inquiry_contents') }}
+                            </dt>
+                            <dd>
+                                {{ form.contents.vars.data|nl2br }}
+                                {{ form_widget(form.contents, { type : 'hidden' }) }}
+                            </dd>
+                        </dl>
+                        {# エンティティ拡張の自動出力 #}
+                        {% for f in form|filter(f => f.vars.eccube_form_options.auto_render) %}
+                            {% if f.vars.eccube_form_options.form_theme %}
+                                {% form_theme f f.vars.eccube_form_options.form_theme %}
+                                {{ form_row(f) }}
+                            {% else %}
+                                <dl>
+                                    <dt>
+                                        {% set label_class =  f.vars.label_attr.class is defined ? f.vars.label_attr.class : '' %}
+                                        {{ form_label(f, f.vars.label, { 'label_attr': {'class': label_class ~ ' ec-label' }}) }}
+                                    </dt>
+                                    <dd>
+                                        <div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+                                            {{ f.vars.data }}
+                                            {{ form_widget(f, { type: 'hidden'}) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="text-center">
+                        <div class="aki-row aki-well align-items-center justify-content-center mb30">
+                            <div class="col-md-6 text-md-end">
+                                <button type="submit" class="aki-btn aki-btn-default" name="mode" value="back">{{ 'common.back'|trans }}</button>
+                            </div>
+                            <div class="col-md-6 text-md-start">
+                                <button type="submit" class="aki-btn aki-btn-primary" name="mode" value="complete">{{ 'common.send'|trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

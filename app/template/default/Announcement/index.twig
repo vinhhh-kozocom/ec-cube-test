@@ -1,0 +1,40 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'service_page' %}
+{% block main %}
+	<div class="aki-row">
+		<div class="col-md-12 sp-left">
+			<div>
+				<h2 class="mt0 announcement-title text-nowrap">{{ title }}</h2>
+			</div>
+		</div>
+	</div>
+	<p class="aki-border-primary"></p>
+	<div class="aki-row mb20" id="s01">
+		<div class="col-md-12">
+			{% include template %}
+			<p class="aki-border-gray mt40 mb40"></p>
+			<p class="aki-font-semibold">【電話番号】</p>
+			<p>
+				<div class="mb30">
+					<p class="mt20">
+						<i class="aki-icon-hotline color-primary"></i>
+						渋谷本店：<a class="color-primary" href="tel:0334763341">TEL： 03-3476-3341</a>
+					</p>
+					<p class="mt20">
+						<i class="aki-icon-hotline color-primary"></i>
+						池袋店：<a class="color-primary" href="tel:0355680529">TEL：03-5568-0529</a>
+					</p>
+					<p class="mt20">
+						<i class="aki-icon-hotline color-primary"></i>
+						銀座店：<a class="color-primary" href="tel:0364160529">TEL：03-6416-0529</a>
+					</p>
+					<p class="mt20">
+						<i class="aki-icon-hotline color-primary"></i>
+						横浜店：<a class="color-primary" href="tel:0454410529">TEL：045-441-0529</a>
+					</p>
+				</div>
+			</p>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTDHTML4.01Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<body bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;">
+		{% set isJapan = app.request.locale == 'ja' %}
+		<br>
+		<br>
+		<div align="center">
+			<a href="{{ url('homepage') }}" style="font-family:Helvetica, Arial, sans-serif;font-size:30px;color:#333333;text-decoration:none;">
+				{% if isJapan %}
+					{{ BaseInfo.shop_name }}
+				{% else %}
+					Kimono Rental Aki
+				{% endif %}
+			</a>
+		</div>
+		<!-- 100% background wrapper (grey background) -->
+		<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+			<tr>
+				<td align="center" valign="top" bgcolor="#F0F0F0" style="background-color:#F0F0F0;border-collapse:collapse;">
+					<br>
+					<!-- 600px container (white background) -->
+					<table id="html-mail-table1" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content" align="left" style="border-collapse:collapse;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								<br>
+								<div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333;">
+									{% if locale == 'en' %}
+										{% if Order.orderDetailInfo[0].gender == 'Male' %}
+											{% set object = 'Mr' %}
+										{% elseif Order.orderDetailInfo[0].gender == 'Female' %}
+											{% set object = 'Ms' %}
+										{% else %}
+											{% set object = 'Mr/Ms'%}
+										{% endif %}
+										Dear {{object}}. {{ Order.name01 }} {{ Order.name02 }}, <br/><br/>
+
+										Thank you for your reservation.
+										<br/>
+										This e-mail is automatically generated in response to your order.<br/>
+										Please don't reply to this e-mail.<br/><br/>
+
+										You will receive a confirmation email from our staff within 48 hours of placing your reservation.<br/>
+										<b>Your reservation is confirmed upon receipt of this confirmation email.</b><br/><br/>
+                                        {% set index = 0 %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code != 'secure_pack' %}
+											{% set addinfo = Order.orderDetailInfo[index] %}
+												・Item name: {{OrderDetail.product_name}} <br/>
+												{% if OrderDetail.price_inctax != 0 %}
+													・Price: {{ OrderDetail.price_inctax|price }}
+												{% else %}
+													・Price: {{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+												{% endif %} <br/>
+												・Date: {{ addinfo.wear_date|date('Y-m-d') }} <br/>
+												・Time: {{ addinfo.time_departure }}<br/>
+												・Store: {{ addinfo.visit_store }}<br/>
+												・Number of guests: {{ addinfo.number_of_guests }}<br/>
+												{% if addinfo.number_of_guests == 1 %}
+													・Gender: {{ addinfo.gender }}<br/>
+												{% endif %}
+												・Height: {{ addinfo.body_height }}<br/>
+												・Shoe size: {{ addinfo.foot_size }}<br/>
+												・Body shape: {% for body_type in addinfo.getBodyTypeJsonDecode() %}{{body_type}}{% endfor %}<br/>
+												・Kimono Insurance: {% if addinfo.secure_pack is iterable %}
+																		{% for secure_pack in addinfo.secure_pack %}
+																			{{secure_pack}}
+																		{% endfor %}
+																		{% else %}
+																			{{addinfo.secure_pack}}
+																	{% endif %}<br/>
+												・Optional Photo Shoot: {{ addinfo.need_photo }}<br/>
+												・Optional Hair Set: {{ addinfo.need_hair_make }}<br/>
+												・Remark: {{ addinfo.remark }}<br/>
+												------------------------------------<br/><br/>
+                                                {% set index = index + 1 %}
+											{% endif %}
+										{% endfor %}
+
+										Thank you!<br/><br/>
+
+										Kimono Rental AKI<br/>
+										Email to : eng@kr-aki <br/>
+    									Address: 15-14-310 Maruyama Shibuya Tokyo Japan150-0044
+									{% elseif locale == 'zh' %}
+										親愛的 {{ Order.name01 }} {{ Order.name02 }} 様 <br/><br/>
+
+										感謝您的預訂。<br/>
+										該電子郵件是根據您的訂單自動產生的。<br/>
+										請不要回覆此電子郵件。<br/><br/>
+
+										您將在預訂後 48 小時內收到我們工作人員發送的確認電子郵件。<br/>
+										<b>收到此確認電子郵件後，您的預訂即被確認。</b><br/><br/>
+                                        {% set index = 0 %}
+										{% for OrderDetail in Order.MergedProductOrderItems %}
+											{% if OrderDetail.product_code != 'secure_pack' %}
+												{% set addinfo = Order.orderDetailInfo[index] %}
+												・專案名：{{OrderDetail.product_name}} <br/>
+												{% if OrderDetail.price_inctax != 0 %}
+													・價格：{{ OrderDetail.price_inctax|price }}
+												{% else %}
+													・價格：{{ calc_inc_tax(OrderDetail.productClass.price02, OrderDetail.tax_rate, OrderDetail.tax_rule_id)|price }}
+												{% endif %} <br/>
+												・日期：{{ addinfo.wear_date|date('Y-m-d') }}<br/>
+												・時間：{{ addinfo.time_departure }}<br/>
+												・店：{{ addinfo.visit_store }}<br/>
+												・入住人數：{{ addinfo.number_of_guests }}<br/>
+												{% if addinfo.number_of_guests == 1 %}
+													・Gender: {{ addinfo.gender }}<br/>
+												{% endif %}
+												・高度：{{ addinfo.body_height }}<br/>
+												・鞋號：{{ addinfo.foot_size }}<br/>
+												・身材：{% for body_type in addinfo.getBodyTypeJsonDecode() %}{{body_type}}{% endfor %}<br/>
+												・和服保險：{% if addinfo.secure_pack is iterable %}
+																{% for secure_pack in addinfo.secure_pack %}
+																	{{secure_pack}}
+																{% endfor %}
+																{% else %}
+																	{{addinfo.secure_pack}}
+															{% endif %}
+															<br/>
+												・自選拍照項目：{{ addinfo.need_photo }}<br/>
+												・自選髮飾：{{ addinfo.need_hair_make }}<br/>
+												・評論：{{ addinfo.remark }}<br/>
+												------------------------------------<br/><br/>
+                                                {% set index = index + 1 %}
+											{% endif %}
+										{% endfor %}
+
+										謝謝你！<br/><br/>
+
+										和服租賃 AKI<br/>
+										電子郵件至：eng@kr-aki<br/>
+										地址：日本東京澀谷丸山15-14-310150-0044<br/>
+									{% endif %}
+								</div>
+							</td>
+						</tr>
+					</table>
+					<!--/600px container -->
+					<br>
+					<br>
+					<table id="html-mail-table2" border="0" width="600px" cellpadding="10" cellspacing="0" class="container" style="border-spacing:0;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+						<tr>
+							<td class="container-padding content footer-text" align="left" style="border-collapse:collapse;font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff;">
+								本メールは、{{ BaseInfo.shop_name }}より送信しております。<br/>
+								もしお心当たりが無い場合は、その旨
+								<a href="mailto:{{ BaseInfo.email02 }}" style="text-decoration:none;">{{ BaseInfo.email02 }}</a>
+								までご連絡いただければ幸いです。<br/>
+								<br/>
+								<div class="title" style="font-size:14px;font-family:Helvetica, Arial, sans-serif;font-weight:600;color:#374550;">
+									<a href="{{ url('homepage') }}" style="color:#aaaaaa;text-decoration:none;">{{ BaseInfo.shop_name }}</a>
+								</div>
+								<div>copyright &copy;
+									{{ BaseInfo.shop_name }}
+									all rights reserved.</div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<!--/100% background wrapper-->
+		<br>
+		<br>
+	</body>
+</html>
